@@ -47,7 +47,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
             foreach (var item in datos.motivosNota)
             {
-                if (!string.IsNullOrWhiteSpace(item.serie))
+                if (!string.IsNullOrEmpty(item.serie))
                 {
                     _billingReference.Add(new BillingReferenceType()
                     {

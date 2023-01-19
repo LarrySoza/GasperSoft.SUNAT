@@ -352,7 +352,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                         //Número de documento de Identidad del adquirente o usuario
                         CustomerAssignedAccountID = new CustomerAssignedAccountIDType()
                         {
-                            Value = string.IsNullOrWhiteSpace(item.numeroDocumentoIdentificacionAdquirente) ? "-" : item.numeroDocumentoIdentificacionAdquirente
+                            Value = string.IsNullOrEmpty(item.numeroDocumentoIdentificacionAdquirente) ? "-" : item.numeroDocumentoIdentificacionAdquirente
                         },
 
                         AdditionalAccountID = new AdditionalAccountIDType[]
@@ -473,7 +473,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
                 if (item.tipoDocumento == "07" || item.tipoDocumento == "08")
                 {
-                    if (!string.IsNullOrWhiteSpace(item.serieModifica) && !string.IsNullOrWhiteSpace(item.tipoDocumentoModifica))
+                    if (!string.IsNullOrEmpty(item.serieModifica) && !string.IsNullOrEmpty(item.tipoDocumentoModifica))
                     {
                         _summaryDocumentLine.BillingReference = new BillingReferenceType()
                         {
@@ -509,7 +509,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
                 #region Percepcion
 
-                if (!string.IsNullOrWhiteSpace(item.regimenPercepcion))
+                if (!string.IsNullOrEmpty(item.regimenPercepcion))
                 {
                     _summaryDocumentLine.SUNATPerceptionSummaryDocumentReference = new SUNATPerceptionSummaryDocumentReference()
                     {

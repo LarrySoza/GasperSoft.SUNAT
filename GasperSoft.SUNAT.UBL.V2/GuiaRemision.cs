@@ -186,17 +186,17 @@ namespace GasperSoft.SUNAT.UBL.V2
                 GetAdditionalItemProperty("7022", "Indicador de bien regulado por SUNAT",item.esBienNormalizado? "1":"0")
             };
 
-            if (!string.IsNullOrWhiteSpace(item.partidaArancelaria))
+            if (!string.IsNullOrEmpty(item.partidaArancelaria))
             {
                 _itemsPropertyType.Add(GetAdditionalItemProperty("7020", "Partida arancelaria", item.partidaArancelaria));
             }
 
-            if (!string.IsNullOrWhiteSpace(item.numeroDeclaracionAduanera))
+            if (!string.IsNullOrEmpty(item.numeroDeclaracionAduanera))
             {
                 _itemsPropertyType.Add(GetAdditionalItemProperty("7021", "Numero de declaracion aduanera (DAM)", item.numeroDeclaracionAduanera));
             }
 
-            if (!string.IsNullOrWhiteSpace(item.numeroSerieEnDeclaracionAduanera))
+            if (!string.IsNullOrEmpty(item.numeroSerieEnDeclaracionAduanera))
             {
                 _itemsPropertyType.Add(GetAdditionalItemProperty("7023", "Numero de serie en la DAM o DS", item.numeroSerieEnDeclaracionAduanera));
             }
@@ -217,7 +217,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 }
             };
 
-            if (!string.IsNullOrWhiteSpace(direccion.direccion))
+            if (!string.IsNullOrEmpty(direccion.direccion))
             {
                 _address.AddressLine = new AddressLineType[]
                 {
@@ -231,7 +231,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 };
             }
 
-            if (!string.IsNullOrWhiteSpace(direccion.rucAsociado))
+            if (!string.IsNullOrEmpty(direccion.rucAsociado))
             {
                 _address.AddressTypeCode = new AddressTypeCodeType()
                 {
@@ -239,7 +239,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 };
             }
 
-            if (!string.IsNullOrWhiteSpace(direccion.codigoEstablecimiento))
+            if (!string.IsNullOrEmpty(direccion.codigoEstablecimiento))
             {
                 if (_address.AddressTypeCode == null)
                 {
@@ -691,7 +691,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     }
                 };
 
-                if (!string.IsNullOrWhiteSpace(datos.datosEnvio.transportista.registroMTC))
+                if (!string.IsNullOrEmpty(datos.datosEnvio.transportista.registroMTC))
                 {
                     _transportita.PartyLegalEntity[0].CompanyID = new CompanyIDType()
                     {
@@ -889,7 +889,7 @@ namespace GasperSoft.SUNAT.UBL.V2
             }
 
             //Datos del contenedor (Motivo Importación) 
-            if (!string.IsNullOrWhiteSpace(datos.datosEnvio.numeroContenedor))
+            if (!string.IsNullOrEmpty(datos.datosEnvio.numeroContenedor))
             {
                 _despatchAdvice.Shipment.TransportHandlingUnit = new TransportHandlingUnitType[]
                 {
@@ -908,7 +908,7 @@ namespace GasperSoft.SUNAT.UBL.V2
             }
 
             //Puerto o Aeropuerto de embarque/desembarque
-            if (!string.IsNullOrWhiteSpace(datos.datosEnvio.codigoPuerto))
+            if (!string.IsNullOrEmpty(datos.datosEnvio.codigoPuerto))
             {
                 _despatchAdvice.Shipment.FirstArrivalPortLocation = new LocationType1()
                 {

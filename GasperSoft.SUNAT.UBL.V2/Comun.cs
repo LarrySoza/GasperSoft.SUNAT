@@ -81,24 +81,15 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static IssueTimeType GetHoraEmision(string strHoraEmision)
         {
-            try
+            if (!string.IsNullOrEmpty(strHoraEmision))
             {
-                var _horaEmision = TimeSpan.Parse(strHoraEmision);
-
-                if (_horaEmision.TotalSeconds > 0)
+                return new IssueTimeType()
                 {
-                    return new IssueTimeType()
-                    {
-                        Value = _horaEmision.ToString(@"hh\:mm\:ss")
-                    };
-                }
+                    Value = strHoraEmision
+                };
+            }
 
-                return null;
-            }
-            catch
-            {
-                return null;
-            }
+            return null;
         }
 
         internal static DueDateType GetFechaVencimiento(DateTime? fechaVencimiento)
@@ -364,7 +355,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static PartyNameType[] GetNombreComercialEmisor(EmisorType emisor)
         {
-            if (!string.IsNullOrWhiteSpace(emisor.nombreComercial))
+            if (!string.IsNullOrEmpty(emisor.nombreComercial))
             {
                 return new PartyNameType[]
                 {
@@ -380,7 +371,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static CitySubdivisionNameType GetUrbanizacionEmisor(EmisorType emisor)
         {
-            if (!string.IsNullOrWhiteSpace(emisor.urbanizacion))
+            if (!string.IsNullOrEmpty(emisor.urbanizacion))
             {
                 return new CitySubdivisionNameType()
                 {
@@ -501,7 +492,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static ItemIdentificationType GetCodigoProductoItem(string codigo)
         {
-            if (!string.IsNullOrWhiteSpace(codigo))
+            if (!string.IsNullOrEmpty(codigo))
             {
                 return new ItemIdentificationType()
                 {
@@ -518,7 +509,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static CommodityClassificationType[] GetCodigoProductoSunatItem(string codigo)
         {
-            if (!string.IsNullOrWhiteSpace(codigo))
+            if (!string.IsNullOrEmpty(codigo))
             {
                 return new CommodityClassificationType[]
                 {
@@ -541,7 +532,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static ItemIdentificationType GetCodigoProductoGS1Item(string codigo)
         {
-            if (!string.IsNullOrWhiteSpace(codigo))
+            if (!string.IsNullOrEmpty(codigo))
             {
                 return new ItemIdentificationType()
                 {
@@ -561,7 +552,7 @@ namespace GasperSoft.SUNAT.UBL.V2
             var _additionalItemProperty = new List<ItemPropertyType>();
 
             //25- Número de placa del vehículo (Información Adicional - Gastos art.37° Renta) C
-            if (!string.IsNullOrWhiteSpace(item.numeroPlacaVehiculo))
+            if (!string.IsNullOrEmpty(item.numeroPlacaVehiculo))
             {
                 _additionalItemProperty.Add(new ItemPropertyType()
                 {

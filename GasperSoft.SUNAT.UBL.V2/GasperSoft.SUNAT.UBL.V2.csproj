@@ -1,8 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net35;net452;net462;net472;net481;netstandard2.0;net6.0;net7.0</TargetFrameworks>
+    <Title>GasperSoft.SUNAT.UBL.V2</Title>
+    <RepositoryUrl>https://github.com/LarrySoza/GasperSoft.SUNAT</RepositoryUrl>
+    <PackageTags>XML SUNAT V2</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>README_SUNAT_UBL_V2.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README_SUNAT_UBL_V2.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GasperSoft.SUNAT.DTO\GasperSoft.SUNAT.DTO.csproj" />

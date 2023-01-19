@@ -13,7 +13,7 @@ namespace GasperSoft.SUNAT.UBL.V2
     {
         private static OrderReferenceType GetOrdenReferencia(CPEType datos)
         {
-            if (!string.IsNullOrWhiteSpace(datos.ordenCompra))
+            if (!string.IsNullOrEmpty(datos.ordenCompra))
             {
                 return new OrderReferenceType()
                 {
@@ -514,7 +514,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     };
 
                     //metodo de pago
-                    if (!string.IsNullOrWhiteSpace(datos.informacionPago.metodoPago))
+                    if (!string.IsNullOrEmpty(datos.informacionPago.metodoPago))
                     {
                         _invoice.PaymentMeans = new PaymentMeansType[]
                         {
@@ -641,7 +641,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
                     var _id = $"{item.serie}-{item.numero}";
 
-                    if (string.IsNullOrWhiteSpace(item.tipoDocumento))
+                    if (string.IsNullOrEmpty(item.tipoDocumento))
                     {
                         if (datos.tipoDocumento == "01")//Es factura
                         {
@@ -656,8 +656,8 @@ namespace GasperSoft.SUNAT.UBL.V2
                         }
                     }
 
-                    if (string.IsNullOrWhiteSpace(item.tipoDocumentoIdentificacionEmisor) ||
-                        string.IsNullOrWhiteSpace(item.numeroDocumentoIdentificacionEmisor))
+                    if (string.IsNullOrEmpty(item.tipoDocumentoIdentificacionEmisor) ||
+                        string.IsNullOrEmpty(item.numeroDocumentoIdentificacionEmisor))
                     {
                         item.tipoDocumentoIdentificacionEmisor = emisor.tipoDocumentoIdentificacion;
                         item.numeroDocumentoIdentificacionEmisor = emisor.ruc;
