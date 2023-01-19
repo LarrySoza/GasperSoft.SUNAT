@@ -8,6 +8,7 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>README_SUNAT_UBL_V1.md</PackageReadmeFile>
+    <Description>Permiten generar el XML de la Comunicaciones de baja con la estructura UBL requerida por SUNAT.</Description>
   </PropertyGroup>
 
   <ItemGroup>

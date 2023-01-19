@@ -8,6 +8,7 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>README_SUNAT_DTO.md</PackageReadmeFile>
+    <Description>Objetos (DTOs), usados por las librerías GasperSoft.SUNAT.UBL.V1.dll y GasperSoft.SUNAT.UBL.V2.dll para la generación de los XML requeridos por SUNAT.</Description>
   </PropertyGroup>
 
   <ItemGroup>
