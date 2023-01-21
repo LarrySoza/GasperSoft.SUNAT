@@ -445,6 +445,26 @@ namespace GasperSoft.SUNAT.UBL.V2
                     );
                 }
 
+                if (item.totalOperacionesExportacion > 0)
+                {
+                    _billingPayment.Add(
+                        //Total valor de venta - operaciones inafectas (M)
+                        new PaymentType()
+                        {
+                            PaidAmount = new PaidAmountType()
+                            {
+                                currencyID = _codMoneda,
+                                Value = item.totalOperacionesInafectas
+                            },
+
+                            InstructionID = new InstructionIDType()
+                            {
+                                Value = "04"
+                            }
+                        }
+                    );
+                }
+
                 if (item.totalOperacionesGratuitas > 0)
                 {
                     _billingPayment.Add(
@@ -463,6 +483,33 @@ namespace GasperSoft.SUNAT.UBL.V2
                             }
                         }
                    );
+                }
+
+                //Si se esta anulando el documento y no existen operaciones Gravadas,Exoneradas,Inafectas,Exportacion o gratuitas
+                //agrego PaymentType para evitar el error 2255
+                if (item.estadoItem == "3"
+                    && item.totalOperacionesGravadas == 0m
+                    && item.totalOperacionesExoneradas == 0m
+                    && item.totalOperacionesInafectas == 0m
+                    && item.totalOperacionesExportacion == 0
+                    && item.totalOperacionesGratuitas == 0m)
+                {
+                    _billingPayment.Add(
+                        //Total valor de venta - operaciones gravadas (M)
+                        new PaymentType()
+                        {
+                            PaidAmount = new PaidAmountType()
+                            {
+                                currencyID = _codMoneda,
+                                Value = item.totalOperacionesGravadas
+                            },
+
+                            InstructionID = new InstructionIDType()
+                            {
+                                Value = "01"
+                            }
+                        }
+                    );
                 }
 
                 _summaryDocumentLine.BillingPayment = _billingPayment.ToArray();

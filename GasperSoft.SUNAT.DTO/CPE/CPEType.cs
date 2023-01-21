@@ -112,11 +112,6 @@ namespace GasperSoft.SUNAT.DTO.CPE
         public decimal totalOperacionesGravadas { get; set; }
 
         /// <summary>
-        /// Es la sumatoria de la propiedad valorVenta de items de exportacion(valor de codAfectacionIgv  del item = 40)
-        /// </summary>
-        public decimal totalOperacionesExportacion { get; set; }
-
-        /// <summary>
         /// Es la sumatoria de de la propiedad valorVenta de items exonerados(valor de codAfectacionIgv  del item comiensa con 2..)
         /// </summary>
         public decimal totalOperacionesExoneradas { get; set; }
@@ -127,7 +122,12 @@ namespace GasperSoft.SUNAT.DTO.CPE
         public decimal totalOperacionesInafectas { get; set; }
 
         /// <summary>
-        /// Colocar aqui la sumatoria de la propiedad valorVenta de items que fueron entregados por ejemplo por Bonificacion(codAfectacionIgv = "31")
+        /// Es la sumatoria de la propiedad valorVenta de items de exportacion(valor de codAfectacionIgv  del item = 40)
+        /// </summary>
+        public decimal totalOperacionesExportacion { get; set; }
+
+        /// <summary>
+        /// Colocar aqui la sumatoria de la propiedad valorVenta de items que no son 10,20,30,40
         /// </summary>
         public decimal totalOperacionesGratuitas { get; set; }
 
