@@ -10,6 +10,40 @@ namespace GasperSoft.SUNAT.UBL.V2
 {
     public class GuiaRemision : Comun
     {
+        private static string GetDocumentType(string codigo)
+        {
+            switch (codigo)
+            {
+                case "01": return "Factura";
+                case "03": return "Boleta de Venta";
+                case "04": return "Liquidación de Compra";
+                case "09": return "Guía de Remisión Remitente";
+                case "12": return "Ticket o cinta emitido por máquina registradora";
+                case "31": return "Guía de Remisión Transportista";
+                case "48": return "Comprobante de Operaciones – Ley N° 29972";
+                case "49": return "Constancia de Depósito -IVAP(Ley 28211)";
+                case "50": return "Declaración Aduanera de Mercancías";
+                case "52": return "Declaración Simplificada (DS)";
+                case "65": return "Autorización de Circulación para transportar MATPEL – Callao";
+                case "66": return "Autorización de Circulación para transporte de carga y mercancías en Lima Metropolitana";
+                case "67": return "Permiso de Operación Especial para el servicio de transporte de MATPEL - MTC";
+                case "68": return "Habilitación Sanitaria de Transporte Terrestre de Productos Pesqueros y Acuícolas";
+                case "69": return "Permiso / Autorización de operación de transporte de mercancías";
+                case "71": return "Resolución de Adjudicación de bienes – SUNAT";
+                case "72": return "Resolución de Comiso de bienes – SUNAT";
+                case "73": return "Guía de Transporte Forestal o de Fauna - SERFOR";
+                case "74": return "Guía de Tránsito – SUCAMEC";
+                case "75": return "Autorización para operar como empresa de Saneamiento Ambiental – MINSA -";
+                case "76": return "Autorización para manejo y recojo de residuos sólidos peligrosos y no peligrosos";
+                case "77": return "Certificado fitosanitario la movilización de plantas, productos vegetales, y otros artículos reglamentados";
+                case "78": return "Registro Único de Usuarios y Transportistas de Alcohol Etílico";
+                case "80": return "Constancia de Depósito – Detracción";
+                case "81": return "Código de autorización emitida por el SCOP";
+                case "82": return "Declaración jurada de mudanza";
+                default: return "";
+            }
+        }
+
         private static NoteType[] GetObservaciones(List<string> observaciones)
         {
             var _notas = new List<NoteType>();
@@ -64,6 +98,11 @@ namespace GasperSoft.SUNAT.UBL.V2
                         listAgencyName = "PE:SUNAT",
                         listName = "Documento relacionado al transporte",
                         listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo61"
+                    },
+
+                    DocumentType = new DocumentTypeType()
+                    {
+                        Value = GetDocumentType(item.tipoDocumento)
                     },
 
                     IssuerParty = new PartyType()
