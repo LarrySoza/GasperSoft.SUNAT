@@ -128,7 +128,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     },
 
                     //Cargo/descuento por ítem (C)
-                    AllowanceCharge = GetDescuentosCargosItem(item, codMoneda)
+                    //AllowanceCharge = GetDescuentosCargosItem(item, codMoneda)
                 };
 
                 _debitNoteLines.Add(_debitNoteLine);
