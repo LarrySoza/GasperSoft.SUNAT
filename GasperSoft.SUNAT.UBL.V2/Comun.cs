@@ -2378,42 +2378,6 @@ namespace GasperSoft.SUNAT.UBL.V2
                 });
             }
 
-            if (datos.propina != null)
-            {
-                _descuentosCargos.Add(new AllowanceChargeType()
-                {
-                    ChargeIndicator = new ChargeIndicatorType()
-                    {
-                        Value = true
-                    },
-
-                    AllowanceChargeReasonCode = new AllowanceChargeReasonCodeType()
-                    {
-                        Value = "46",
-                        listAgencyName = "PE:SUNAT",
-                        listName = "Cargo/descuento",
-                        listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53"
-                    },
-
-                    MultiplierFactorNumeric = new MultiplierFactorNumericType()
-                    {
-                        Value = datos.propina.tasa
-                    },
-
-                    Amount = new AmountType2()
-                    {
-                        Value = datos.propina.importe,
-                        currencyID = datos.codMoneda
-                    },
-
-                    BaseAmount = new BaseAmountType()
-                    {
-                        Value = datos.propina.montoBase,
-                        currencyID = datos.codMoneda
-                    }
-                });
-            }
-
             if (datos.recargoAlConsumo != null)
             {
                 _descuentosCargos.Add(new AllowanceChargeType()

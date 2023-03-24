@@ -230,13 +230,7 @@ namespace GasperSoft.SUNAT.DTO.CPE
 
         /// <summary>
         /// UBL 2.1
-        /// Propinas de existir
-        /// </summary>
-        public DescuentoCargoType propina { get; set; }
-
-        /// <summary>
-        /// UBL 2.1
-        /// Recargo al consumo de existir
+        /// Recargo al consumo/propina de existir
         /// </summary>
         public DescuentoCargoType recargoAlConsumo { get; set; }
 
