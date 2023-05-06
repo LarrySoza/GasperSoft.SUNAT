@@ -5,6 +5,7 @@
 using GasperSoft.SUNAT.DTO;
 using GasperSoft.SUNAT.DTO.CPE;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GasperSoft.SUNAT.UBL.V2
 {
@@ -216,6 +217,74 @@ namespace GasperSoft.SUNAT.UBL.V2
                 //Leyenda
                 Note = GetNotes(datos)
             };
+
+            if (datos.informacionPago?.formaPago == FormaPagoType.Credito && datos.informacionPago?.cuotas?.Count > 0)
+            {
+                var _paymentTerms = new List<PaymentTermsType>();
+
+                _paymentTerms.Add(new PaymentTermsType()
+                {
+                    ID = new IDType()
+                    {
+                        Value = "FormaPago"
+                    },
+
+                    PaymentMeansID = new PaymentMeansIDType[]
+                    {
+                        new PaymentMeansIDType()
+                        {
+                            Value = "Credito"
+                        }
+                    },
+
+                    Amount = new AmountType2()
+                    {
+                        currencyID = datos.codMoneda,
+                        Value = datos.informacionPago.montoPendientePago
+                    },
+                });
+
+                int _secuencia = 1;
+
+                //Ordenamos las cuotas por fecha de pago
+                var _cuotas = datos.informacionPago.cuotas.OrderBy(x => x.fechaPago).ToList();
+
+                foreach (var cuota in _cuotas)
+                {
+                    var _id = $"Cuota{_secuencia.ToString().PadLeft(3, '0')}";
+
+                    _paymentTerms.Add(new PaymentTermsType()
+                    {
+                        ID = new IDType()
+                        {
+                            Value = "FormaPago"
+                        },
+
+                        PaymentMeansID = new PaymentMeansIDType[]
+                        {
+                                        new PaymentMeansIDType()
+                                        {
+                                            Value = _id
+                                        }
+                        },
+
+                        Amount = new AmountType2()
+                        {
+                            currencyID = datos.codMoneda,
+                            Value = cuota.monto
+                        },
+
+                        PaymentDueDate = new PaymentDueDateType()
+                        {
+                            Value = cuota.fechaPago
+                        }
+                    });
+
+                    _secuencia++;
+                }
+
+                _creditNote.PaymentTerms = _paymentTerms.ToArray();
+            }
 
             return _creditNote;
         }

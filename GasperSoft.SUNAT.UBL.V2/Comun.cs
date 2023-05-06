@@ -1645,6 +1645,8 @@ namespace GasperSoft.SUNAT.UBL.V2
         internal static TaxTotalType[] GetTotales(CPEType datos)
         {
             var _taxSubTotal = new List<TaxSubtotalType>();
+            var _esNotaCreditoMotivo13 = false;
+
 
             decimal _totalAnticiposGravados = 0;
             decimal _totalAnticiposExonerados = 0;
@@ -1659,8 +1661,18 @@ namespace GasperSoft.SUNAT.UBL.V2
                 _totalAnticiposExportacion = datos.anticipos.Sum(x => x.totalOperacionesExportacion);
             }
 
+            //Cuando es una nota de crédito con motivo 13, todos los montos son 0, y es requerido enviar un “TaxSubTotal” como mínimo con monto 0
+            //en este caso al ser la variable "_esNotaCreditoMotivo13 = verdadero" se agregará el “TaxSubTotal” de operaciones gravadas
+            if (datos.motivosNota?.Count > 0)
+            {
+                if (datos.motivosNota[0].tipoNota == "13")
+                {
+                    _esNotaCreditoMotivo13 = true;
+                }
+            }
+
             //Total valor de venta operaciones gravadas(IGV o IVAP)/41- Sumatoria IGV o IVAP (M)
-            if (datos.totalOperacionesGravadas > 0 || _totalAnticiposGravados > 0)
+            if (datos.totalOperacionesGravadas > 0 || _totalAnticiposGravados > 0 || _esNotaCreditoMotivo13)
             {
                 _taxSubTotal.Add(new TaxSubtotalType()
                 {
@@ -2104,129 +2116,6 @@ namespace GasperSoft.SUNAT.UBL.V2
                     }
                 });
             }
-
-            //if (datos.tasaDescuentoGlobal > 0 && datos.descuentoOperacionesExoneradas != null)
-            //{
-            //    _descuentosCargos.Add(new AllowanceChargeType()
-            //    {
-            //        //Indicador de descuento, colocar false (an5 C)
-            //        ChargeIndicator = new ChargeIndicatorType()
-            //        {
-            //            Value = false
-            //        },
-
-            //        AllowanceChargeReasonCode = new AllowanceChargeReasonCodeType()
-            //        {
-            //            //Descuentos globales que no afectan la base imponible del IGV/IVAP(Catálogo No. 53)
-            //            Value = "03",
-            //            listAgencyName = "PE:SUNAT",
-            //            listName = "Cargo/descuento",
-            //            listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53"
-            //        },
-
-            //        //Factor de cargo/descuento
-            //        MultiplierFactorNumeric = new MultiplierFactorNumericType()
-            //        {
-            //            Value = datos.tasaDescuentoGlobal
-            //        },
-
-            //        //Monto del descuento
-            //        Amount = new AmountType2()
-            //        {
-            //            Value = datos.descuentoOperacionesExoneradas.importe,
-            //            currencyID = datos.codMoneda
-            //        },
-
-            //        //Monto base del descuento(los descuentos se aplican sobre el valor venta)
-            //        BaseAmount = new BaseAmountType()
-            //        {
-            //            Value = datos.descuentoOperacionesExoneradas.montoBase,
-            //            currencyID = datos.codMoneda
-            //        }
-            //    });
-            //}
-
-            //if (datos.tasaDescuentoGlobal > 0 && datos.descuentoOperacionesInafectas != null)
-            //{
-            //    _descuentosCargos.Add(new AllowanceChargeType()
-            //    {
-            //        //Indicador de descuento, colocar false (an5 C)
-            //        ChargeIndicator = new ChargeIndicatorType()
-            //        {
-            //            Value = false
-            //        },
-
-            //        AllowanceChargeReasonCode = new AllowanceChargeReasonCodeType()
-            //        {
-            //            //Descuentos globales que no afectan la base imponible del IGV/IVAP(Catálogo No. 53)
-            //            Value = "03",
-            //            listAgencyName = "PE:SUNAT",
-            //            listName = "Cargo/descuento",
-            //            listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53"
-            //        },
-
-            //        //Factor de cargo/descuento
-            //        MultiplierFactorNumeric = new MultiplierFactorNumericType()
-            //        {
-            //            Value = datos.tasaDescuentoGlobal
-            //        },
-
-            //        //Monto del descuento
-            //        Amount = new AmountType2()
-            //        {
-            //            Value = datos.descuentoOperacionesInafectas.importe,
-            //            currencyID = datos.codMoneda
-            //        },
-
-            //        //Monto base del descuento(los descuentos se aplican sobre el valor venta)
-            //        BaseAmount = new BaseAmountType()
-            //        {
-            //            Value = datos.descuentoOperacionesInafectas.montoBase,
-            //            currencyID = datos.codMoneda
-            //        }
-            //    });
-            //}
-
-            //if (datos.tasaDescuentoGlobal > 0 && datos.descuentoOperacionesExportacion != null)
-            //{
-            //    _descuentosCargos.Add(new AllowanceChargeType()
-            //    {
-            //        //Indicador de descuento, colocar false (an5 C)
-            //        ChargeIndicator = new ChargeIndicatorType()
-            //        {
-            //            Value = false
-            //        },
-
-            //        AllowanceChargeReasonCode = new AllowanceChargeReasonCodeType()
-            //        {
-            //            //Descuentos globales que no afectan la base imponible del IGV/IVAP(Catálogo No. 53)
-            //            Value = "03",
-            //            listAgencyName = "PE:SUNAT",
-            //            listName = "Cargo/descuento",
-            //            listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53"
-            //        },
-
-            //        //Factor de cargo/descuento
-            //        MultiplierFactorNumeric = new MultiplierFactorNumericType()
-            //        {
-            //            Value = datos.tasaDescuentoGlobal
-            //        },
-
-            //        //Monto del descuento
-            //        Amount = new AmountType2()
-            //        {
-            //            Value = datos.descuentoOperacionesExportacion.importe,
-            //            currencyID = datos.codMoneda
-            //        },
-
-            //        //Monto base del descuento(los descuentos se aplican sobre el valor venta)
-            //        BaseAmount = new BaseAmountType()
-            //        {
-            //            Value = datos.descuentoOperacionesExportacion.montoBase,
-            //            currencyID = datos.codMoneda
-            //        }
-            //    });
-            //}
 
             if (datos.tasaDescuentoGlobal > 0 && datos.descuentoGlobalNoAfectaBI != null)
             {
