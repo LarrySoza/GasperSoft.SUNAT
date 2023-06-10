@@ -772,40 +772,42 @@ namespace GasperSoft.SUNAT.UBL.V2
             //VEHICULO (Transporte Privado)
             if (datos.datosEnvio.placasVehiculo != null && datos.datosEnvio.placasVehiculo.Count > 0)
             {
-                //Vehiculo principal
-                var _TransportEquipment = new List<TransportEquipmentType>()
+                var _TransportEquipment = new List<TransportEquipmentType>();
+
+                //Vehiculo secundario
+                var _AttachedTransportEquipment = new List<TransportEquipmentType>();
+
+                var _esPrincipal = true;
+
+                foreach (var item in datos.datosEnvio.placasVehiculo)
                 {
-                    new TransportEquipmentType()
+                    if (_esPrincipal)
                     {
-                        ID =new IDType()
+                        _TransportEquipment.Add(new TransportEquipmentType()
                         {
-                           Value = datos.datosEnvio.placasVehiculo[0]
-                        }
-                    }
-                };
-
-                //Quitamos el vehiculo principal y verificamos si existen mas placas
-                datos.datosEnvio.placasVehiculo.Remove(datos.datosEnvio.placasVehiculo[0]);
-
-                if (datos.datosEnvio.placasVehiculo.Count > 0)
-                {
-                    //Vehiculo secundario hasta 2
-                    var _AttachedTransportEquipment = new List<TransportEquipmentType>();
-
-                    foreach (var item in datos.datosEnvio.placasVehiculo)
-                    {
-                        if (item != datos.datosEnvio.placasVehiculo[0])
-                        {
-                            _AttachedTransportEquipment.Add(new TransportEquipmentType()
+                            ID = new IDType()
                             {
-                                ID = new IDType()
-                                {
-                                    Value = item
-                                }
-                            });
-                        }
+                                Value = datos.datosEnvio.placasVehiculo[0]
+                            }
+                        });
+                    }
+                    else
+                    {
+                        _AttachedTransportEquipment.Add(new TransportEquipmentType()
+                        {
+                            ID = new IDType()
+                            {
+                                Value = item
+                            }
+                        });
                     }
 
+                    //después de la primera interacción ya no es el vehículo principal
+                    _esPrincipal = false;
+                }
+
+                if (_AttachedTransportEquipment.Count > 0)
+                {
                     _TransportEquipment[0].AttachedTransportEquipment = _AttachedTransportEquipment.ToArray();
                 }
 
@@ -821,23 +823,26 @@ namespace GasperSoft.SUNAT.UBL.V2
             //CONDUCTOR (Transporte Privado)
             if (datos.datosEnvio.conductores != null && datos.datosEnvio.conductores.Count > 0)
             {
-                var _driverPerson = new List<PersonType>
+                var _driverPerson = new List<PersonType>();
+
+                var _jobTitle = "Principal";
+
+                foreach (var item in datos.datosEnvio.conductores)
                 {
-                    //Conductor principal
-                    new PersonType()
+                    _driverPerson.Add(new PersonType()
                     {
                         JobTitle = new JobTitleType()
                         {
-                            Value = "Principal"
+                            Value = _jobTitle
                         },
 
                         ID = new IDType()
                         {
                             //Numero de documento de identidad del conductor
-                            Value = datos.datosEnvio.conductores[0].numeroDocumentoIdentificacion,
+                            Value = item.numeroDocumentoIdentificacion,
 
                             //Tipo de documento de identidad del conductor
-                            schemeID = datos.datosEnvio.conductores[0].tipoDocumentoIdentificacion,
+                            schemeID = item.tipoDocumentoIdentificacion,
 
                             schemeName = "Documento de Identidad",
                             schemeAgencyName = "PE:SUNAT",
@@ -846,66 +851,16 @@ namespace GasperSoft.SUNAT.UBL.V2
 
                         FirstName = new FirstNameType()
                         {
-                            Value = datos.datosEnvio.conductores[0].nombres
+                            Value = item.nombres
                         },
 
                         FamilyName = new FamilyNameType()
                         {
-                            Value = datos.datosEnvio.conductores[0].apellidos
+                            Value = item.apellidos
                         },
 
                         IdentityDocumentReference = new DocumentReferenceType[]
                         {
-                            new DocumentReferenceType()
-                            {
-                                ID = new IDType()
-                                {
-                                    Value = datos.datosEnvio.conductores[0].licenciaConducir
-                                }
-                            }
-                        }
-                    }
-                };
-
-                //Quitamos el principal porque ya fue agregado
-                datos.datosEnvio.conductores.Remove(datos.datosEnvio.conductores[0]);
-
-                if (datos.datosEnvio.conductores.Count > 0)
-                {
-                    foreach (var item in datos.datosEnvio.conductores)
-                    {
-                        _driverPerson.Add(new PersonType()
-                        {
-                            JobTitle = new JobTitleType()
-                            {
-                                Value = "Secundario"
-                            },
-
-                            ID = new IDType()
-                            {
-                                //Numero de documento de identidad del conductor
-                                Value = item.numeroDocumentoIdentificacion,
-
-                                //Tipo de documento de identidad del conductor
-                                schemeID = item.tipoDocumentoIdentificacion,
-
-                                schemeName = "Documento de Identidad",
-                                schemeAgencyName = "PE:SUNAT",
-                                schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
-                            },
-
-                            FirstName = new FirstNameType()
-                            {
-                                Value = item.nombres
-                            },
-
-                            FamilyName = new FamilyNameType()
-                            {
-                                Value = item.apellidos
-                            },
-
-                            IdentityDocumentReference = new DocumentReferenceType[]
-                            {
                                 new DocumentReferenceType()
                                 {
                                     ID = new IDType()
@@ -913,9 +868,11 @@ namespace GasperSoft.SUNAT.UBL.V2
                                         Value = item.licenciaConducir
                                     }
                                 }
-                            }
-                        });
-                    }
+                        }
+                    });
+
+                    //después de la primera interacción es conductor "Secundario"
+                    _jobTitle = "Secundario";
                 }
 
                 _despatchAdvice.Shipment.ShipmentStage[0].DriverPerson = _driverPerson.ToArray();
