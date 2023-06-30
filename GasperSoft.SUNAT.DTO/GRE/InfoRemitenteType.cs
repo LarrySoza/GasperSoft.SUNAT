@@ -9,11 +9,8 @@ using System.Text;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
-    public class InfoRemitenteType
+    public class InfoRemitenteType : InfoPersonaType
     {
-        public string ruc { get; set; }
-        public string razonSocial { get; set; }
-
         /// <summary>
         /// Datos de la autorización especial para el traslado de la carga
         /// codigo debe estar en el catalogo D37

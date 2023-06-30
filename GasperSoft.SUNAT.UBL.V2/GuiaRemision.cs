@@ -571,63 +571,67 @@ namespace GasperSoft.SUNAT.UBL.V2
                     }
 
                     //Datos del Remitente
-                    _despatchAdvice.DespatchSupplierParty = new SupplierPartyType()
+
+                    if (datos.remitente != null)
                     {
-                        Party = new PartyType()
+                        _despatchAdvice.DespatchSupplierParty = new SupplierPartyType()
                         {
-                            PartyLegalEntity = new PartyLegalEntityType[]
+                            Party = new PartyType()
                             {
+                                PartyLegalEntity = new PartyLegalEntityType[]
+                                {
                                 new PartyLegalEntityType()
                                 {
                                     RegistrationName = new RegistrationNameType()
                                     {
-                                        Value = datos.remitente.razonSocial
+                                        Value = datos.remitente.nombre
                                     }
                                 }
-                            },
-                            PartyIdentification = new PartyIdentificationType[]
-                            {
+                                },
+                                PartyIdentification = new PartyIdentificationType[]
+                                {
                                 new PartyIdentificationType()
                                 {
                                     ID = new IDType()
                                     {
-                                        Value = datos.remitente.ruc,
-                                        schemeID = "6",
+                                        Value = datos.remitente.numeroDocumentoIdentificacion,
+                                        schemeID = datos.remitente.tipoDocumentoIdentificacion,
                                         schemeName = "Documento de Identidad",
                                         schemeAgencyName = "PE:SUNAT",
                                         schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
                                     }
                                 }
-                            }
-                        }
-                    };
-
-                    if (datos.remitente.autorizacionesEspeciales != null)
-                    {
-                        var _autorizaciones = new List<PartyLegalEntityType>();
-
-                        foreach (var item in datos.remitente.autorizacionesEspeciales)
-                        {
-                            _autorizaciones.Add(new PartyLegalEntityType()
-                            {
-                                CompanyID = new CompanyIDType()
-                                {
-                                    Value = item.valor,
-                                    schemeID = item.codigo,
-                                    schemeName = "Entidad Autorizadora",
-                                    schemeAgencyName = "PE:SUNAT",
-                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
                                 }
-                            });
-                        }
-
-                        _despatchAdvice.Shipment.Delivery.Despatch.DespatchParty = new PartyType()
-                        {
-                            AgentParty = new PartyType()
-                            {
-                                PartyLegalEntity = _autorizaciones.ToArray()
                             }
                         };
+
+                        if (datos.remitente.autorizacionesEspeciales != null)
+                        {
+                            var _autorizaciones = new List<PartyLegalEntityType>();
+
+                            foreach (var item in datos.remitente.autorizacionesEspeciales)
+                            {
+                                _autorizaciones.Add(new PartyLegalEntityType()
+                                {
+                                    CompanyID = new CompanyIDType()
+                                    {
+                                        Value = item.valor,
+                                        schemeID = item.codigo,
+                                        schemeName = "Entidad Autorizadora",
+                                        schemeAgencyName = "PE:SUNAT",
+                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
+                                    }
+                                });
+                            }
+
+                            _despatchAdvice.Shipment.Delivery.Despatch.DespatchParty = new PartyType()
+                            {
+                                AgentParty = new PartyType()
+                                {
+                                    PartyLegalEntity = _autorizaciones.ToArray()
+                                }
+                            };
+                        }
                     }
 
                     //Transportista (Transporte Público)
@@ -810,12 +814,14 @@ namespace GasperSoft.SUNAT.UBL.V2
                     break;
                 case "31":
                     //Datos del transportista
-                    _despatchAdvice.DespatchSupplierParty = new SupplierPartyType()
+                    if (datos.transportista != null)
                     {
-                        Party = new PartyType()
+                        _despatchAdvice.DespatchSupplierParty = new SupplierPartyType()
                         {
-                            PartyLegalEntity = new PartyLegalEntityType[]
+                            Party = new PartyType()
                             {
+                                PartyLegalEntity = new PartyLegalEntityType[]
+                                {
                                 new PartyLegalEntityType()
                                 {
                                     RegistrationName = new RegistrationNameType()
@@ -823,10 +829,10 @@ namespace GasperSoft.SUNAT.UBL.V2
                                         Value = datos.transportista.razonSocial
                                     }
                                 }
-                            },
+                                },
 
-                            PartyIdentification = new PartyIdentificationType[]
-                            {
+                                PartyIdentification = new PartyIdentificationType[]
+                                {
                                 new PartyIdentificationType()
                                 {
                                     ID = new IDType()
@@ -838,15 +844,15 @@ namespace GasperSoft.SUNAT.UBL.V2
                                         schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
                                     }
                                 }
+                                }
                             }
-                        }
-                    };
+                        };
 
-                    //Número de Registro MTC
-                    if (!string.IsNullOrEmpty(datos.transportista.registroMTC))
-                    {
-                        _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
+                        //Número de Registro MTC
+                        if (!string.IsNullOrEmpty(datos.transportista.registroMTC))
                         {
+                            _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
+                            {
                             new PartyType()
                             {
                                 PartyLegalEntity = new PartyLegalEntityType[]
@@ -860,63 +866,67 @@ namespace GasperSoft.SUNAT.UBL.V2
                                     }
                                 }
                             }
-                        };
-                    }
-
-                    if (datos.transportista.autorizacionesEspeciales != null)
-                    {
-                        var _autorizaciones = new List<PartyLegalEntityType>();
-
-                        foreach (var item in datos.transportista.autorizacionesEspeciales)
-                        {
-                            _autorizaciones.Add(new PartyLegalEntityType()
-                            {
-                                CompanyID = new CompanyIDType()
-                                {
-                                    Value = item.valor,
-                                    schemeID = item.codigo,
-                                    schemeName = "Entidad Autorizadora",
-                                    schemeAgencyName = "PE:SUNAT",
-                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
-                                }
-                            });
+                            };
                         }
 
-                        _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty[0].AgentParty = new PartyType()
+                        if (datos.transportista.autorizacionesEspeciales != null)
                         {
-                            PartyLegalEntity = _autorizaciones.ToArray()
-                        };
+                            var _autorizaciones = new List<PartyLegalEntityType>();
+
+                            foreach (var item in datos.transportista.autorizacionesEspeciales)
+                            {
+                                _autorizaciones.Add(new PartyLegalEntityType()
+                                {
+                                    CompanyID = new CompanyIDType()
+                                    {
+                                        Value = item.valor,
+                                        schemeID = item.codigo,
+                                        schemeName = "Entidad Autorizadora",
+                                        schemeAgencyName = "PE:SUNAT",
+                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
+                                    }
+                                });
+                            }
+
+                            _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty[0].AgentParty = new PartyType()
+                            {
+                                PartyLegalEntity = _autorizaciones.ToArray()
+                            };
+                        }
                     }
 
                     //Datos del Remitente
-                    _despatchAdvice.Shipment.Delivery.Despatch.DespatchParty = new PartyType()
+                    if (datos.remitente != null)
                     {
-                        PartyLegalEntity = new PartyLegalEntityType[]
+                        _despatchAdvice.Shipment.Delivery.Despatch.DespatchParty = new PartyType()
                         {
-                            new PartyLegalEntityType()
+                            PartyLegalEntity = new PartyLegalEntityType[]
                             {
-                                RegistrationName = new RegistrationNameType()
+                                new PartyLegalEntityType()
                                 {
-                                    Value = datos.remitente.razonSocial
+                                    RegistrationName = new RegistrationNameType()
+                                    {
+                                        Value = datos.remitente.nombre
+                                    }
                                 }
-                            }
-                        },
+                            },
 
-                        PartyIdentification = new PartyIdentificationType[]
-                        {
-                            new PartyIdentificationType()
+                            PartyIdentification = new PartyIdentificationType[]
                             {
-                                ID = new IDType()
+                                new PartyIdentificationType()
                                 {
-                                    Value = datos.remitente.ruc,
-                                    schemeID = "6",
-                                    schemeName = "Documento de Identidad",
-                                    schemeAgencyName = "PE:SUNAT",
-                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                    ID = new IDType()
+                                    {
+                                        Value = datos.remitente.numeroDocumentoIdentificacion,
+                                        schemeID = datos.remitente.tipoDocumentoIdentificacion,
+                                        schemeName = "Documento de Identidad",
+                                        schemeAgencyName = "PE:SUNAT",
+                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                    }
                                 }
                             }
-                        }
-                    };
+                        };
+                    }
 
                     if (datos.empresaSubcontratada != null)
                     {
@@ -1100,7 +1110,5 @@ namespace GasperSoft.SUNAT.UBL.V2
 
             return _despatchAdvice;
         }
-
-
     }
 }
