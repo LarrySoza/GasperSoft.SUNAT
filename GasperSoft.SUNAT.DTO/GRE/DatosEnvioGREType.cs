@@ -20,11 +20,6 @@ namespace GasperSoft.SUNAT.DTO.GRE
         public string descripcionMotivoTraslado { get; set; }
 
         /// <summary>
-        /// Indicador de Transbordo Programado
-        /// </summary>
-        public bool transbordoProgramado { get; set; }
-
-        /// <summary>
         /// El peso bruto total de los bienes que se estan transportando
         /// </summary>
         public decimal pesoBrutoTotalBienes { get; set; }
@@ -59,11 +54,6 @@ namespace GasperSoft.SUNAT.DTO.GRE
         /// Conductor (modalidadTranslado = transporte privado)
         /// </summary>
         public List<InfoConductorType> conductores { get; set; }
-
-        /// <summary>
-        /// Informacion de la empresa que transporta los bienes (modalidadTranslado = transporte publico)
-        /// </summary>
-        public InfoTransportistaType transportista { get; set; }
 
         /// <summary>
         /// Datos del contenedor (Motivo Importación) - Condicional

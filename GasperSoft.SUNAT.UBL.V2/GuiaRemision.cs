@@ -439,7 +439,10 @@ namespace GasperSoft.SUNAT.UBL.V2
                 //Tipo de documento (an2 M) 
                 DespatchAdviceTypeCode = new DespatchAdviceTypeCodeType()
                 {
-                    Value = datos.tipoGuia
+                    Value = datos.tipoGuia,
+                    listAgencyName = "PE:SUNAT",
+                    listName = "Tipo de Documento",
+                    listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01"
                 },
 
                 UBLExtensions = new UBLExtensionType[]
@@ -448,38 +451,6 @@ namespace GasperSoft.SUNAT.UBL.V2
                 },
 
                 Signature = GetSignature(emisor),
-
-                //Datos del Remitente
-                DespatchSupplierParty = new SupplierPartyType()
-                {
-                    Party = new PartyType()
-                    {
-                        PartyLegalEntity = new PartyLegalEntityType[]
-                        {
-                            new PartyLegalEntityType()
-                            {
-                                RegistrationName = new RegistrationNameType()
-                                {
-                                    Value = datos.remitente.nombre
-                                }
-                            }
-                        },
-                        PartyIdentification = new PartyIdentificationType[]
-                        {
-                            new PartyIdentificationType()
-                            {
-                                ID = new IDType()
-                                {
-                                    Value = datos.remitente.numeroDocumentoIdentificacion,
-                                    schemeID = datos.remitente.tipoDocumentoIdentificacion,
-                                    schemeName = "Documento de Identidad",
-                                    schemeAgencyName = "PE:SUNAT",
-                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
-                                }
-                            }
-                        }
-                    }
-                },
 
                 //Datos del Destinatario
                 DeliveryCustomerParty = new CustomerPartyType()
@@ -521,24 +492,6 @@ namespace GasperSoft.SUNAT.UBL.V2
                         Value = "SUNAT_Envio"
                     },
 
-                    //Motivo del traslado Catalogo 20(an2 M)
-                    HandlingCode = new HandlingCodeType()
-                    {
-                        Value = datos.datosEnvio.motivoTraslado,
-                        listAgencyName = "PE:SUNAT",
-                        listName = "Motivo de traslado",
-                        listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo20"
-                    },
-
-                    //Descripción de motivo de traslado (an..100 C)
-                    HandlingInstructions = new HandlingInstructionsType[]
-                    {
-                        new HandlingInstructionsType()
-                        {
-                            Value = datos.datosEnvio.descripcionMotivoTraslado
-                        }
-                    },
-
                     //Peso bruto total de los bienes (n(12,3) M)
                     GrossWeightMeasure = new GrossWeightMeasureType()
                     {
@@ -546,26 +499,11 @@ namespace GasperSoft.SUNAT.UBL.V2
                         unitCode = datos.datosEnvio.unidadMedidaPesoBruto
                     },
 
-                    //Indicador de Transbordo Programado (true/false M)
-                    SplitConsignmentIndicator = new SplitConsignmentIndicatorType()
-                    {
-                        Value = datos.datosEnvio.transbordoProgramado
-                    },
-
                     //Informacion de traslado
                     ShipmentStage = new ShipmentStageType[]
                     {
                         new ShipmentStageType()
                         {
-                            //Modalidad de Traslado (an2 M) Catalogo 18 SUNAT
-                            TransportModeCode = new TransportModeCodeType()
-                            {
-                                Value = datos.datosEnvio.modalidadTraslado,
-                                listName = "Modalidad de traslado",
-                                listAgencyName = "PE:SUNAT",
-                                listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo18"
-                            },
-
                             //Fecha de inicio del traslado 
                             TransitPeriod = new PeriodType()
                             {
@@ -592,48 +530,195 @@ namespace GasperSoft.SUNAT.UBL.V2
                 DespatchLine = GetItems(datos.detalles)
             };
 
-            //Es importacion
-            if (datos.datosEnvio.motivoTraslado == "08" || datos.datosEnvio.motivoTraslado == "09")
+            switch (datos.tipoGuia)
             {
-                //Numero de Bulltos o Pallets (n11 C)
-                _despatchAdvice.Shipment.TotalTransportHandlingUnitQuantity = new TotalTransportHandlingUnitQuantityType()
-                {
-                    Value = datos.datosEnvio.totalBultos
-                };
-            }
-
-            //Observaciones (an..250 C)
-            if (datos.observaciones != null)
-            {
-                _despatchAdvice.Note = GetObservaciones(datos.observaciones);
-            }
-
-            //Guía de Remisión de referencia (dada de baja por cambio de destinatario)
-            if (datos.guiasRemisionDadasDeBaja != null)
-            {
-                _despatchAdvice.OrderReference = GetGuiasRemisionDadasDeBaja(datos.guiasRemisionDadasDeBaja);
-            }
-
-            //Documentos relacionados
-            if (datos.documentosRelacionados != null)
-            {
-                _despatchAdvice.AdditionalDocumentReference = GetDocumentosReferenciaAdicionales(datos.documentosRelacionados);
-            }
-
-            if (datos.proveedor != null)
-            {
-                _despatchAdvice.SellerSupplierParty = new SupplierPartyType()
-                {
-                    //CustomerAssignedAccountID = new CustomerAssignedAccountIDType()
-                    //{
-                    //    Value = datos.proveedor.numeroDocumentoIdentificacion,
-                    //    schemeID = datos.proveedor.tipoDocumentoIdentificacion
-                    //},
-
-                    Party = new PartyType()
+                case "09":
+                    //Motivo del traslado Catalogo 20(an2 M)
+                    _despatchAdvice.Shipment.HandlingCode = new HandlingCodeType()
                     {
-                        PartyLegalEntity = new PartyLegalEntityType[]
+                        Value = datos.datosEnvio.motivoTraslado,
+                        listAgencyName = "PE:SUNAT",
+                        listName = "Motivo de traslado",
+                        listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo20"
+                    };
+
+                    //Descripción de motivo de traslado (an..100 C)
+                    _despatchAdvice.Shipment.HandlingInstructions = new HandlingInstructionsType[]
+                    {
+                        new HandlingInstructionsType()
                         {
+                            Value = datos.datosEnvio.descripcionMotivoTraslado
+                        }
+                    };
+
+                    //Modalidad de Traslado (an2 M) Catalogo 18 SUNAT
+                    _despatchAdvice.Shipment.ShipmentStage[0].TransportModeCode = new TransportModeCodeType()
+                    {
+                        Value = datos.datosEnvio.modalidadTraslado,
+                        listName = "Modalidad de traslado",
+                        listAgencyName = "PE:SUNAT",
+                        listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo18"
+                    };
+
+                    //Es importacion
+                    if (datos.datosEnvio.motivoTraslado == "08" || datos.datosEnvio.motivoTraslado == "09")
+                    {
+                        //Numero de Bulltos o Pallets (n11 C)
+                        _despatchAdvice.Shipment.TotalTransportHandlingUnitQuantity = new TotalTransportHandlingUnitQuantityType()
+                        {
+                            Value = datos.datosEnvio.totalBultos
+                        };
+                    }
+
+                    //Datos del Remitente
+                    _despatchAdvice.DespatchSupplierParty = new SupplierPartyType()
+                    {
+                        Party = new PartyType()
+                        {
+                            PartyLegalEntity = new PartyLegalEntityType[]
+                            {
+                                new PartyLegalEntityType()
+                                {
+                                    RegistrationName = new RegistrationNameType()
+                                    {
+                                        Value = datos.remitente.razonSocial
+                                    }
+                                }
+                            },
+                            PartyIdentification = new PartyIdentificationType[]
+                            {
+                                new PartyIdentificationType()
+                                {
+                                    ID = new IDType()
+                                    {
+                                        Value = datos.remitente.ruc,
+                                        schemeID = "6",
+                                        schemeName = "Documento de Identidad",
+                                        schemeAgencyName = "PE:SUNAT",
+                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                    }
+                                }
+                            }
+                        }
+                    };
+
+                    if (datos.remitente.autorizacionesEspeciales != null)
+                    {
+                        var _autorizaciones = new List<PartyLegalEntityType>();
+
+                        foreach (var item in datos.remitente.autorizacionesEspeciales)
+                        {
+                            _autorizaciones.Add(new PartyLegalEntityType()
+                            {
+                                CompanyID = new CompanyIDType()
+                                {
+                                    Value = item.valor,
+                                    schemeID = item.codigo,
+                                    schemeName = "Entidad Autorizadora",
+                                    schemeAgencyName = "PE:SUNAT",
+                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
+                                }
+                            });
+                        }
+
+                        _despatchAdvice.Shipment.Delivery.Despatch.DespatchParty = new PartyType()
+                        {
+                            AgentParty = new PartyType()
+                            {
+                                PartyLegalEntity = _autorizaciones.ToArray()
+                            }
+                        };
+                    }
+
+                    //Transportista (Transporte Público)
+                    if (datos.transportista != null)
+                    {
+                        var _transportita = new PartyType()
+                        {
+                            PartyIdentification = new PartyIdentificationType[]
+                            {
+                                new PartyIdentificationType()
+                                {
+                                    ID = new IDType()
+                                    {
+                                        //Numero de RUC transportista
+                                        Value = datos.transportista.ruc,
+
+                                        //Tipo de documento del transportista
+                                        schemeID = "6",
+
+                                        schemeName = "Documento de Identidad",
+                                        schemeAgencyName = "PE:SUNAT",
+                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                    }
+                                }
+                            },
+
+                            PartyLegalEntity = new PartyLegalEntityType[]
+                            {
+                                new PartyLegalEntityType()
+                                {
+                                    RegistrationName = new RegistrationNameType()
+                                    {
+                                        Value = datos.transportista.razonSocial
+                                    }
+                                }
+                            }
+                        };
+
+                        if (!string.IsNullOrEmpty(datos.transportista.registroMTC))
+                        {
+                            _transportita.PartyLegalEntity[0].CompanyID = new CompanyIDType()
+                            {
+                                Value = datos.transportista.registroMTC
+                            };
+                        }
+
+                        if (datos.transportista.autorizacionesEspeciales != null)
+                        {
+                            var _autorizaciones = new List<PartyLegalEntityType>();
+
+                            foreach (var item in datos.transportista.autorizacionesEspeciales)
+                            {
+                                _autorizaciones.Add(new PartyLegalEntityType()
+                                {
+                                    CompanyID = new CompanyIDType()
+                                    {
+                                        Value = item.valor,
+                                        schemeID = item.codigo,
+                                        schemeName = "Entidad Autorizadora",
+                                        schemeAgencyName = "PE:SUNAT",
+                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
+                                    }
+                                });
+                            }
+
+                            _transportita.AgentParty = new PartyType()
+                            {
+                                PartyLegalEntity = _autorizaciones.ToArray()
+                            };
+                        }
+
+                        _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
+                        {
+                            _transportita
+                        };
+                    }
+
+                    if (datos.proveedor != null)
+                    {
+                        _despatchAdvice.SellerSupplierParty = new SupplierPartyType()
+                        {
+                            //CustomerAssignedAccountID = new CustomerAssignedAccountIDType()
+                            //{
+                            //    Value = datos.proveedor.numeroDocumentoIdentificacion,
+                            //    schemeID = datos.proveedor.tipoDocumentoIdentificacion
+                            //},
+
+                            Party = new PartyType()
+                            {
+                                PartyLegalEntity = new PartyLegalEntityType[]
+                                {
                             new PartyLegalEntityType()
                             {
                                 RegistrationName =new RegistrationNameType()
@@ -641,9 +726,9 @@ namespace GasperSoft.SUNAT.UBL.V2
                                     Value = datos.proveedor.nombre
                                 }
                             }
-                        },
-                        PartyIdentification = new PartyIdentificationType[]
-                        {
+                                },
+                                PartyIdentification = new PartyIdentificationType[]
+                                {
                             new PartyIdentificationType()
                             {
                                 ID = new IDType()
@@ -655,19 +740,19 @@ namespace GasperSoft.SUNAT.UBL.V2
                                     schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
                                 }
                             }
-                        }
+                                }
+                            }
+                        };
                     }
-                };
-            }
 
-            if (datos.comprador != null)
-            {
-                _despatchAdvice.BuyerCustomerParty = new CustomerPartyType()
-                {
-                    Party = new PartyType()
+                    if (datos.comprador != null)
                     {
-                        PartyLegalEntity = new PartyLegalEntityType[]
+                        _despatchAdvice.BuyerCustomerParty = new CustomerPartyType()
                         {
+                            Party = new PartyType()
+                            {
+                                PartyLegalEntity = new PartyLegalEntityType[]
+                                {
                             new PartyLegalEntityType()
                             {
                                 RegistrationName =new RegistrationNameType()
@@ -675,9 +760,9 @@ namespace GasperSoft.SUNAT.UBL.V2
                                     Value = datos.comprador.nombre
                                 }
                             }
-                        },
-                        PartyIdentification = new PartyIdentificationType[]
-                        {
+                                },
+                                PartyIdentification = new PartyIdentificationType[]
+                                {
                             new PartyIdentificationType()
                             {
                                 ID = new IDType()
@@ -689,87 +774,216 @@ namespace GasperSoft.SUNAT.UBL.V2
                                     schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
                                 }
                             }
+                                }
+                            }
+                        };
+                    }
+
+                    //Datos del contenedor (Motivo Importación) 
+                    if (!string.IsNullOrEmpty(datos.datosEnvio.numeroContenedor))
+                    {
+                        _despatchAdvice.Shipment.TransportHandlingUnit = new TransportHandlingUnitType[]
+                        {
+                    new TransportHandlingUnitType()
+                    {
+                        //Numero de Contenedor
+                        TransportEquipment =new TransportEquipmentType[]
+                        {
+                            new TransportEquipmentType()
+                            {
+                                ID = new IDType() { Value = datos.datosEnvio.numeroContenedor }
+                            }
                         }
                     }
-                };
+                        };
+                    }
+
+                    //Puerto o Aeropuerto de embarque/desembarque
+                    if (!string.IsNullOrEmpty(datos.datosEnvio.codigoPuerto))
+                    {
+                        _despatchAdvice.Shipment.FirstArrivalPortLocation = new LocationType1()
+                        {
+                            ID = new IDType() { Value = datos.datosEnvio.codigoPuerto }
+                        };
+                    }
+
+                    break;
+                case "31":
+                    //Datos del transportista
+                    _despatchAdvice.DespatchSupplierParty = new SupplierPartyType()
+                    {
+                        Party = new PartyType()
+                        {
+                            PartyLegalEntity = new PartyLegalEntityType[]
+                            {
+                                new PartyLegalEntityType()
+                                {
+                                    RegistrationName = new RegistrationNameType()
+                                    {
+                                        Value = datos.transportista.razonSocial
+                                    }
+                                }
+                            },
+
+                            PartyIdentification = new PartyIdentificationType[]
+                            {
+                                new PartyIdentificationType()
+                                {
+                                    ID = new IDType()
+                                    {
+                                        Value = datos.transportista.ruc,
+                                        schemeID = "6",
+                                        schemeName = "Documento de Identidad",
+                                        schemeAgencyName = "PE:SUNAT",
+                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                    }
+                                }
+                            }
+                        }
+                    };
+
+                    //Número de Registro MTC
+                    if (!string.IsNullOrEmpty(datos.transportista.registroMTC))
+                    {
+                        _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
+                        {
+                            new PartyType()
+                            {
+                                PartyLegalEntity = new PartyLegalEntityType[]
+                                {
+                                    new PartyLegalEntityType()
+                                    {
+                                        CompanyID = new CompanyIDType()
+                                        {
+                                            Value = datos.transportista.registroMTC
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                    }
+
+                    if (datos.transportista.autorizacionesEspeciales != null)
+                    {
+                        var _autorizaciones = new List<PartyLegalEntityType>();
+
+                        foreach (var item in datos.transportista.autorizacionesEspeciales)
+                        {
+                            _autorizaciones.Add(new PartyLegalEntityType()
+                            {
+                                CompanyID = new CompanyIDType()
+                                {
+                                    Value = item.valor,
+                                    schemeID = item.codigo,
+                                    schemeName = "Entidad Autorizadora",
+                                    schemeAgencyName = "PE:SUNAT",
+                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
+                                }
+                            });
+                        }
+
+                        _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty[0].AgentParty = new PartyType()
+                        {
+                            PartyLegalEntity = _autorizaciones.ToArray()
+                        };
+                    }
+
+                    //Datos del Remitente
+                    _despatchAdvice.Shipment.Delivery.Despatch.DespatchParty = new PartyType()
+                    {
+                        PartyLegalEntity = new PartyLegalEntityType[]
+                        {
+                            new PartyLegalEntityType()
+                            {
+                                RegistrationName = new RegistrationNameType()
+                                {
+                                    Value = datos.remitente.razonSocial
+                                }
+                            }
+                        },
+
+                        PartyIdentification = new PartyIdentificationType[]
+                        {
+                            new PartyIdentificationType()
+                            {
+                                ID = new IDType()
+                                {
+                                    Value = datos.remitente.ruc,
+                                    schemeID = "6",
+                                    schemeName = "Documento de Identidad",
+                                    schemeAgencyName = "PE:SUNAT",
+                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                }
+                            }
+                        }
+                    };
+
+                    if (datos.empresaSubcontratada != null)
+                    {
+                        _despatchAdvice.Shipment.Consignment = new ConsignmentType[]
+                        {
+                            new ConsignmentType()
+                            {
+                                ID = new IDType()
+                                {
+                                    Value = "SUNAT_Envio"
+                                },
+                                LogisticsOperatorParty = new PartyType()
+                                {
+                                    PartyLegalEntity = new PartyLegalEntityType[]
+                                    {
+                                        new PartyLegalEntityType()
+                                        {
+                                            RegistrationName = new RegistrationNameType()
+                                            {
+                                                Value = datos.empresaSubcontratada.razonSocial
+                                            }
+                                        }
+                                    },
+
+                                    PartyIdentification = new PartyIdentificationType[]
+                                    {
+                                        new PartyIdentificationType()
+                                        {
+                                            ID = new IDType()
+                                            {
+                                                Value = datos.empresaSubcontratada.ruc,
+                                                schemeID = "6",
+                                                schemeName = "Documento de Identidad",
+                                                schemeAgencyName = "PE:SUNAT",
+                                                schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                    }
+
+                    if (datos.pagadorFlete != null)
+                    {
+                        _despatchAdvice.OriginatorCustomerParty = new CustomerPartyType()
+                        {
+
+                        };
+                    }
+
+                    break;
             }
 
-            //Transportista (Transporte Público)
-            if (datos.datosEnvio.transportista != null)
+            //Observaciones (an..250 C)
+            if (datos.observaciones != null)
             {
-                var _transportita = new PartyType()
-                {
-                    PartyIdentification = new PartyIdentificationType[]
-                    {
-                        new PartyIdentificationType()
-                        {
-                            ID = new IDType()
-                            {
-                                //Numero de RUC transportista
-                                Value = datos.datosEnvio.transportista.ruc,
-
-                                //Tipo de documento del transportista
-                                schemeID = "6",
-
-                                schemeName = "Documento de Identidad",
-                                schemeAgencyName = "PE:SUNAT",
-                                schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
-                            }
-                        }
-                    },
-
-                    PartyLegalEntity = new PartyLegalEntityType[]
-                    {
-                        new PartyLegalEntityType()
-                        {
-                            RegistrationName = new RegistrationNameType()
-                            {
-                                Value = datos.datosEnvio.transportista.razonSocial
-                            }
-                        }
-                    }
-                };
-
-                if (!string.IsNullOrEmpty(datos.datosEnvio.transportista.registroMTC))
-                {
-                    _transportita.PartyLegalEntity[0].CompanyID = new CompanyIDType()
-                    {
-                        Value = datos.datosEnvio.transportista.registroMTC
-                    };
-                }
-
-                if (datos.datosEnvio.transportista.autorizacionesEspeciales != null)
-                {
-                    var _autorizaciones = new List<PartyLegalEntityType>();
-
-                    foreach (var item in datos.datosEnvio.transportista.autorizacionesEspeciales)
-                    {
-                        _autorizaciones.Add(new PartyLegalEntityType()
-                        {
-                            CompanyID = new CompanyIDType()
-                            {
-                                Value = item.valor,
-                                schemeID = item.codigo,
-                                schemeName = "Entidad Autorizadora",
-                                schemeAgencyName = "PE:SUNAT",
-                                schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
-                            }
-                        });
-                    }
-
-                    _transportita.AgentParty = new PartyType()
-                    {
-                        PartyLegalEntity = _autorizaciones.ToArray()
-                    };
-                }
-
-                _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
-                {
-                    _transportita
-                };
+                _despatchAdvice.Note = GetObservaciones(datos.observaciones);
             }
 
-            //VEHICULO (Transporte Privado)
+            //Documentos relacionados
+            if (datos.documentosRelacionados != null)
+            {
+                _despatchAdvice.AdditionalDocumentReference = GetDocumentosReferenciaAdicionales(datos.documentosRelacionados);
+            }
+
+            //Vehiculos(En guias remitente solo cuando "modalidadTraslado" es "privado")
             if (datos.datosEnvio.placasVehiculo != null && datos.datosEnvio.placasVehiculo.Count > 0)
             {
                 var _TransportEquipment = new List<TransportEquipmentType>();
@@ -882,34 +1096,6 @@ namespace GasperSoft.SUNAT.UBL.V2
             if (datos.datosEnvio.puntoLlegada != null)
             {
                 _despatchAdvice.Shipment.Delivery.DeliveryAddress = GetDireccion(datos.datosEnvio.puntoLlegada);
-            }
-
-            //Datos del contenedor (Motivo Importación) 
-            if (!string.IsNullOrEmpty(datos.datosEnvio.numeroContenedor))
-            {
-                _despatchAdvice.Shipment.TransportHandlingUnit = new TransportHandlingUnitType[]
-                {
-                    new TransportHandlingUnitType()
-                    {
-                        //Numero de Contenedor
-                        TransportEquipment =new TransportEquipmentType[]
-                        {
-                            new TransportEquipmentType()
-                            {
-                                ID = new IDType() { Value = datos.datosEnvio.numeroContenedor }
-                            }
-                        }
-                    }
-                };
-            }
-
-            //Puerto o Aeropuerto de embarque/desembarque
-            if (!string.IsNullOrEmpty(datos.datosEnvio.codigoPuerto))
-            {
-                _despatchAdvice.Shipment.FirstArrivalPortLocation = new LocationType1()
-                {
-                    ID = new IDType() { Value = datos.datosEnvio.codigoPuerto }
-                };
             }
 
             return _despatchAdvice;

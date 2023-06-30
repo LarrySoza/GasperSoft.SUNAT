@@ -51,19 +51,24 @@ namespace GasperSoft.SUNAT.DTO.GRE
         public List<string> observaciones { get; set; }
 
         /// <summary>
-        /// Guía de Remisión Dada de Baja
-        /// </summary>
-        public List<DocumentoRelacionadoGREType> guiasRemisionDadasDeBaja { get; set; }
-
-        /// <summary>
         /// Documentos relacionados Catalogo 61
         /// </summary>
         public List<DocumentoRelacionadoGREType> documentosRelacionados { get; set; }
 
         /// <summary>
+        /// Informacion del transportista
+        /// </summary>
+        public InfoTransportistaType transportista { get; set; }
+
+        /// <summary>
+        /// Empresa Subcontratada(Solo guías remisión transportista)
+        /// </summary>
+        public InfoTransportistaType empresaSubcontratada { get; set; }
+
+        /// <summary>
         /// Informacion del remitente
         /// </summary>
-        public InfoPersonaType remitente { get; set; }
+        public InfoRemitenteType remitente { get; set; }
 
         /// <summary>
         /// Informacion del destinatario
@@ -79,6 +84,11 @@ namespace GasperSoft.SUNAT.DTO.GRE
         /// Informacion del Comprador
         /// </summary>
         public InfoPersonaType comprador { get; set; }
+
+        /// <summary>
+        /// Informacion del persona(Solo guías remisión transportista) 
+        /// </summary>
+        public InfoPersonaType pagadorFlete { get; set; }
 
         /// <summary>
         /// Informacion del envio 
