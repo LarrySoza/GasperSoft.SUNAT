@@ -24,26 +24,26 @@ namespace GasperSoft.SUNAT.UBL.V2
                     SignatoryParty = new PartyType()
                     {
                         PartyIdentification = new PartyIdentificationType[]
-                    {
-                        new PartyIdentificationType()
                         {
-                            ID = new IDType()
+                            new PartyIdentificationType()
                             {
-                                Value = emisor.ruc
+                                ID = new IDType()
+                                {
+                                    Value = emisor.ruc
+                                }
                             }
-                        }
-                    },
+                        },
 
                         PartyName = new PartyNameType[]
-                    {
-                        new PartyNameType()
                         {
-                            Name = new NameType1()
+                            new PartyNameType()
                             {
-                                Value = emisor.razonSocial
+                                Name = new NameType1()
+                                {
+                                    Value = emisor.razonSocial
+                                }
                             }
                         }
-                    }
                     },
 
                     DigitalSignatureAttachment = new AttachmentType()

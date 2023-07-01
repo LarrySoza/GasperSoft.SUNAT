@@ -580,27 +580,27 @@ namespace GasperSoft.SUNAT.UBL.V2
                             {
                                 PartyLegalEntity = new PartyLegalEntityType[]
                                 {
-                                new PartyLegalEntityType()
-                                {
-                                    RegistrationName = new RegistrationNameType()
+                                    new PartyLegalEntityType()
                                     {
-                                        Value = datos.remitente.nombre
+                                        RegistrationName = new RegistrationNameType()
+                                        {
+                                            Value = datos.remitente.nombre
+                                        }
                                     }
-                                }
                                 },
                                 PartyIdentification = new PartyIdentificationType[]
                                 {
-                                new PartyIdentificationType()
-                                {
-                                    ID = new IDType()
+                                    new PartyIdentificationType()
                                     {
-                                        Value = datos.remitente.numeroDocumentoIdentificacion,
-                                        schemeID = datos.remitente.tipoDocumentoIdentificacion,
-                                        schemeName = "Documento de Identidad",
-                                        schemeAgencyName = "PE:SUNAT",
-                                        schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                        ID = new IDType()
+                                        {
+                                            Value = datos.remitente.numeroDocumentoIdentificacion,
+                                            schemeID = datos.remitente.tipoDocumentoIdentificacion,
+                                            schemeName = "Documento de Identidad",
+                                            schemeAgencyName = "PE:SUNAT",
+                                            schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                        }
                                     }
-                                }
                                 }
                             }
                         };
@@ -974,7 +974,34 @@ namespace GasperSoft.SUNAT.UBL.V2
                     {
                         _despatchAdvice.OriginatorCustomerParty = new CustomerPartyType()
                         {
+                            Party = new PartyType()
+                            {
+                                PartyLegalEntity = new PartyLegalEntityType[]
+                                {
+                                    new PartyLegalEntityType()
+                                    {
+                                        RegistrationName = new RegistrationNameType()
+                                        {
+                                            Value = datos.pagadorFlete.nombre
+                                        }
+                                    }
+                                },
 
+                                PartyIdentification = new PartyIdentificationType[]
+                                {
+                                    new PartyIdentificationType()
+                                    {
+                                        ID = new IDType()
+                                        {
+                                            Value = datos.pagadorFlete.numeroDocumentoIdentificacion,
+                                            schemeID = datos.pagadorFlete.tipoDocumentoIdentificacion,
+                                            schemeName = "Documento de Identidad",
+                                            schemeAgencyName = "PE:SUNAT",
+                                            schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                        }
+                                    }
+                                }
+                            }
                         };
                     }
 
