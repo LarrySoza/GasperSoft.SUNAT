@@ -369,7 +369,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 }
 
                 //SUNAT_Envio_IndicadorPagadorFlete_Remitente
-                if (datos.datosEnvio.indicadoresGRETransportista.indPagadorFlete_Remitente)
+                if (datos.datosEnvio.indicadoresGRETransportista.indPagadorFleteRemitente)
                 {
                     _specialInstructionsType.Add(GetSpecialInstruction("SUNAT_Envio_IndicadorPagadorFlete_Remitente"));
                 }

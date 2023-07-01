@@ -25,7 +25,7 @@ namespace GasperSoft.SUNAT.DTO.GRE
         /// <summary>
         /// SUNAT_Envio_IndicadorPagadorFlete_Remitente
         /// </summary>
-        public bool indPagadorFlete_Remitente { get; set; }
+        public bool indPagadorFleteRemitente { get; set; }
         /// <summary>
         /// SUNAT_Envio_IndicadorPagadorFlete_Subcontratador
         /// </summary>
