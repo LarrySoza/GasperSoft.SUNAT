@@ -13,6 +13,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <FileVersion>1.0.1</FileVersion>
     <Version>$(FileVersion)</Version>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>

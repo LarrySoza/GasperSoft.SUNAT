@@ -605,7 +605,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                             }
                         };
 
-                        if (datos.remitente.autorizacionesEspeciales != null)
+                        if (datos.remitente.autorizacionesEspeciales != null && datos.remitente.autorizacionesEspeciales.Count > 0)
                         {
                             var _autorizaciones = new List<PartyLegalEntityType>();
 
@@ -678,7 +678,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                             };
                         }
 
-                        if (datos.transportista.autorizacionesEspeciales != null)
+                        if (datos.transportista.autorizacionesEspeciales != null && datos.transportista.autorizacionesEspeciales.Count > 0)
                         {
                             var _autorizaciones = new List<PartyLegalEntityType>();
 
@@ -853,23 +853,23 @@ namespace GasperSoft.SUNAT.UBL.V2
                         {
                             _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
                             {
-                            new PartyType()
-                            {
-                                PartyLegalEntity = new PartyLegalEntityType[]
+                                new PartyType()
                                 {
-                                    new PartyLegalEntityType()
+                                    PartyLegalEntity = new PartyLegalEntityType[]
                                     {
-                                        CompanyID = new CompanyIDType()
+                                        new PartyLegalEntityType()
                                         {
-                                            Value = datos.transportista.registroMTC
+                                            CompanyID = new CompanyIDType()
+                                            {
+                                                Value = datos.transportista.registroMTC
+                                            }
                                         }
                                     }
                                 }
-                            }
                             };
                         }
 
-                        if (datos.transportista.autorizacionesEspeciales != null)
+                        if (datos.transportista.autorizacionesEspeciales != null && datos.transportista.autorizacionesEspeciales.Count > 0)
                         {
                             var _autorizaciones = new List<PartyLegalEntityType>();
 
@@ -886,6 +886,15 @@ namespace GasperSoft.SUNAT.UBL.V2
                                         schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
                                     }
                                 });
+                            }
+
+                            //Cuando datos.transportista.registroMTC es vacío/nulo entonces no se inicializa esta propiedad
+                            if (_despatchAdvice.Shipment.ShipmentStage[0].CarrierParty == null)
+                            {
+                                _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
+                                {
+                                    new PartyType()
+                                };
                             }
 
                             _despatchAdvice.Shipment.ShipmentStage[0].CarrierParty[0].AgentParty = new PartyType()
