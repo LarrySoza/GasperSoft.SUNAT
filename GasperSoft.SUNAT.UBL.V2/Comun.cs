@@ -308,7 +308,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     languageLocaleID = "2001",
 
                     //Descripción de la leyenda
-                    Value = "BIENES TRANSFERIDOS EN LA AMAZONÍA REGIÓN SELVAPARA SER CONSUMIDOS EN LA MISMA"
+                    Value = "BIENES TRANSFERIDOS EN LA AMAZONÍA REGIÓN SELVA PARA SER CONSUMIDOS EN LA MISMA"
                 });
             }
 

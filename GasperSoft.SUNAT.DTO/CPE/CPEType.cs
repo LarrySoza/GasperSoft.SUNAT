@@ -322,7 +322,7 @@ namespace GasperSoft.SUNAT.DTO.CPE
         public bool indTransferenciaGratuita { get; set; }
 
         /// <summary>
-        /// Agregar la leyenda codigo: 2001("BIENES TRANSFERIDOS EN LA AMAZONÍA REGIÓN SELVAPARA SER CONSUMIDOS EN LA MISMA")
+        /// Agregar la leyenda codigo: 2001("BIENES TRANSFERIDOS EN LA AMAZONÍA REGIÓN SELVA PARA SER CONSUMIDOS EN LA MISMA")
         /// </summary>
         public bool indBienesTransferidosSelva { get; set; }
 
