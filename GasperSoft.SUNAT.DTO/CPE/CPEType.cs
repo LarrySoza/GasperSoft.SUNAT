@@ -26,12 +26,6 @@ namespace GasperSoft.SUNAT.DTO.CPE
         public string codigoTipoOperacion { get; set; }
 
         /// <summary>
-        /// El codigo de la unidad de negocio en la cual se genera el comprobante, esta variable se usa para determinar la plantilla
-        /// que se va usar para generar el PDF, de ser vacio o nulo se usa la plantilla predeterminada
-        /// </summary>
-        public string codigoUnidadNegocio { get; set; }
-
-        /// <summary>
         /// UBL 2.1
         /// Código de cuatro dígitos asignado por SUNAT, que identifica al
         /// establecimiento anexo.Dicho código se genera al momento la respectiva comunicación del
@@ -49,11 +43,6 @@ namespace GasperSoft.SUNAT.DTO.CPE
         /// Requerido por SUNAT el 1ª Abril
         /// </summary>
         public InformacionPagoType informacionPago { get; set; }
-
-        /// <summary>
-        /// IDentificador unico del comprobante en los sistemas del contribuyente
-        /// </summary>
-        public string idTransaccion { get; set; }
 
         /// <summary>
         /// Fecha de emision del comprobante
