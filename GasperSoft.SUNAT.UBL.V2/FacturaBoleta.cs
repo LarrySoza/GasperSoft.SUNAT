@@ -494,7 +494,7 @@ namespace GasperSoft.SUNAT.UBL.V2
             {
                 if (datos.informacionPago.formaPago == FormaPagoType.Contado)
                 {
-                    _invoice.PaymentTerms = new PaymentTermsType[]
+                    var _paymentTerms = new List<PaymentTermsType>()
                     {
                         new PaymentTermsType()
                         {
@@ -512,6 +512,26 @@ namespace GasperSoft.SUNAT.UBL.V2
                             }
                         }
                     };
+
+                    //Adicionar la leyenda de "COMPROBANTE DE PERCEPCIÓN"
+                    if (datos.percepcion != null)
+                    {
+                        _paymentTerms.Add(new PaymentTermsType()
+                        {
+                            ID = new IDType()
+                            {
+                                Value = "Percepcion"
+                            },
+
+                            Amount = new AmountType2()
+                            {
+                                Value = datos.percepcion.importeTotalEnSolesConPercepcion,
+                                currencyID = datos.percepcion.codMoneda
+                            }
+                        });
+                    }
+
+                    _invoice.PaymentTerms = _paymentTerms.ToArray();
 
                     //metodo de pago
                     if (!string.IsNullOrEmpty(datos.informacionPago.metodoPago))
