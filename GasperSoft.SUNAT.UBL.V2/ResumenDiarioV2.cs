@@ -10,58 +10,6 @@ namespace GasperSoft.SUNAT.UBL.V2
 {
     public class ResumenDiarioV2
     {
-        private static SignatureType[] GetSignature(EmisorType emisor)
-        {
-            var _signature = new List<SignatureType>
-            {
-                new SignatureType()
-                {
-                    ID = new IDType()
-                    {
-                        Value = emisor.ruc
-                    },
-
-                    SignatoryParty = new PartyType()
-                    {
-                        PartyIdentification = new PartyIdentificationType[]
-                        {
-                            new PartyIdentificationType()
-                            {
-                                ID = new IDType()
-                                {
-                                    Value = emisor.ruc
-                                }
-                            }
-                        },
-
-                        PartyName = new PartyNameType[]
-                        {
-                            new PartyNameType()
-                            {
-                                Name = new NameType1()
-                                {
-                                    Value = emisor.razonSocial
-                                }
-                            }
-                        }
-                    },
-
-                    DigitalSignatureAttachment = new AttachmentType()
-                    {
-                        ExternalReference = new ExternalReferenceType()
-                        {
-                            URI = new URIType()
-                            {
-                                Value = emisor.ruc
-                            }
-                        }
-                    }
-                }
-            };
-
-            return _signature.ToArray();
-        }
-
         private static SupplierPartyType GetEmisor(EmisorType emisor)
         {
             return new SupplierPartyType()
@@ -644,7 +592,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     new UBLExtensionType(){ }
                 },
 
-                Signature = GetSignature(emisor),
+                Signature = Comun.GetSignature(emisor),
 
                 //Identificador del resumen RC-<Fecha>-#####
                 ID = new IDType()

@@ -113,32 +113,40 @@ namespace GasperSoft.SUNAT.UBL.V2
                 {
                     ID = new IDType()
                     {
-                        Value = emisor.ruc
+                        Value = "signatureGASPERSOFT"
+                    },
+
+                    Note = new NoteType[]
+                    {
+                        new NoteType()
+                        {
+                            Value = "GASPERSOFT"
+                        }
                     },
 
                     SignatoryParty = new PartyType()
                     {
                         PartyIdentification = new PartyIdentificationType[]
-                    {
-                        new PartyIdentificationType()
                         {
-                            ID = new IDType()
+                            new PartyIdentificationType()
                             {
-                                Value = emisor.ruc
+                                ID = new IDType()
+                                {
+                                    Value = emisor.ruc
+                                }
                             }
-                        }
-                    },
+                        },
 
                         PartyName = new PartyNameType[]
-                    {
-                        new PartyNameType()
                         {
-                            Name = new NameType1()
+                            new PartyNameType()
                             {
-                                Value = emisor.razonSocial
+                                Name = new NameType1()
+                                {
+                                    Value = emisor.razonSocial
+                                }
                             }
                         }
-                    }
                     },
 
                     DigitalSignatureAttachment = new AttachmentType()
@@ -147,7 +155,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                         {
                             URI = new URIType()
                             {
-                                Value = emisor.ruc
+                                Value = "#signatureGASPERSOFT"
                             }
                         }
                     }
