@@ -2,6 +2,9 @@
 // Copyright (C) 2023 GasperSoft.
 // Contacto: it@gaspersoft.com
 
+
+/* Cambio no fusionado mediante combinación del proyecto 'GasperSoft.SUNAT.UBL.V1 (net452)'
+Antes:
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +12,133 @@ using System.Security.Cryptography;
 using System.Text;
 using GasperSoft.SUNAT.DTO;
 using GasperSoft.SUNAT.DTO.CRE;
+Después:
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.Collections.DTO.CRE;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+*/
+
+/* Cambio no fusionado mediante combinación del proyecto 'GasperSoft.SUNAT.UBL.V1 (net7.0)'
+Antes:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.SUNAT.DTO.CRE;
+Después:
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.Collections.DTO.CRE;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+*/
+
+/* Cambio no fusionado mediante combinación del proyecto 'GasperSoft.SUNAT.UBL.V1 (net462)'
+Antes:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.SUNAT.DTO.CRE;
+Después:
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.Collections.DTO.CRE;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+*/
+
+/* Cambio no fusionado mediante combinación del proyecto 'GasperSoft.SUNAT.UBL.V1 (net472)'
+Antes:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.SUNAT.DTO.CRE;
+Después:
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.Collections.DTO.CRE;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+*/
+
+/* Cambio no fusionado mediante combinación del proyecto 'GasperSoft.SUNAT.UBL.V1 (netstandard2.0)'
+Antes:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.SUNAT.DTO.CRE;
+Después:
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.Collections.DTO.CRE;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+*/
+
+/* Cambio no fusionado mediante combinación del proyecto 'GasperSoft.SUNAT.UBL.V1 (net35)'
+Antes:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.SUNAT.DTO.CRE;
+Después:
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.Collections.DTO.CRE;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+*/
+
+/* Cambio no fusionado mediante combinación del proyecto 'GasperSoft.SUNAT.UBL.V1 (net481)'
+Antes:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.SUNAT.DTO.CRE;
+Después:
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.Collections.DTO.CRE;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+*/
+using GasperSoft.SUNAT.DTO;
+using GasperSoft.SUNAT.DTO.CRE;
+using System;
+using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.UBL.V1
 {
