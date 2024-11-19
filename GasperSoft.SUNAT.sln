@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasperSoft.SUNAT.DTO", "GasperSoft.SUNAT.DTO\GasperSoft.SUNAT.DTO.csproj", "{B056B16A-9FAC-410C-8218-620911FB2D1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{933CE835-3CE2-47E4-A6A7-FB8689E29A2D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasperSoft.SUNAT.UBL.V1", "GasperSoft.SUNAT.UBL.V1\GasperSoft.SUNAT.UBL.V1.csproj", "{9D9BC680-934C-485B-825B-0DD5147BEF74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasperSoft.SUNAT.UBL.V2", "GasperSoft.SUNAT.UBL.V2\GasperSoft.SUNAT.UBL.V2.csproj", "{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasperSoft.SUNAT.DTO.Validar", "GasperSoft.SUNAT.DTO.Validar\GasperSoft.SUNAT.DTO.Validar.csproj", "{BA3BAED9-34E6-4619-97DE-EB99CFBC6A00}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B056B16A-9FAC-410C-8218-620911FB2D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B056B16A-9FAC-410C-8218-620911FB2D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B056B16A-9FAC-410C-8218-620911FB2D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B056B16A-9FAC-410C-8218-620911FB2D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA3BAED9-34E6-4619-97DE-EB99CFBC6A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3BAED9-34E6-4619-97DE-EB99CFBC6A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3BAED9-34E6-4619-97DE-EB99CFBC6A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3BAED9-34E6-4619-97DE-EB99CFBC6A00}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7320CB8A-EBDB-42C6-898E-7D94958B7559}
+	EndGlobalSection
+EndGlobal

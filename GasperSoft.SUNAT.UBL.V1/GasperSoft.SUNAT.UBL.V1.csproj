@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net35;net452;net462;net472;net481;netstandard2.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    <Title>GasperSoft.SUNAT.UBL.V1</Title>
+    <RepositoryUrl>https://github.com/LarrySoza/GasperSoft.SUNAT</RepositoryUrl>
+    <PackageTags>XML SUNAT V1</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>Permiten generar el XML de la Comunicaciones de baja con la estructura UBL requerida por SUNAT.</Description>
+    <Copyright>Copyright (C) 2023 GasperSoft.</Copyright>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <FileVersion>1.0.4</FileVersion>
+    <Version>$(FileVersion)</Version>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GasperSoft.SUNAT.DTO\GasperSoft.SUNAT.DTO.csproj" />
+  </ItemGroup>
+
+</Project>
