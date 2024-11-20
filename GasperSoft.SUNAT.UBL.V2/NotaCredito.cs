@@ -146,7 +146,7 @@ namespace GasperSoft.SUNAT.UBL.V2
         /// <param name="datos">Informacion del comprobante</param>
         /// <param name="emisor">Informacion del emisor</param>
         /// <returns></returns>
-        public static CreditNoteType GetDocumento(CPEType datos, EmisorType emisor)
+        public static CreditNoteType GetDocumento(CPEType datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
         {
             var _creditNote = new CreditNoteType()
             {
@@ -190,7 +190,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     new UBLExtensionType(){ }
                 },
 
-                Signature = GetSignature(emisor),
+                Signature = GetSignature(emisor, signature),
 
                 //Aqui colocamos la informacion del EMISOR
                 AccountingSupplierParty = GetEmisor(emisor, datos.codigoEstablecimiento),

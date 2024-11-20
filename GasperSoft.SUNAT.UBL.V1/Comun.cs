@@ -73,7 +73,7 @@ namespace GasperSoft.SUNAT.UBL.V1
             };
         }
 
-        internal static SignatureType[] GetSignature(EmisorType emisor)
+        internal static SignatureType[] GetSignature(EmisorType emisor, string signature)
         {
             var _signature = new List<SignatureType>
             {
@@ -81,7 +81,7 @@ namespace GasperSoft.SUNAT.UBL.V1
                 {
                     ID = new IDType()
                     {
-                        Value = "signatureGASPERSOFT"
+                        Value = $"{signature}"
                     },
 
                     Note = new NoteType()
@@ -120,7 +120,7 @@ namespace GasperSoft.SUNAT.UBL.V1
                         {
                             URI = new URIType()
                             {
-                                Value = "#signatureGASPERSOFT"
+                                Value = $"#{signature}"
                             }
                         }
                     }

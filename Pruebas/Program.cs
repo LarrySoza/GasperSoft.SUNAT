@@ -116,7 +116,10 @@ namespace Pruebas
             }
             else
             {
-                var _cpeType = FacturaBoleta.GetDocumento(_cpe, _emisor);
+                //El valor de esta variable se refleja en el tag <cac:Signature><cbc:ID> en el XML
+                var _signature = "signatureMIEMPRESA";
+
+                var _cpeType = FacturaBoleta.GetDocumento(_cpe, _emisor, _signature);
 
                 var _xml = Metodos.Serializar(_cpeType);
 
@@ -126,7 +129,7 @@ namespace Pruebas
 
                 //Firmar el XML y obtener el digestValue
                 var _digestValue = string.Empty;
-                var _xmlFirmado = Metodos.FirmarXml(_xml, _certificado, out _digestValue);
+                var _xmlFirmado = Metodos.FirmarXml(_xml, _certificado, out _digestValue, _signature);
                 var _nombreXml = $"{_emisor.ruc}-{_cpe.tipoDocumento}-{_cpe.serie}-{_cpe.numero}.xml";
 
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/

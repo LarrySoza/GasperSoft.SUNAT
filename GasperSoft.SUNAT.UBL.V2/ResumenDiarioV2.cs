@@ -573,7 +573,7 @@ namespace GasperSoft.SUNAT.UBL.V2
             return _summaryDocumentsLines.ToArray();
         }
 
-        public static SummaryDocumentsType GetDocumento(ResumenDiarioV2Type datos, EmisorType emisor)
+        public static SummaryDocumentsType GetDocumento(ResumenDiarioV2Type datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
         {
             var _summaryDocuments = new SummaryDocumentsType()
             {
@@ -592,7 +592,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     new UBLExtensionType(){ }
                 },
 
-                Signature = Comun.GetSignature(emisor),
+                Signature = Comun.GetSignature(emisor, signature),
 
                 //Identificador del resumen RC-<Fecha>-#####
                 ID = new IDType()

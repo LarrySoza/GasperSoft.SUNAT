@@ -52,7 +52,7 @@ namespace GasperSoft.SUNAT.UBL.V1
             return _voidedDocumentsLines.ToArray();
         }
 
-        public static VoidedDocumentsType GetDocumento(ComunicacionBajaType datos, EmisorType emisor)
+        public static VoidedDocumentsType GetDocumento(ComunicacionBajaType datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
         {
             var _voidedDocuments = new VoidedDocumentsType()
             {
@@ -72,7 +72,7 @@ namespace GasperSoft.SUNAT.UBL.V1
                     new UBLExtensionType(){ }
                 },
 
-                Signature = Comun.GetSignature(emisor),
+                Signature = Comun.GetSignature(emisor, signature),
 
                 ID = new IDType()
                 {

@@ -11,7 +11,7 @@
     <Description>Permiten generar el XML de la Comunicaciones de baja con la estructura UBL requerida por SUNAT.</Description>
     <Copyright>Copyright (C) 2023 GasperSoft.</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.4</FileVersion>
+    <FileVersion>1.0.5</FileVersion>
     <Version>$(FileVersion)</Version>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

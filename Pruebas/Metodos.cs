@@ -58,7 +58,7 @@ namespace Pruebas
             return xml;
         }
 
-        public static string FirmarXml(string xml, X509Certificate2 certificado, out string digestValue)
+        public static string FirmarXml(string xml, X509Certificate2 certificado, out string digestValue, string signature = "signatureGASPERSOFT")
         {
             var xmlDoc = new XmlDocument();
             digestValue = string.Empty;
@@ -71,10 +71,10 @@ namespace Pruebas
                 //Agregamos un nuevo nodo donde colocar la firma digital
                 XmlNode _extensionContent = xmlDoc.CreateNode(XmlNodeType.Element, "ext", "ExtensionContent", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
                 var _UBLExtension = xmlDoc.GetElementsByTagName("UBLExtension", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
-                _UBLExtension.Item(0).AppendChild(_extensionContent);
+                _UBLExtension.Item(0)?.AppendChild(_extensionContent);
 
                 // Creamos el objeto SignedXml.
-                var signedXml = new SignedXml(xmlDoc) { SigningKey = (RSA)certificado.PrivateKey };
+                var signedXml = new SignedXml(xmlDoc) { SigningKey = certificado.GetRSAPrivateKey() };
 
                 var xmlSignature = signedXml.Signature;
 
@@ -82,7 +82,7 @@ namespace Pruebas
 
                 var reference = new Reference(string.Empty);
                 reference.AddTransform(env);
-                xmlSignature.SignedInfo.AddReference(reference);
+                xmlSignature.SignedInfo?.AddReference(reference);
 
                 var keyInfo = new KeyInfo();
                 var x509Data = new KeyInfoX509Data(certificado);
@@ -91,7 +91,7 @@ namespace Pruebas
 
                 keyInfo.AddClause(x509Data);
                 xmlSignature.KeyInfo = keyInfo;
-                xmlSignature.Id = "signatureGASPERSOFT";
+                xmlSignature.Id = signature;
 
                 signedXml.ComputeSignature();
 

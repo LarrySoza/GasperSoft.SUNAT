@@ -144,57 +144,57 @@ namespace GasperSoft.SUNAT.UBL.V1
 {
     public class Retencion
     {
-        internal static SignatureType GetSignature(EmisorType emisor)
-        {
-            return new SignatureType()
-            {
-                ID = new IDType()
-                {
-                    Value = "signatureGASPERSOFT"
-                },
+        //internal static SignatureType GetSignature(EmisorType emisor)
+        //{
+        //    return new SignatureType()
+        //    {
+        //        ID = new IDType()
+        //        {
+        //            Value = "signatureGASPERSOFT"
+        //        },
 
-                Note = new NoteType()
-                {
-                    Value = "GASPERSOFT"
-                },
+        //        Note = new NoteType()
+        //        {
+        //            Value = "GASPERSOFT"
+        //        },
 
-                SignatoryParty = new PartyType()
-                {
-                    PartyIdentification = new PartyIdentificationType[]
-                    {
-                            new PartyIdentificationType()
-                            {
-                                ID = new IDType()
-                                {
-                                    Value = emisor.ruc
-                                }
-                            }
-                    },
+        //        SignatoryParty = new PartyType()
+        //        {
+        //            PartyIdentification = new PartyIdentificationType[]
+        //            {
+        //                    new PartyIdentificationType()
+        //                    {
+        //                        ID = new IDType()
+        //                        {
+        //                            Value = emisor.ruc
+        //                        }
+        //                    }
+        //            },
 
-                    PartyName = new PartyNameType[]
-                    {
-                            new PartyNameType()
-                            {
-                                Name = new NameType1()
-                                {
-                                    Value = emisor.razonSocial
-                                }
-                            }
-                    }
-                },
+        //            PartyName = new PartyNameType[]
+        //            {
+        //                    new PartyNameType()
+        //                    {
+        //                        Name = new NameType1()
+        //                        {
+        //                            Value = emisor.razonSocial
+        //                        }
+        //                    }
+        //            }
+        //        },
 
-                DigitalSignatureAttachment = new AttachmentType()
-                {
-                    ExternalReference = new ExternalReferenceType()
-                    {
-                        URI = new URIType()
-                        {
-                            Value = "#signatureGASPERSOFT"
-                        }
-                    }
-                }
-            };
-        }
+        //        DigitalSignatureAttachment = new AttachmentType()
+        //        {
+        //            ExternalReference = new ExternalReferenceType()
+        //            {
+        //                URI = new URIType()
+        //                {
+        //                    Value = "#signatureGASPERSOFT"
+        //                }
+        //            }
+        //        }
+        //    };
+        //}
 
         internal static PartyNameType[] GetNombreComercialEmisor(EmisorType emisor)
         {
@@ -483,7 +483,7 @@ namespace GasperSoft.SUNAT.UBL.V1
             return _documentosReferencia.ToArray();
         }
 
-        public static RetentionType GetDocumento(CREType datos, EmisorType emisor)
+        public static RetentionType GetDocumento(CREType datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
         {
             var _retention = new RetentionType()
             {
@@ -506,7 +506,7 @@ namespace GasperSoft.SUNAT.UBL.V1
                 },
 
                 //Firma Digital
-                Signature = GetSignature(emisor),
+                Signature = Comun.GetSignature(emisor, signature)[0],
 
                 //Serie y número del comprobante "R###-NNNNNNNN"
                 ID = new IDType() { Value = $"{datos.serie}-{datos.numero}" },
