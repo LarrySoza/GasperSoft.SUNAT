@@ -9,13 +9,12 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Xml;
 
-namespace Pruebas
+namespace GasperSoft.SUNAT
 {
-    public static class XmlSerializerExtensions
+    internal static class XmlSerializerExtensions
     {
         private static string GetNumberFormat(int numeroDecimales)
         {
@@ -120,7 +119,7 @@ namespace Pruebas
                     // if property is a XML class (contains XML in name) iterate through properties of this class
                     if (propertyType.Name.ToLower().Contains("type") && propertyType.IsClass)
                     {
-                        IteratePropertiesRecursively(property.GetValue(o));
+                        IteratePropertiesRecursively(property.GetValue(o, null));
                     }
                 }
             }

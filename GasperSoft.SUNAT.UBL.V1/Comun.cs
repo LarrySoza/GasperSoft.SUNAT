@@ -75,6 +75,11 @@ namespace GasperSoft.SUNAT.UBL.V1
 
         internal static SignatureType[] GetSignature(EmisorType emisor, string signature)
         {
+            if (string.IsNullOrEmpty(signature))
+            {
+                signature = "signatureGASPERSOFT";
+            }
+
             var _signature = new List<SignatureType>
             {
                 new SignatureType()

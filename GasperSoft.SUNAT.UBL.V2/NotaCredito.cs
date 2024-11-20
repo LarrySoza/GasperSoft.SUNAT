@@ -146,7 +146,7 @@ namespace GasperSoft.SUNAT.UBL.V2
         /// <param name="datos">Informacion del comprobante</param>
         /// <param name="emisor">Informacion del emisor</param>
         /// <returns></returns>
-        public static CreditNoteType GetDocumento(CPEType datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
+        public static CreditNoteType GetDocumento(CPEType datos, EmisorType emisor, string signature = null)
         {
             var _creditNote = new CreditNoteType()
             {

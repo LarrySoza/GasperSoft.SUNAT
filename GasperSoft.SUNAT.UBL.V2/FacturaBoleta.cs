@@ -399,7 +399,7 @@ namespace GasperSoft.SUNAT.UBL.V2
         /// <param name="datos">Informacion del comprobante</param>
         /// <param name="emisor">Informacion del emisor</param>
         /// <returns></returns>
-        public static InvoiceType GetDocumento(CPEType datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
+        public static InvoiceType GetDocumento(CPEType datos, EmisorType emisor, string signature = null)
         {
             var _invoice = new InvoiceType()
             {

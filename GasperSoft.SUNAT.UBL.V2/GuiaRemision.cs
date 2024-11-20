@@ -407,7 +407,7 @@ namespace GasperSoft.SUNAT.UBL.V2
         /// <param name="datos">Informacion del comprobante</param>
         /// <param name="emisor">Informacion del emisor</param>
         /// <returns></returns>
-        public static DespatchAdviceType GetDocumento(GREType datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
+        public static DespatchAdviceType GetDocumento(GREType datos, EmisorType emisor, string signature = null)
         {
             var _despatchAdvice = new DespatchAdviceType()
             {

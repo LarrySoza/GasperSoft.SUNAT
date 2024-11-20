@@ -31,7 +31,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
         {
             int _index = mensaje.IndexOf(":");
 
-            if ((mensaje.StartsWith("A") || mensaje.StartsWith("S")) && (_index == 4 || _index == 5))
+            if ((mensaje.StartsWith("V") || mensaje.StartsWith("S")) && (_index == 4 || _index == 5))
             {
                 codigo = mensaje.Substring(0, _index);
                 detalle = mensaje.Substring(_index + 1);

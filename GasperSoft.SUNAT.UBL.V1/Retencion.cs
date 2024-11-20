@@ -144,58 +144,6 @@ namespace GasperSoft.SUNAT.UBL.V1
 {
     public class Retencion
     {
-        //internal static SignatureType GetSignature(EmisorType emisor)
-        //{
-        //    return new SignatureType()
-        //    {
-        //        ID = new IDType()
-        //        {
-        //            Value = "signatureGASPERSOFT"
-        //        },
-
-        //        Note = new NoteType()
-        //        {
-        //            Value = "GASPERSOFT"
-        //        },
-
-        //        SignatoryParty = new PartyType()
-        //        {
-        //            PartyIdentification = new PartyIdentificationType[]
-        //            {
-        //                    new PartyIdentificationType()
-        //                    {
-        //                        ID = new IDType()
-        //                        {
-        //                            Value = emisor.ruc
-        //                        }
-        //                    }
-        //            },
-
-        //            PartyName = new PartyNameType[]
-        //            {
-        //                    new PartyNameType()
-        //                    {
-        //                        Name = new NameType1()
-        //                        {
-        //                            Value = emisor.razonSocial
-        //                        }
-        //                    }
-        //            }
-        //        },
-
-        //        DigitalSignatureAttachment = new AttachmentType()
-        //        {
-        //            ExternalReference = new ExternalReferenceType()
-        //            {
-        //                URI = new URIType()
-        //                {
-        //                    Value = "#signatureGASPERSOFT"
-        //                }
-        //            }
-        //        }
-        //    };
-        //}
-
         internal static PartyNameType[] GetNombreComercialEmisor(EmisorType emisor)
         {
             if (!string.IsNullOrEmpty(emisor.nombreComercial))
@@ -483,7 +431,7 @@ namespace GasperSoft.SUNAT.UBL.V1
             return _documentosReferencia.ToArray();
         }
 
-        public static RetentionType GetDocumento(CREType datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
+        public static RetentionType GetDocumento(CREType datos, EmisorType emisor, string signature = null)
         {
             var _retention = new RetentionType()
             {

@@ -6,27 +6,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
+using System.IO;
 
-namespace Pruebas
+namespace GasperSoft.SUNAT
 {
-    internal class Metodos
+    public class XmlUtil
     {
-        public static Encoding GlobalEncoding => Encoding.GetEncoding("ISO-8859-1");
+        internal static Encoding GlobalEncoding => Encoding.GetEncoding("ISO-8859-1");
 
-        public static XmlWriterSettings GetXmlWriterSettings()
+        internal static XmlWriterSettings GetXmlWriterSettings()
         {
             var _xmlWriterSettings = new XmlWriterSettings
             {
                 OmitXmlDeclaration = false,
                 Indent = true,
                 NewLineOnAttributes = false,
-                Encoding = Metodos.GlobalEncoding
+                Encoding = GlobalEncoding
             };
 
             return _xmlWriterSettings;
@@ -48,22 +48,27 @@ namespace Pruebas
 
             using (var stream = new MemoryStream())
             {
-                using (var xmlWriter = XmlWriter.Create(stream, Metodos.GetXmlWriterSettings()))
+                using (var xmlWriter = XmlWriter.Create(stream, GetXmlWriterSettings()))
                 {
                     serializer.SerializeWithDecimalFormatting(xmlWriter, documento, ns);
                 }
 
-                xml = Metodos.GlobalEncoding.GetString(stream.ToArray());
+                xml = GlobalEncoding.GetString(stream.ToArray());
             }
             return xml;
         }
 
-        public static string FirmarXml(string xml, X509Certificate2 certificado, out string digestValue, string signature = "signatureGASPERSOFT")
+        public static string FirmarXml(string xml, X509Certificate2 certificado, out string digestValue, string signature =null)
         {
+            if (string.IsNullOrEmpty(signature))
+            {
+                signature = "signatureGASPERSOFT";
+            }
+            
             var xmlDoc = new XmlDocument();
             digestValue = string.Empty;
 
-            using (var documento = new MemoryStream(Metodos.GlobalEncoding.GetBytes(xml)))
+            using (var documento = new MemoryStream(GlobalEncoding.GetBytes(xml)))
             {
                 xmlDoc.PreserveWhitespace = true;
                 xmlDoc.Load(documento);
@@ -109,7 +114,7 @@ namespace Pruebas
                         xmlDoc.WriteTo(writer);
                     }
 
-                    xml = Metodos.GlobalEncoding.GetString(stream.ToArray());
+                    xml = GlobalEncoding.GetString(stream.ToArray());
                 }
             }
 

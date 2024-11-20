@@ -573,7 +573,7 @@ namespace GasperSoft.SUNAT.UBL.V2
             return _summaryDocumentsLines.ToArray();
         }
 
-        public static SummaryDocumentsType GetDocumento(ResumenDiarioV2Type datos, EmisorType emisor, string signature = "signatureGASPERSOFT")
+        public static SummaryDocumentsType GetDocumento(ResumenDiarioV2Type datos, EmisorType emisor, string signature = null)
         {
             var _summaryDocuments = new SummaryDocumentsType()
             {

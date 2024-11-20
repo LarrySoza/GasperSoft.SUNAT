@@ -237,6 +237,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
             if (!documentosPermitidos.Contains(_cpe.tipoDocumento))
             {
                 _mensajesError.AddMensaje(CodigoError.V0027, "tipoDocumento");
+                return false;
             }
 
             //Si no es entero entonces es una serie de documento electronico y debemos validarlo
