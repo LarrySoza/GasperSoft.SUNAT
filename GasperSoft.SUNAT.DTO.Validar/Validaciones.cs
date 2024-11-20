@@ -260,6 +260,13 @@ namespace GasperSoft.SUNAT.DTO.Validar
             return Rgx.IsMatch(url);
         }
 
+        public static bool IsValidOrdenCompra(string input)
+        {
+            var regex = new Regex(@"^[0-9a-zA-Z]{1,20}$");
+
+            return regex.IsMatch(input ?? "");
+        }
+
         /// <summary>
         /// Previamente debe invocarse al metodo "IsValidTipoDocumentoIdentidad(string tipoDocumento)"
         /// Segun SUNAT cualquier otro tipo de documento alfanumerico entre 2 y 15 digitos es valido

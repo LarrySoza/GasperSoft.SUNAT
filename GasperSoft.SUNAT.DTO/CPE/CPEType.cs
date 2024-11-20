@@ -50,7 +50,7 @@ namespace GasperSoft.SUNAT.DTO.CPE
         public DateTime fechaEmision { get; set; }
 
         /// <summary>
-        /// Hora de emision del comprobante
+        /// Hora de emision del comprobante Formato "HH:mm:ss"
         /// </summary>
         public string horaEmision { get; set; }
 

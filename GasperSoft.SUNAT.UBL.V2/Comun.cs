@@ -271,17 +271,19 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static NoteType[] GetNotes(CPEType datos)
         {
-            var _additionalPropertys = new List<NoteType>
+            var _additionalPropertys = new List<NoteType>();
+
+            if (!string.IsNullOrEmpty(datos.importeTotalLetras))
             {
-                new NoteType()
+                _additionalPropertys.Add(new NoteType()
                 {
                     //Código de la leyenda - Catálogo No. 52
                     languageLocaleID = "1000",
 
                     //Descripción de la leyenda
                     Value = datos.importeTotalLetras
-                }
-            };
+                });
+            }
 
             if (datos.indTransferenciaGratuita)
             {

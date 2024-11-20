@@ -52,7 +52,9 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string S3244 = "S3244:Debe consignar la informacion del tipo de transaccion del comprobante('informacionPago' es requerido para facturas y notas de crédito motivo 13)";
         public const string S3249 = "S3249:Si el tipo de transaccion es al Credito debe existir al menos información de una cuota de pago";
         public const string S3365 = "S3365:Código de establecimiento es obligatorio para el motivo de traslado seleccionado";
-
+        public const string S4233 = "S4233:El dato ingresado en order de compra no cumple con el formato establecido";
+        public const string S3030 = "S3030:No existe información del código de local anexo del emisor";
+        
         //Validaciones(Les fui asignado un código correlativo)
         public const string V0001 = "V0001:Tipo de documento de identidad no es válido";
         public const string V0002 = "V0002:Ruc no valido";

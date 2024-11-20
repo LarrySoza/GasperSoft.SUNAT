@@ -185,8 +185,13 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             #endregion
 
-
             #region Validacion de Propiedades del comprobante
+
+            if (string.IsNullOrEmpty(_cpe.codigoEstablecimiento))
+            {
+                _mensajesError.AddMensaje(CodigoError.S3030, "codigoEstablecimiento");
+                return false;
+            }
 
             if (_cpe.tipoDocumento == "01" || _cpe.tipoDocumento == "03")
             {
@@ -246,6 +251,14 @@ namespace GasperSoft.SUNAT.DTO.Validar
             if (_cpe.numero.ToString().Length > 8)
             {
                 _mensajesError.AddMensaje(CodigoError.V0010);
+            }
+
+            if (!string.IsNullOrEmpty(_cpe.ordenCompra))
+            {
+                if (!Validaciones.IsValidOrdenCompra(_cpe.ordenCompra))
+                {
+                    _mensajesError.AddMensaje(CodigoError.S4233);
+                }
             }
 
             //Validar que codMoneda se encuentre en el catálogo N° 02
