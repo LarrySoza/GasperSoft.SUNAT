@@ -22,4 +22,4 @@ Un conjunto de librerías para .NET que permite la fácil generación de los XML
 
 ## Asesoría y Soporte ##
 
-Siéntase como de escribirme a it@neleb.com para cualquier característica requerida o bugs, me ayudaran a mejorar mi producto final que ofrezco a mis clientes.
+Siéntase cómodo de escribirme a it@neleb.com para cualquier característica requerida o bugs, me ayudaran a mejorar mi producto final que ofrezco a mis clientes.
