@@ -52,7 +52,8 @@ namespace Pruebas
                 Console.WriteLine("Seleccione Opción:");
                 Console.WriteLine("==================");
                 Console.WriteLine("1: Ejemplo XML FACTURA SIMPLE");
-                Console.WriteLine("2: Ejemplo XML GUIA REMISION REMITENTE (Transporte Publico)");
+                Console.WriteLine("2: Ejemplo XML FACTURA GRATUITA");
+                Console.WriteLine("3: Ejemplo XML GUIA REMISION REMITENTE (Transporte Publico)");
                 Console.WriteLine("S: Salir");
 
                 var _input = Console.ReadLine();
@@ -62,10 +63,14 @@ namespace Pruebas
                 switch (_input)
                 {
                     case "1":
-                        EjemploCPE1(_emisor, _certificado, _signature);
+                        EjemploCPE(CPE1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "2":
-                        EjemploGRE1(_emisor, _certificado, _signature);
+                        EjemploCPE(CPE2.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "3":
+                        var _gre = GRERemitente1.GetDocumento(_emisor);
+                        EjemploGRE(_gre, _emisor, _certificado, _signature);
                         break;
                     case "S":
                     case "s":
@@ -85,12 +90,10 @@ namespace Pruebas
             Console.ForegroundColor = _colorOriginal;
         }
 
-        private static void EjemploGRE1(EmisorType emisor, X509Certificate2 certificado, string signature)
+        private static void EjemploGRE(GREType gre, EmisorType emisor, X509Certificate2 certificado, string signature)
         {
-            var _gre = GRERemitente1.GetDocumento(emisor);
-
             //Iniciamos la Validacion 
-            var _validador = new ValidadorGRE(_gre);
+            var _validador = new ValidadorGRE(gre);
             _validador.OnValidarCatalogoSunat += ValidarCatalogoSunat;
             var _validado = _validador.Validar();
 
@@ -115,9 +118,9 @@ namespace Pruebas
                 //aqui se almacena el digestValue del xml firmado
                 string _digestValue;
                 //Generamos el XML
-                var _xml = GetXML(_gre, emisor, certificado, out _digestValue, signature);
+                var _xml = GetXML(gre, emisor, certificado, out _digestValue, signature);
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
-                var _nombreXml = $"{emisor.ruc}-{_gre.tipoGuia}-{_gre.serie}-{_gre.numero}.xml";
+                var _nombreXml = $"{emisor.ruc}-{gre.tipoGuia}-{gre.serie}-{gre.numero}.xml";
                 GuardarXml(_nombreXml, _xml, _digestValue);
             }
             else
@@ -126,12 +129,10 @@ namespace Pruebas
             }
         }
 
-        private static void EjemploCPE1(EmisorType emisor, X509Certificate2 certificado, string signature)
+        private static void EjemploCPE(CPEType cpe, EmisorType emisor, X509Certificate2 certificado, string signature)
         {
-            var _cpe = CPE1.GetDocumento();
-
             //Iniciamos la Validacion 
-            var _validador = new ValidadorCPE(_cpe);
+            var _validador = new ValidadorCPE(cpe);
             _validador.OnValidarCatalogoSunat += ValidarCatalogoSunat;
             var _validado = _validador.Validar();
 
@@ -140,9 +141,9 @@ namespace Pruebas
                 //aqui se almacena el digestValue del xml firmado
                 string _digestValue;
                 //Generamos el XML
-                var _xml = GetXML(_cpe, emisor, certificado, out _digestValue, signature);
+                var _xml = GetXML(cpe, emisor, certificado, out _digestValue, signature);
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
-                var _nombreXml = $"{emisor.ruc}-{_cpe.tipoDocumento}-{_cpe.serie}-{_cpe.numero}.xml";
+                var _nombreXml = $"{emisor.ruc}-{cpe.tipoDocumento}-{cpe.serie}-{cpe.numero}.xml";
                 GuardarXml(_nombreXml, _xml, _digestValue);
             }
             else
