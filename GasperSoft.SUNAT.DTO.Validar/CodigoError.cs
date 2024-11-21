@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace GasperSoft.SUNAT.DTO.Validar
@@ -19,15 +21,18 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string S2329 = "S2329:La fecha de emision se encuentra fuera del limite permitido";
         public const string S2511 = "S2511:El tipo de documento no es aceptado, para 'Guías Remisión Remitente', el tipo de documento de identificación del remitente debe ser '6'(RUC)";
         public const string S2523 = "S2523:El valor del atributo es diferente 'KGM' y diferente de 'TNE'";
+        public const string S2532 = "S2532:No existe información de modalidad de transporte";
         public const string S2567 = "S2567:Placa debe ser un valor alfanumérico de 6 a 8 caracteres";
         public const string S2573 = "S2573:Licencia de conducir debe ser un valor alfanumérico de 9 a 10 caracteres (no se permite solamente ceros)";
         public const string S2642 = "S2642:Operaciones de exportación, deben consignar Tipo Afectación igual a 40(en todos los ítems)";
         public const string S2760 = "S2760:El valor ingresado como tipo de documento del destinatario es incorrecto";
         public const string S2769 = "S2769:El valor ingresado como numero de DAM no cumple con el estandar";
+        public const string S2773 = "S2773:El valor ingresado como modalidad de transporte no es correcto";
         public const string S2776 = "S2776:Ubigeo debe ser un valor numérico de 6 dígitos";
         public const string S2800 = "S2800:El dato ingresado en el tipo de documento de identidad del receptor no esta permitido";
         public const string S2801 = "S2801:El DNI ingresado no cumple con el estandar";
         public const string S2802 = "S2802:El dato ingresado como numero de documento de identidad del receptor no cumple con el formato establecido";
+        public const string S3030 = "S3030:No existe información del código de local anexo del emisor";
         public const string S3205 = "S3205:Debe consignar el tipo de operación";
         public const string S3208 = "S3208:La moneda del monto de la detracción debe ser PEN";
         public const string S3206 = "S3206:El dato ingresado como tipo de operación no corresponde a un valor esperado (catálogo nro. 51)";
@@ -37,6 +42,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string S3343 = "S3343:La Fecha de inicio del traslado debe ser mayor o igual a la Fecha de emision del documento";
         public const string S3347 = "S3347:No debe consignar los datos del transportista para una operacion de Transporte Privado";
         public const string S3352 = "S3352:Si ingreso un documento relacionado tipo '49' (solo en caso de GRE-Remitente) u '80', debe existir al menos un item con Partida arancelaria";
+        public const string S3355 = "S3355:El Numero de Constancia de Inscripcion Vehicular o Certificado de Habilitacion Vehicular o la TUC (fisica o electronica) no cumple con el formato establecido";
         public const string S3377 = "S3377:La Partida arancelaria no cumple con el formato establecido";
         public const string S3414 = "S3414:El Numero de RUC  asociado al punto de partida/llegada debe ser el igual al Numero de RUC del remitente";
         public const string S3426 = "S3426:Si se trata de un bien normalizado por SUNAT, debe indicarse la Partida arancelaria";
@@ -45,16 +51,27 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string S3438 = "S3438:Hora de emisión no cumple con el formato requerido por Sunat (hh:mm:ss)";
         public const string S3440 = "S3440:No se ha ingresado el tipo Declaracion Aduanera de Mercancias (DAM) o el Declaracion Simplificada (DS)  para el motivo de traslado selecionado";
         public const string S3445 = "S3445:El tipo de documento relacionado no corresponde para motivo de traslado seleccionado";
+        public const string S3452 = "S3452:No debe ingresar informacion adicional de vehiculos (registros y/o autorizaciones)";
         public const string S3453 = "S3453:No debe ingresar informacion de vehiculos secundarios";
         public const string S4392 = "S4392:El Numero de Registro MTC del transportista no cumple con el formato establecido";
         public const string S3034 = "S3034:No existe información en el nro de cuenta de detracción";
         public const string S3203 = "S3203:El tipo de nota es un dato único (Notas de crédito y débito deben consignar un único elemento en la propiedad 'motivosNota')";
         public const string S3244 = "S3244:Debe consignar la informacion del tipo de transaccion del comprobante('informacionPago' es requerido para facturas y notas de crédito motivo 13)";
         public const string S3249 = "S3249:Si el tipo de transaccion es al Credito debe existir al menos información de una cuota de pago";
+        public const string S3356 = "S3356:Solo debe consignar un Numero de autorizacion del vehiculo";
         public const string S3365 = "S3365:Código de establecimiento es obligatorio para el motivo de traslado seleccionado";
         public const string S4233 = "S4233:El dato ingresado en order de compra no cumple con el formato establecido";
-        public const string S3030 = "S3030:No existe información del código de local anexo del emisor";
-        
+        public const string S4399 = "S4399:No ha consignado el Numero de Constancia de Inscripcion Vehicular o Certificado de Habilitacion Vehicular o la TUC (fisica o electronica)";
+        public const string S4403 = "S4403:Debe indicar la entidad autorizadora del vehiculo";
+        public const string S4406 = "S4406:El Numero de autorizacion del vehiculo no cumple con el formato establecido";
+        public const string S4407 = "S4407:El Codigo de entidad autorizadora del vehiculo no corresponde a un valor esperado(El valor no existe el catalogo N° D37)";
+
+
+        public const string S3404 = "S3404:El XML no contiene el tag o no existe informacion del motivo de traslado";
+        public const string S3405 = "S3405:El valor ingresado como motivo de traslado no es valido";
+
+
+
         //Validaciones(Les fui asignado un código correlativo)
         public const string V0001 = "V0001:Tipo de documento de identidad no es válido";
         public const string V0002 = "V0002:Ruc no valido";
@@ -86,18 +103,12 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string V0028 = "V0028:El valor no existe el catalogo N° 02";
         public const string V0029 = "V0029:El valor no existe el catalogo N° 03";
         public const string V0030 = "V0030:El valor no existe el catalogo N° 07";
-        public const string V0031 = "V0031:Solo se permite máximo 3 placas por GRE (una principal y dos secundarias)";
+        public const string V0031 = "V0031:Solo se permite máximo 3 vehículos por GRE (un principal y dos secundarias)";
         public const string V0032 = "V0032:Solo se permite máximo 3 conductores por GRE (uno principal y dos secundarios)";
-
-        /// <summary>
-        /// Evitar el error 3455 y 3456
-        /// </summary>
-        public const string V0033 = "V0033:No debe ingresar información de conductores cuando existe el indicador de traslado en vehículos de categoría M1 o L";
-
-        /// <summary>
-        /// Evitar el error 2561,2558 y 2563
-        /// </summary>
-        public const string V0034 = "V0034:Se debe consignar los datos del transportista para una operación de Transporte Publico cuando no existe el indicador de traslado en vehículos de categoría M1 o L";
+        public const string V0033 = "V0033:No debe ingresar información de conductores cuando existe el indicador de traslado en vehículos de categoría M1 o L, Cod. SUNAT 3455 y 3456";
+        public const string V0034 = "V0034:Se debe consignar los datos del transportista para una operación de Transporte Publico cuando no existe el indicador de traslado en vehículos de categoría M1 o L, Cod. SUNAT 2561,2558 y 2563";
+        public const string V0035 = "V0035:No debe ingresar informacion adicional de vehiculos (registros y/o autorizaciones), Cod. SUNAT 3452 y 3454";
+        
 
         //Estos codigos se usan para varias propiedades
         public const string V0100 = "V0100:El valor de la propiedad no es valido";

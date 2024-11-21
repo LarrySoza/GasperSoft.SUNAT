@@ -605,7 +605,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                             }
                         };
 
-                        if (datos.remitente.autorizacionesEspeciales != null && datos.remitente.autorizacionesEspeciales.Count > 0)
+                        if (datos.remitente.autorizacionesEspeciales?.Count > 0)
                         {
                             var _autorizaciones = new List<PartyLegalEntityType>();
 
@@ -615,8 +615,8 @@ namespace GasperSoft.SUNAT.UBL.V2
                                 {
                                     CompanyID = new CompanyIDType()
                                     {
-                                        Value = item.valor,
-                                        schemeID = item.codigo,
+                                        Value = item.numeroAutorizacion,
+                                        schemeID = item.codigoEntidadAutorizadora,
                                         schemeName = "Entidad Autorizadora",
                                         schemeAgencyName = "PE:SUNAT",
                                         schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
@@ -678,7 +678,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                             };
                         }
 
-                        if (datos.transportista.autorizacionesEspeciales != null && datos.transportista.autorizacionesEspeciales.Count > 0)
+                        if (datos.transportista.autorizacionesEspeciales?.Count > 0)
                         {
                             var _autorizaciones = new List<PartyLegalEntityType>();
 
@@ -688,8 +688,8 @@ namespace GasperSoft.SUNAT.UBL.V2
                                 {
                                     CompanyID = new CompanyIDType()
                                     {
-                                        Value = item.valor,
-                                        schemeID = item.codigo,
+                                        Value = item.numeroAutorizacion,
+                                        schemeID = item.codigoEntidadAutorizadora,
                                         schemeName = "Entidad Autorizadora",
                                         schemeAgencyName = "PE:SUNAT",
                                         schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
@@ -869,7 +869,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                             };
                         }
 
-                        if (datos.transportista.autorizacionesEspeciales != null && datos.transportista.autorizacionesEspeciales.Count > 0)
+                        if (datos.transportista.autorizacionesEspeciales?.Count > 0)
                         {
                             var _autorizaciones = new List<PartyLegalEntityType>();
 
@@ -879,8 +879,8 @@ namespace GasperSoft.SUNAT.UBL.V2
                                 {
                                     CompanyID = new CompanyIDType()
                                     {
-                                        Value = item.valor,
-                                        schemeID = item.codigo,
+                                        Value = item.numeroAutorizacion,
+                                        schemeID = item.codigoEntidadAutorizadora,
                                         schemeName = "Entidad Autorizadora",
                                         schemeAgencyName = "PE:SUNAT",
                                         schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
@@ -1024,13 +1024,13 @@ namespace GasperSoft.SUNAT.UBL.V2
             }
 
             //Documentos relacionados
-            if (datos.documentosRelacionados != null)
+            if (datos.documentosRelacionados?.Count > 0)
             {
                 _despatchAdvice.AdditionalDocumentReference = GetDocumentosReferenciaAdicionales(datos.documentosRelacionados);
             }
 
-            //Vehiculos(En guias remitente solo cuando "modalidadTraslado" es "privado")
-            if (datos.datosEnvio.placasVehiculo != null && datos.datosEnvio.placasVehiculo.Count > 0)
+            //la propiedad "vehiculos" tiene prioridad sobre la propiedad "placasVehiculo" que ya no se debería usar
+            if (datos.datosEnvio.vehiculos?.Count > 0)
             {
                 var _TransportEquipment = new List<TransportEquipmentType>();
 
@@ -1039,27 +1039,58 @@ namespace GasperSoft.SUNAT.UBL.V2
 
                 var _esPrincipal = true;
 
-                foreach (var item in datos.datosEnvio.placasVehiculo)
+                foreach (var item in datos.datosEnvio.vehiculos)
                 {
+                    var _vehiculo = new TransportEquipmentType()
+                    {
+                        ID = new IDType()
+                        {
+                            Value = item.numeroPlaca
+                        }
+                    };
+
+                    //Si existe Tuc lo agregamos
+                    if (!string.IsNullOrEmpty(item.numeroTarjeta))
+                    {
+                        _vehiculo.ApplicableTransportMeans = new TransportMeansType()
+                        {
+                            RegistrationNationalityID = new RegistrationNationalityIDType()
+                            {
+                                Value = item.numeroTarjeta
+                            }
+                        };
+                    }
+
+                    //Agregamos las autorizaciones especiales si existen
+                    if (item.autorizacionesEspeciales?.Count > 0)
+                    {
+                        var _autorizacionesEspeciales = new List<DocumentReferenceType>();
+
+                        foreach (var _autorizacion in item.autorizacionesEspeciales)
+                        {
+                            _autorizacionesEspeciales.Add(new DocumentReferenceType()
+                            {
+                                ID = new IDType()
+                                {
+                                    Value = _autorizacion.numeroAutorizacion,
+                                    schemeID = _autorizacion.codigoEntidadAutorizadora,
+                                    schemeName = "Entidad Autorizadora",
+                                    schemeAgencyName = "PE:SUNAT",
+                                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogoD37"
+                                }
+                            });
+                        }
+
+                        _vehiculo.ShipmentDocumentReference = _autorizacionesEspeciales.ToArray();
+                    }
+
                     if (_esPrincipal)
                     {
-                        _TransportEquipment.Add(new TransportEquipmentType()
-                        {
-                            ID = new IDType()
-                            {
-                                Value = datos.datosEnvio.placasVehiculo[0]
-                            }
-                        });
+                        _TransportEquipment.Add(_vehiculo);
                     }
                     else
                     {
-                        _AttachedTransportEquipment.Add(new TransportEquipmentType()
-                        {
-                            ID = new IDType()
-                            {
-                                Value = item
-                            }
-                        });
+                        _AttachedTransportEquipment.Add(_vehiculo);
                     }
 
                     //después de la primera interacción ya no es el vehículo principal
@@ -1079,6 +1110,56 @@ namespace GasperSoft.SUNAT.UBL.V2
                     }
                 };
             }
+            else
+            {
+                //Vehiculos
+                if (datos.datosEnvio.placasVehiculo?.Count > 0)
+                {
+                    var _TransportEquipment = new List<TransportEquipmentType>();
+
+                    //Vehiculo secundario
+                    var _AttachedTransportEquipment = new List<TransportEquipmentType>();
+
+                    var _esPrincipal = true;
+
+                    foreach (var item in datos.datosEnvio.placasVehiculo)
+                    {
+                        var _vehiculo = new TransportEquipmentType()
+                        {
+                            ID = new IDType()
+                            {
+                                Value = item
+                            }
+                        };
+
+                        if (_esPrincipal)
+                        {
+                            _TransportEquipment.Add(_vehiculo);
+                        }
+                        else
+                        {
+                            _AttachedTransportEquipment.Add(_vehiculo);
+                        }
+
+                        //después de la primera interacción ya no es el vehículo principal
+                        _esPrincipal = false;
+                    }
+
+                    if (_AttachedTransportEquipment.Count > 0)
+                    {
+                        _TransportEquipment[0].AttachedTransportEquipment = _AttachedTransportEquipment.ToArray();
+                    }
+
+                    _despatchAdvice.Shipment.TransportHandlingUnit = new TransportHandlingUnitType[]
+                    {
+                        new TransportHandlingUnitType()
+                        {
+                            TransportEquipment = _TransportEquipment.ToArray()
+                        }
+                    };
+                }
+            }
+
 
             //CONDUCTOR (Transporte Privado)
             if (datos.datosEnvio.conductores != null && datos.datosEnvio.conductores.Count > 0)

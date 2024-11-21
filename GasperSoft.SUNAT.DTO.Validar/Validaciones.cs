@@ -267,6 +267,20 @@ namespace GasperSoft.SUNAT.DTO.Validar
             return regex.IsMatch(input ?? "");
         }
 
+        public static bool IsValidTuc(string input)
+        {
+            var regex = new Regex(@"^(?!0+$)([0-9A-Z]{10,15})$");
+
+            return regex.IsMatch(input ?? "");
+        }
+
+        public static bool IsValidAutorizacionEspecial(string input)
+        {
+            var regex = new Regex(@"^[^\s\n\t\r]{3,50}$");
+            
+            return regex.IsMatch(input ?? "");
+        }
+
         /// <summary>
         /// Previamente debe invocarse al metodo "IsValidTipoDocumentoIdentidad(string tipoDocumento)"
         /// Segun SUNAT cualquier otro tipo de documento alfanumerico entre 2 y 15 digitos es valido

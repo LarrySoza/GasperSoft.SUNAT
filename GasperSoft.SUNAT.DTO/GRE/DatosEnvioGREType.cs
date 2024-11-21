@@ -46,12 +46,18 @@ namespace GasperSoft.SUNAT.DTO.GRE
         public DateTime fechaInicioTraslado { get; set; }
 
         /// <summary>
-        /// Número de placa del vehículo (modalidadTranslado = transporte privado)
+        /// Número de placa(s) del vehiculo
         /// </summary>
+        [Obsolete("Usar la propiedad \"vehículos\" para asignar información de los vehículos usados en el transporte")]
         public List<string> placasVehiculo { get; set; }
 
         /// <summary>
-        /// Conductor (modalidadTranslado = transporte privado)
+        /// Información de los Vehículos, según las validaciones de SUNAT se permiten máximo 3 unidades uno principal y otros 2 secundarios
+        /// </summary>
+        public List<InfoVehiculo> vehiculos { get; set; }
+
+        /// <summary>
+        /// Informacion de los conductores
         /// </summary>
         public List<InfoConductorType> conductores { get; set; }
 

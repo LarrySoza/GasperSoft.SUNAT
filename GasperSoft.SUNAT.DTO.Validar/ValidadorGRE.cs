@@ -6,6 +6,7 @@ using GasperSoft.SUNAT.DTO.GRE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using static GasperSoft.SUNAT.DTO.Validar.Validaciones;
 
@@ -270,6 +271,8 @@ namespace GasperSoft.SUNAT.DTO.Validar
                 }
             }
 
+
+
             //Si no existen mensajes de Error entonces la validacion esta OK
             return !(_mensajesError.Count > 0);
         }
@@ -294,12 +297,14 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             var _mensajes = new List<Error>();
 
+            //No permitir indicadores Transportista
             if (_gre.datosEnvio.indicadoresGRETransportista != null)
             {
                 _mensajesError.AddMensaje(CodigoError.V0101, "datosEnvio.indicadoresGRETransportista");
                 return false;
             }
 
+            //Validar el remitente
             if (_gre.remitente == null)
             {
                 _mensajesError.AddMensaje(CodigoError.V0103, "remitente");
@@ -325,10 +330,26 @@ namespace GasperSoft.SUNAT.DTO.Validar
                 }
             }
 
-            //Necesitamos evaluar documentosRealacionados para evitar un error de referencia nula es mas facil inicializarlo
-            if (_gre.documentosRelacionados == null)
+            if (string.IsNullOrEmpty(_gre.datosEnvio.motivoTraslado))
             {
-                _gre.documentosRelacionados = new List<DocumentoRelacionadoGREType>();
+                _mensajesError.AddMensaje(CodigoError.S3404, $"datosEnvio.motivoTraslado = '{_gre.datosEnvio.modalidadTraslado}'");
+                return false;
+            }
+            else if (!OnValidarCatalogoSunat("20", _gre.datosEnvio.motivoTraslado))
+            {
+                _mensajesError.AddMensaje(CodigoError.S3405, $"datosEnvio.motivoTraslado = '{_gre.datosEnvio.modalidadTraslado}'");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(_gre.datosEnvio.modalidadTraslado))
+            {
+                _mensajesError.AddMensaje(CodigoError.S2532, $"datosEnvio.modalidadTraslado = '{_gre.datosEnvio.modalidadTraslado}'");
+                return false;
+            }
+            else if (!OnValidarCatalogoSunat("18", _gre.datosEnvio.modalidadTraslado))
+            {
+                _mensajesError.AddMensaje(CodigoError.S2773, $"datosEnvio.modalidadTraslado = '{_gre.datosEnvio.modalidadTraslado}'");
+                return false;
             }
 
             #region  Traslado en vehículos de categoría M1 o L
@@ -340,10 +361,22 @@ namespace GasperSoft.SUNAT.DTO.Validar
                     _mensajesError.AddMensaje(CodigoError.V0033, "datosEnvio.conductores");
                 }
 
-                //Solo se debe ingresar 1 placa la del vehiculo M1 o L(opcional)
-                if (_gre.datosEnvio.placasVehiculo?.Count > 1)
+                //Si esta asignado la propiedad "vehiculos" se ignora la propiedad "placasVehiculo" en la generacion del XML
+                if (_gre.datosEnvio.vehiculos?.Count > 0)
                 {
-                    _mensajesError.AddMensaje(CodigoError.S3453, "datosEnvio.placasVehiculo");
+                    //Solo se debe ingresar 1 placa la del vehiculo M1 o L(opcional)
+                    if (_gre.datosEnvio.vehiculos.Count > 1)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S3453, "datosEnvio.placasVehiculo");
+                    }
+                }
+                else
+                {
+                    //Solo se debe ingresar 1 placa la del vehiculo M1 o L(opcional)
+                    if (_gre.datosEnvio.placasVehiculo?.Count > 1)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S3453, "datosEnvio.placasVehiculo");
+                    }
                 }
 
                 if (_mensajesError.Count > 0)
@@ -479,10 +512,11 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             #region Vehiculo principal/secundarios
 
-            if (_gre.datosEnvio.placasVehiculo?.Count > 0)
+            //Si esta asignado la propiedad "vehiculos" se ignora la propiedad "placasVehiculo" en la generacion del XML
+            if (_gre.datosEnvio.vehiculos?.Count > 0)
             {
                 //Maximos 3 placas 1 principal y 2 secundarias
-                if (_gre.datosEnvio.placasVehiculo.Count > 3)
+                if (_gre.datosEnvio.vehiculos.Count > 3)
                 {
                     _mensajesError.AddMensaje(CodigoError.V0031);
                 }
@@ -490,21 +524,127 @@ namespace GasperSoft.SUNAT.DTO.Validar
                 {
                     _idRecord = 0;
 
-                    foreach (var item in _gre.datosEnvio.placasVehiculo)
+                    foreach (var item in _gre.datosEnvio.vehiculos)
                     {
-                        if (!Validaciones.IsValidPlacaSunat(item ?? ""))
+                        if (!Validaciones.IsValidPlacaSunat(item.numeroPlaca ?? ""))
                         {
-                            _mensajesError.AddMensaje(CodigoError.S2567, $"datosEnvio.placasVehiculo[{_idRecord}] = {item}");
+                            _mensajesError.AddMensaje(CodigoError.S2567, $"datosEnvio.vehiculos[{_idRecord}].numeroPlaca = {item}");
                         }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(item.numeroTarjeta))
+                            {
+                                //Si existe el Indicador de registro de vehículos y conductores del transportista es falso no se debe registrar el Tuc
+                                if ((_gre.datosEnvio.indicadoresGRERemitente?.indVehiculoConductoresTransp ?? false) == false)
+                                {
+                                    //No se debe ingresar el Tuc
+                                    _mensajes.AddMensaje(CodigoError.V0035, $"datosEnvio.vehiculos[{_idRecord}].numeroTarjeta");
+                                }
+                                else
+                                {
+                                    //Validamos el formato del Tuc
+                                    if (!Validaciones.IsValidTuc(item.numeroTarjeta))
+                                    {
+                                        _mensajesError.AddMensaje(CodigoError.S3355, $"datosEnvio.vehiculos[{_idRecord}].numeroTarjeta = {item}");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (_gre.datosEnvio.modalidadTraslado == "01"
+                                    && (_gre.datosEnvio.indicadoresGRERemitente?.indTrasladoVehiculoM1L ?? false) == false
+                                    && (_gre.datosEnvio.indicadoresGRERemitente?.indVehiculoConductoresTransp ?? false) == true)
+                                {
+                                    _mensajesError.AddMensaje(CodigoError.S4399, $"datosEnvio.vehiculos[{_idRecord}].numeroTarjeta");
+                                }
+                            }
+
+                            if (item.autorizacionesEspeciales?.Count > 0)
+                            {
+                                if (item.autorizacionesEspeciales.Count > 1)
+                                {
+                                    _mensajesError.AddMensaje(CodigoError.S3356, $"datosEnvio.vehiculos[{_idRecord}].autorizacionesEspeciales.Count > 1");
+                                    continue;
+                                }
+
+                                if ((_gre.datosEnvio.indicadoresGRERemitente?.indTrasladoVehiculoM1L ?? false) == true)
+                                {
+                                    //No se debe ingresar el Tuc
+                                    _mensajes.AddMensaje(CodigoError.V0035, $"datosEnvio.vehiculos[{_idRecord}].autorizacionesEspeciales");
+                                    continue;
+                                }
+
+                                if (_gre.datosEnvio.modalidadTraslado == "01"
+                                    && (_gre.datosEnvio.indicadoresGRERemitente?.indTrasladoVehiculoM1L ?? false) == false
+                                    && (_gre.datosEnvio.indicadoresGRERemitente?.indVehiculoConductoresTransp ?? false) == false)
+                                {
+                                    _mensajesError.AddMensaje(CodigoError.V0035, $"datosEnvio.vehiculos[{_idRecord}].autorizacionesEspeciales");
+                                    continue;
+                                }
+
+                                //En un futuro SUNAT podria permitir mas de una Autorizacion(estandar UBL lo permite) por eso el bloque foreach
+                                var _idRecordAutorizacion = 0;
+
+                                foreach (var autorizacion in item.autorizacionesEspeciales)
+                                {
+                                    if (!string.IsNullOrEmpty(autorizacion.codigoEntidadAutorizadora))
+                                    {
+                                        if (!OnValidarCatalogoSunat("D37", autorizacion.codigoEntidadAutorizadora))
+                                        {
+                                            _mensajes.AddMensaje(CodigoError.S4407, $"datosEnvio.vehiculos[{_idRecord}].autorizacionesEspeciales[{_idRecordAutorizacion}].codigoEntidadAutorizadora = '{autorizacion.codigoEntidadAutorizadora}'");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        _mensajes.AddMensaje(CodigoError.S4403, $"datosEnvio.vehiculos[{_idRecord}].autorizacionesEspeciales[{_idRecordAutorizacion}].codigoEntidadAutorizadora = '{autorizacion.codigoEntidadAutorizadora}'");
+                                    }
+
+                                    if (!Validaciones.IsValidAutorizacionEspecial(autorizacion.numeroAutorizacion))
+                                    {
+                                        _mensajes.AddMensaje(CodigoError.S4406, $"datosEnvio.vehiculos[{_idRecord}].autorizacionesEspeciales[{_idRecordAutorizacion}].numeroAutorizacion = '{autorizacion.codigoEntidadAutorizadora}'");
+                                    }
+
+                                    _idRecordAutorizacion++;
+                                }
+                            }
+                        }
+
                         _idRecord++;
                     }
                 }
-
-                if (_mensajesError.Count > 0)
+            }
+            else
+            {
+                //La propiedad "placasVehiculo" se usaba para llenar las placas de los vehiculos esta validacion esta validacion es solo por compatibilidad
+                //con usuarios antiguos de la DLL
+                if (_gre.datosEnvio.placasVehiculo?.Count > 0)
                 {
-                    return false;
+                    //Maximos 3 placas 1 principal y 2 secundarias
+                    if (_gre.datosEnvio.placasVehiculo.Count > 3)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0031);
+                    }
+                    else
+                    {
+                        _idRecord = 0;
+
+                        foreach (var item in _gre.datosEnvio.placasVehiculo)
+                        {
+                            if (!Validaciones.IsValidPlacaSunat(item ?? ""))
+                            {
+                                _mensajesError.AddMensaje(CodigoError.S2567, $"datosEnvio.placasVehiculo[{_idRecord}] = {item}");
+                            }
+                            _idRecord++;
+                        }
+                    }
                 }
             }
+
+            if (_mensajesError.Count > 0)
+            {
+                return false;
+            }
+
 
             #endregion
 
@@ -564,13 +704,13 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             #endregion
 
-            #region cuando el tipo de operacion es importacion/exportacion
-
             if (_gre.datosEnvio.motivoTraslado == "08" || _gre.datosEnvio.motivoTraslado == "09")
             {
-                if (_gre.documentosRelacionados == null)
+                //El tipo de operacion es importacion/ exportacion y se requieren documentos relacionados
+                if (_gre.documentosRelacionados?.Count == 0)
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0103, "documentosRelacionados");
+                    _mensajesError.AddMensaje(CodigoError.S3440, "documentosRelacionados");
+                    return false;
                 }
                 else
                 {
@@ -613,36 +753,35 @@ namespace GasperSoft.SUNAT.DTO.Validar
                     return false;
                 }
             }
-
-            #endregion
-
-            #region cuando el tipo de operacion no es importacion/exportacion
-
-            if (_gre.datosEnvio.motivoTraslado != "08" && _gre.datosEnvio.motivoTraslado != "09")
+            else
             {
+                //El tipo de operacion no es importacion/ exportacion y los documentos relacionados son opcionales
                 _idRecord = 0;
                 bool _debeExistirItemDAMoDS = false;
                 var _docRelacionadosNoPermitidos = new List<string>() { "50", "52" };
 
-                foreach (var item in _gre.documentosRelacionados)
+                if (_gre.documentosRelacionados?.Count > 0)
                 {
-                    //En este punto el motivo de traslado ya es diferente de "08" y "09"
-                    if (_gre.datosEnvio.motivoTraslado != "13")
+                    foreach (var item in _gre.documentosRelacionados)
                     {
-                        if (_docRelacionadosNoPermitidos.Contains(item.tipoDocumento))
+                        //En este punto el motivo de traslado ya es diferente de "08" y "09"
+                        if (_gre.datosEnvio.motivoTraslado != "13")
                         {
-                            _mensajesError.AddMensaje(CodigoError.S3445, $"documentosRelacionados[{_idRecord}].tipoDocumento");
-                            _idRecord++;
-                            continue;
+                            if (_docRelacionadosNoPermitidos.Contains(item.tipoDocumento))
+                            {
+                                _mensajesError.AddMensaje(CodigoError.S3445, $"documentosRelacionados[{_idRecord}].tipoDocumento");
+                                _idRecord++;
+                                continue;
+                            }
                         }
-                    }
 
-                    if ((_gre.datosEnvio.indicadoresGRERemitente?.indTrasladoTotalDAMoDS ?? false) == false && (item.tipoDocumento == "49" || item.tipoDocumento == "80"))
-                    {
-                        _debeExistirItemDAMoDS = true;
-                    }
+                        if ((_gre.datosEnvio.indicadoresGRERemitente?.indTrasladoTotalDAMoDS ?? false) == false && (item.tipoDocumento == "49" || item.tipoDocumento == "80"))
+                        {
+                            _debeExistirItemDAMoDS = true;
+                        }
 
-                    _idRecord++;
+                        _idRecord++;
+                    }
                 }
 
                 if (_debeExistirItemDAMoDS && _mensajesError.Count == 0)
@@ -660,8 +799,6 @@ namespace GasperSoft.SUNAT.DTO.Validar
                     return false;
                 }
             }
-
-            #endregion
 
             #region Detalles
 

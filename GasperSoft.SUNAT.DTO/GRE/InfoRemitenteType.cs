@@ -10,8 +10,7 @@ namespace GasperSoft.SUNAT.DTO.GRE
     {
         /// <summary>
         /// Datos de la autorización especial para el traslado de la carga
-        /// codigo debe estar en el catalogo D37
         /// </summary>
-        public List<DatoAdicionalType> autorizacionesEspeciales { get; set; }
+        public List<AutorizacionEspecialType> autorizacionesEspeciales { get; set; }
     }
 }
