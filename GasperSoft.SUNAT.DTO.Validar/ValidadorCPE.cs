@@ -1647,7 +1647,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
                         }
                         else
                         {
-                            if (_cpe.informacionPago.montoPendientePago > _cpe.importeTotal)
+                            if (_cpe.informacionPago.montoPendientePago > _cpe.importeTotal && !_esNotaCreditoMotivo13)
                             {
                                 _mensajesError.AddMensaje(CodigoError.S3265, $"cpe.informacionPago.montoPendientePago: {_cpe.informacionPago.montoPendientePago}, cpe.importeTotal: {_cpe.importeTotal}");
                             }
@@ -1680,7 +1680,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
             }
             else
             {
-                //Forma de pago es obligatorio para las facturas
+                //Forma de pago es obligatorio para las facturas y notas de credito Motivo 13
                 if (_cpe.tipoDocumento == "01" || _esNotaCreditoMotivo13)
                 {
                     _mensajesError.AddMensaje(CodigoError.S3244);

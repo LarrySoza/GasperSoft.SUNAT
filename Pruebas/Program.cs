@@ -53,7 +53,8 @@ namespace Pruebas
                 Console.WriteLine("==================");
                 Console.WriteLine("1: Ejemplo XML FACTURA SIMPLE");
                 Console.WriteLine("2: Ejemplo XML FACTURA GRATUITA");
-                Console.WriteLine("3: Ejemplo XML GUIA REMISION REMITENTE (Transporte Publico)");
+                Console.WriteLine("3: Ejemplo XML NOTA CREDITO MOTIVO 13");
+                Console.WriteLine("4: Ejemplo XML GUIA REMISION REMITENTE (Transporte Publico)");
                 Console.WriteLine("S: Salir");
 
                 var _input = Console.ReadLine();
@@ -69,6 +70,9 @@ namespace Pruebas
                         EjemploCPE(CPE2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "3":
+                        EjemploCPE(CPE3.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "4":
                         var _gre = GRERemitente1.GetDocumento(_emisor);
                         EjemploGRE(_gre, _emisor, _certificado, _signature);
                         break;
@@ -173,7 +177,23 @@ namespace Pruebas
 
         static string GetXML(CPEType cpe, EmisorType emisor, X509Certificate2 certificado, out string digestValue, string signature)
         {
-            var _cpeType = FacturaBoleta.GetDocumento(cpe, emisor, signature);
+            object _cpeType;
+
+            switch (cpe.tipoDocumento)
+            {
+                case "01":
+                case "03":
+                    _cpeType = FacturaBoleta.GetDocumento(cpe, emisor, signature);
+                    break;
+                case "07":
+                    _cpeType = NotaCredito.GetDocumento(cpe, emisor, signature);
+                    break;
+                case "08":
+                    _cpeType = NotaDebito.GetDocumento(cpe, emisor, signature);
+                    break;
+                default:
+                    throw new Exception("Tipo de documento no valido");
+            }
 
             var _xml = XmlUtil.Serializar(_cpeType);
 
