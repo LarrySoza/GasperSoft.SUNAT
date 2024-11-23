@@ -6,10 +6,9 @@ using GasperSoft.SUNAT.DTO.CPE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using static GasperSoft.SUNAT.DTO.Validar.Validaciones;
+using static GasperSoft.SUNAT.Validaciones;
 
-namespace GasperSoft.SUNAT.DTO.Validar
+namespace GasperSoft.SUNAT
 {
     public class ValidadorCPE
     {
@@ -104,7 +103,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public bool Validar()
         {
             _mensajesError.Clear();
-            
+
             if (OnValidarCatalogoSunat == null)
             {
                 throw new Exception("Debe asociar el evento 'OnValidarCatalogoSunat' para la validación con los catálogos SUNAT");
@@ -144,7 +143,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_cpe.adquirente == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "adquirente");
+                _mensajesError.AddMensaje(CodigoError.V0102, "adquirente");
                 return false;
             }
 
@@ -229,7 +228,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_cpe.fechaEmision == new DateTime())
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "fechaEmision");
+                _mensajesError.AddMensaje(CodigoError.V0102, "fechaEmision");
             }
 
             var documentosPermitidos = new List<string> { "01", "03", "07", "08" };
@@ -526,7 +525,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             #region Detalles del comprobante
 
-            //Un comprobante se considera oneroso cuando cual menos uno de sus items tiene el valor de "codAfectacionIgv"= '10' o '20' o '30' o '40'
+            //Un comprobante se considera oneroso cuando al menos uno de sus items tiene el valor de "codAfectacionIgv"= '10' o '20' o '30' o '40'
             var _codigosOperacionOnerosa = new List<string>() { "10", "20", "30", "40" };
             var _comprobanteOneroso = false;
             var _detalleGratuito = false;
@@ -534,6 +533,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
             int _totalItemsExportacion = 0;
             var _esNotaCreditoMotivo13 = false;
             var _esNotaCreditoDebito = false;
+            decimal _tasaIGVOperacionesGravadas = 0;
 
             _idRecord = 0;
 
@@ -726,6 +726,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
                 if (!OnValidarCatalogoSunat("07", item.codAfectacionIGV))
                 {
                     _mensajesError.AddMensaje(CodigoError.V0030, $"detalle[{_idRecord}].codAfectacionIGV");
+                    continue;
                 }
                 else
                 {
@@ -747,9 +748,39 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
                 #region TasaIGV
 
-                if (item.tasaIGV < 0 || item.tasaIGV >= 100)
+                //Si es una operacion grabada se debe mandar la tasa de IGV > 0
+                if (item.codAfectacionIGV.StartsWith("1"))
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0100, $"detalle[{_idRecord}].tasaIGV");
+                    if (item.tasaIGV == 0)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2993, $"detalle[{_idRecord}].tasaIGV");
+                        continue;
+                    }
+                    else
+                    {
+                        if (_tasaIGVOperacionesGravadas != 0)
+                        {
+                            //Todos los detalles de Operaciones Grabadas deben tener la misma tasa de IGV
+                            if (item.tasaIGV != _tasaIGVOperacionesGravadas)
+                            {
+                                _mensajesError.AddMensaje(CodigoError.S3462, $"detalle[{_idRecord}].tasaIGV = {item.tasaIGV} debe ser {_tasaIGVOperacionesGravadas}");
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            //Guardamos la primera tasa de IGV de operaciones grabadas
+                            _tasaIGVOperacionesGravadas = item.tasaIGV;
+                        }
+                    }
+                }
+                else
+                {
+                    if (item.tasaIGV != 0)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S3101, $"detalle[{_idRecord}].tasaIGV");
+                        continue;
+                    }
                 }
 
                 #endregion
@@ -1354,7 +1385,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
             decimal _anticiposISC = 0;
 
             //Codigo de validacion 3291
-            decimal _sumatoriaIGVCalculado = _totalOperacionesGravadasCalculado * _cpe.tasaIGV / 100;
+            decimal _sumatoriaIGVCalculado = _totalOperacionesGravadasCalculado * _tasaIGVOperacionesGravadas / 100;
 
             //Codigo de validacion 3294
             decimal _sumatoriaImpuestosCalculado = _sumatoriaIGVCalculado + _sumatoriaISCCalculado + _sumatoriaOTHCalculado + _sumatoriaICBPERCalculado;
@@ -1372,7 +1403,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
             }
 
             //Codigo de validacion 3279
-            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _anticiposISC + _sumatoriaOTHCalculado + ((_operacionesGravadasxLinea - _descuentoGlobalAfectaBICalculado) * _cpe.tasaIGV / 100);
+            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _anticiposISC + _sumatoriaOTHCalculado + ((_operacionesGravadasxLinea - _descuentoGlobalAfectaBICalculado) * _tasaIGVOperacionesGravadas / 100);
             decimal _totalAnticiposCalculado = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.importeTotal));
             decimal _totalRedondeo = _cpe.totalRedondeo;
             decimal _importeTotalCalculado = _precioVentaCalculado + _sumatoriaOtrosCargosNoAfectaBICalculado - _totalDescuentosNOAfectaBICalculado - _totalAnticiposCalculado + _totalRedondeo;

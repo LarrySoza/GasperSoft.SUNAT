@@ -100,7 +100,6 @@ namespace Pruebas
                 codMoneda = "PEN",//Catalogo N° 02
                 totalOperacionesGravadas = 0,
                 sumatoriaIGV = 0,
-                tasaIGV = 0,
                 sumatoriaImpuestos = 0,
                 valorVenta = 0,
                 precioVenta = 0,

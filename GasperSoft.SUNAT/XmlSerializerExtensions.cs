@@ -2,15 +2,11 @@
 // Copyright (C) 2023 GasperSoft.
 // Contacto: it@gaspersoft.com
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Xml.Serialization;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace GasperSoft.SUNAT
 {
@@ -33,7 +29,7 @@ namespace GasperSoft.SUNAT
             return _numberFormat;
         }
 
-        public static void SerializeWithDecimalFormatting(this XmlSerializer serializer, XmlWriter xmlWriter, object o, XmlSerializerNamespaces namespaces)
+        internal static void SerializeWithDecimalFormatting(this XmlSerializer serializer, XmlWriter xmlWriter, object o, XmlSerializerNamespaces namespaces)
         {
             IteratePropertiesRecursively(o);
 

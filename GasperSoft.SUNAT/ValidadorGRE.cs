@@ -6,11 +6,9 @@ using GasperSoft.SUNAT.DTO.GRE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
-using static GasperSoft.SUNAT.DTO.Validar.Validaciones;
+using static GasperSoft.SUNAT.Validaciones;
 
-namespace GasperSoft.SUNAT.DTO.Validar
+namespace GasperSoft.SUNAT
 {
     public class ValidadorGRE
     {
@@ -68,7 +66,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.datosEnvio == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, $"datosEnvio");
+                _mensajesError.AddMensaje(CodigoError.V0102, $"datosEnvio");
                 return;
             }
 
@@ -86,7 +84,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.destinatario == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "destinatario");
+                _mensajesError.AddMensaje(CodigoError.V0102, "destinatario");
             }
             else
             {
@@ -105,7 +103,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
                         }
                         else
                         {
-                            _mensajesError.AddMensaje(CodigoError.V0102, "destinatario.numeroDocumentoIdentificacion");
+                            _mensajesError.AddMensaje(CodigoError.V0037, "destinatario.numeroDocumentoIdentificacion");
                         }
                     }
 
@@ -131,7 +129,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.fechaEmision == new DateTime())
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "fechaEmision");
+                _mensajesError.AddMensaje(CodigoError.V0102, "fechaEmision");
             }
 
             #endregion
@@ -158,15 +156,11 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.datosEnvio.pesoBrutoTotalBienes <= 0)
             {
-                _mensajesError.AddMensaje(CodigoError.V0100, "datosEnvio.pesoBrutoTotalBienes debe ser mayor a 0");
+                _mensajesError.AddMensaje(CodigoError.V0037, "datosEnvio.pesoBrutoTotalBienes debe ser mayor a 0");
             }
             else
             {
-                if (_gre.datosEnvio.pesoBrutoTotalBienes < 0)
-                {
-                    _mensajesError.AddMensaje(CodigoError.V0012, "datosEnvio.pesoBrutoTotalBienes");
-                }
-                else if (!Validaciones.IsValidCantidadDecimalesMaximos(_gre.datosEnvio.pesoBrutoTotalBienes, 10))
+                if (!Validaciones.IsValidCantidadDecimalesMaximos(_gre.datosEnvio.pesoBrutoTotalBienes, 10))
                 {
                     _mensajesError.AddMensaje(CodigoError.V0011, "datosEnvio.pesoBrutoTotalBienes");
                 }
@@ -201,7 +195,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.datosEnvio.puntoPartida == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "datosEnvio.puntoPartida");
+                _mensajesError.AddMensaje(CodigoError.V0102, "datosEnvio.puntoPartida");
             }
             else
             {
@@ -237,7 +231,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.transportista == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "transportista");
+                _mensajesError.AddMensaje(CodigoError.V0102, "transportista");
                 return false;
             }
             else
@@ -255,7 +249,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.remitente == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "remitente");
+                _mensajesError.AddMensaje(CodigoError.V0102, "remitente");
                 return false;
             }
             else
@@ -307,7 +301,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
             //Validar el remitente
             if (_gre.remitente == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "remitente");
+                _mensajesError.AddMensaje(CodigoError.V0102, "remitente");
                 return false;
             }
             else
@@ -472,7 +466,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_gre.datosEnvio.puntoLlegada == null && _gre.datosEnvio.motivoTraslado != "18")
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "datosEnvio.puntoLlegada");
+                _mensajesError.AddMensaje(CodigoError.V0102, "datosEnvio.puntoLlegada");
                 return false;
             }
 
@@ -674,7 +668,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
                         if (!Validaciones.IsValidDocumentoIdentidadSunat(item.numeroDocumentoIdentificacion, item.tipoDocumentoIdentificacion))
                         {
-                            _mensajesError.AddMensaje(CodigoError.V0102, $"datosEnvio.conductores[{_idRecord}].numeroDocumentoIdentificacion");
+                            _mensajesError.AddMensaje(CodigoError.V0037, $"datosEnvio.conductores[{_idRecord}].numeroDocumentoIdentificacion");
                         }
 
                         if (!Validaciones.IsValidTextSunat(item.nombres, 3, 250))
@@ -813,7 +807,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
                 if (item.cantidad == 0)
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0100, $"detalle[{_idRecord}].cantidad");
+                    _mensajesError.AddMensaje(CodigoError.V0036, $"detalle[{_idRecord}].cantidad");
                 }
 
                 if (!Validaciones.IsValidTextSunat(item.nombre, 3, 500))

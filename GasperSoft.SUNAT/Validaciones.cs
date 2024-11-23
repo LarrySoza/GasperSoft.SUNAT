@@ -2,10 +2,10 @@
 // Copyright (C) 2023 GasperSoft.
 // Contacto: it@gaspersoft.com
 
-using System.Text.RegularExpressions;
 using System;
+using System.Text.RegularExpressions;
 
-namespace GasperSoft.SUNAT.DTO.Validar
+namespace GasperSoft.SUNAT
 {
     public class Validaciones
     {
@@ -277,7 +277,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public static bool IsValidAutorizacionEspecial(string input)
         {
             var regex = new Regex(@"^[^\s\n\t\r]{3,50}$");
-            
+
             return regex.IsMatch(input ?? "");
         }
 

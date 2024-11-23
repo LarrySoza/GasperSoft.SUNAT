@@ -3,15 +3,12 @@
 // Contacto: it@gaspersoft.com
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace GasperSoft.SUNAT
 {
@@ -58,13 +55,13 @@ namespace GasperSoft.SUNAT
             return xml;
         }
 
-        public static string FirmarXml(string xml, X509Certificate2 certificado, out string digestValue, string signature =null)
+        public static string FirmarXml(string xml, X509Certificate2 certificado, out string digestValue, string signature = null)
         {
             if (string.IsNullOrEmpty(signature))
             {
                 signature = "signatureGASPERSOFT";
             }
-            
+
             var xmlDoc = new XmlDocument();
             digestValue = string.Empty;
 

@@ -2,14 +2,7 @@
 // Copyright (C) 2023 GasperSoft.
 // Contacto: it@gaspersoft.com
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace GasperSoft.SUNAT.DTO.Validar
+namespace GasperSoft.SUNAT
 {
     /// <summary>
     /// He tratado de usar los mismos códigos de error que generaría SUNAT estos códigos comienzan con 'S', validaciones propias de la librería comienzan con 'V'
@@ -32,6 +25,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string S2800 = "S2800:El dato ingresado en el tipo de documento de identidad del receptor no esta permitido";
         public const string S2801 = "S2801:El DNI ingresado no cumple con el estandar";
         public const string S2802 = "S2802:El dato ingresado como numero de documento de identidad del receptor no cumple con el formato establecido";
+        public const string S2993 = "S2993:El factor de afectación de IGV por linea debe ser diferente a 0.00";
         public const string S3030 = "S3030:No existe información del código de local anexo del emisor";
         public const string S3205 = "S3205:Debe consignar el tipo de operación";
         public const string S3208 = "S3208:La moneda del monto de la detracción debe ser PEN";
@@ -55,22 +49,20 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string S3453 = "S3453:No debe ingresar informacion de vehiculos secundarios";
         public const string S4392 = "S4392:El Numero de Registro MTC del transportista no cumple con el formato establecido";
         public const string S3034 = "S3034:No existe información en el nro de cuenta de detracción";
+        public const string S3101 = "S3101:El factor de afectación de IGV por linea debe ser igual a 0.00 para Exoneradas, Inafectas, Exportación, Gratuitas de exoneradas o Gratuitas de inafectas";
         public const string S3203 = "S3203:El tipo de nota es un dato único (Notas de crédito y débito deben consignar un único elemento en la propiedad 'motivosNota')";
         public const string S3244 = "S3244:Debe consignar la informacion del tipo de transaccion del comprobante('informacionPago' es requerido para facturas y notas de crédito motivo 13)";
         public const string S3249 = "S3249:Si el tipo de transaccion es al Credito debe existir al menos información de una cuota de pago";
         public const string S3356 = "S3356:Solo debe consignar un Numero de autorizacion del vehiculo";
         public const string S3365 = "S3365:Código de establecimiento es obligatorio para el motivo de traslado seleccionado";
+        public const string S3404 = "S3404:El XML no contiene el tag o no existe informacion del motivo de traslado";
+        public const string S3405 = "S3405:El valor ingresado como motivo de traslado no es valido";
+        public const string S3462 = "S3462:La tasa del IGV debe ser la misma en todas las líneas o ítems del documento y debe corresponder con una tasa vigente";
         public const string S4233 = "S4233:El dato ingresado en order de compra no cumple con el formato establecido";
         public const string S4399 = "S4399:No ha consignado el Numero de Constancia de Inscripcion Vehicular o Certificado de Habilitacion Vehicular o la TUC (fisica o electronica)";
         public const string S4403 = "S4403:Debe indicar la entidad autorizadora del vehiculo";
         public const string S4406 = "S4406:El Numero de autorizacion del vehiculo no cumple con el formato establecido";
         public const string S4407 = "S4407:El Codigo de entidad autorizadora del vehiculo no corresponde a un valor esperado(El valor no existe el catalogo N° D37)";
-
-
-        public const string S3404 = "S3404:El XML no contiene el tag o no existe informacion del motivo de traslado";
-        public const string S3405 = "S3405:El valor ingresado como motivo de traslado no es valido";
-
-
 
         //Validaciones(Les fui asignado un código correlativo)
         public const string V0001 = "V0001:Tipo de documento de identidad no es válido";
@@ -108,13 +100,13 @@ namespace GasperSoft.SUNAT.DTO.Validar
         public const string V0033 = "V0033:No debe ingresar información de conductores cuando existe el indicador de traslado en vehículos de categoría M1 o L, Cod. SUNAT 3455 y 3456";
         public const string V0034 = "V0034:Se debe consignar los datos del transportista para una operación de Transporte Publico cuando no existe el indicador de traslado en vehículos de categoría M1 o L, Cod. SUNAT 2561,2558 y 2563";
         public const string V0035 = "V0035:No debe ingresar informacion adicional de vehiculos (registros y/o autorizaciones), Cod. SUNAT 3452 y 3454";
-        
+        public const string V0036 = "V0036:Cantidad no puede ser cero (0)";
+        public const string V0037 = "V0037:La propiedad no cumple con el formato requerido por SUNAT";
+        public const string V0038 = "V0038:El codigo de moneda de ser PEN";
 
-        //Estos codigos se usan para varias propiedades
-        public const string V0100 = "V0100:El valor de la propiedad no es valido";
+        //Mensajes genericos para validar una propiedad
         public const string V0101 = "V0101:El valor de la propiedad deber ser NULL";
-        public const string V0102 = "V0102:La propiedad no cumple con el formato requerido por SUNAT";
-        public const string V0103 = "V0103:El valor de la propiedad es requerido";
+        public const string V0102 = "V0102:El valor de la propiedad es requerido";
 
         /// <summary>
         /// Todo error de calculo usa este codigo

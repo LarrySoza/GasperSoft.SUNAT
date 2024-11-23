@@ -3,11 +3,8 @@
 // Contacto: it@gaspersoft.com
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace GasperSoft.SUNAT.DTO.Validar
+namespace GasperSoft.SUNAT
 {
     public class Error
     {

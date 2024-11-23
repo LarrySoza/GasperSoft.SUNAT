@@ -5,14 +5,11 @@
 using GasperSoft.SUNAT.DTO.CRE;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace GasperSoft.SUNAT.DTO.Validar
+namespace GasperSoft.SUNAT
 {
     public class ValidadorCRE
     {
-        private const string codigoMonedaNacional = "PEN";
         private readonly CREType _cre;
         private readonly List<Error> _mensajesError;
         private decimal _toleranciaCalculo = 0.2m;
@@ -74,7 +71,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_cre.proveedor == null)
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "proveedor");
+                _mensajesError.AddMensaje(CodigoError.V0102, "proveedor");
                 return false;
             }
 
@@ -95,7 +92,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
                 }
                 else
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0102, "proveedor.numeroDocumentoIdentificacion");
+                    _mensajesError.AddMensaje(CodigoError.V0037, "proveedor.numeroDocumentoIdentificacion");
                     return false;
                 }
             }
@@ -108,7 +105,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_cre.proveedor.tipoDocumentoIdentificacion == "-")
             {
-                _mensajesError.AddMensaje(CodigoError.V0102, "proveedor.tipoDocumentoIdentificacion");
+                _mensajesError.AddMensaje(CodigoError.V0037, "proveedor.tipoDocumentoIdentificacion");
                 return false;
             }
 
@@ -118,7 +115,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
 
             if (_cre.fechaEmision == new DateTime())
             {
-                _mensajesError.AddMensaje(CodigoError.V0103, "fechaEmision");
+                _mensajesError.AddMensaje(CodigoError.V0102, "fechaEmision");
             }
 
             if (!_cre.serie.StartsWith("R"))
@@ -132,16 +129,16 @@ namespace GasperSoft.SUNAT.DTO.Validar
             }
 
             //Aqui la moneda es valida
-            if (_cre.codMoneda != codigoMonedaNacional)
+            if (_cre.codMoneda != "PEN")
             {
-                _mensajesError.AddMensaje(CodigoError.V0100, "codMoneda");
+                _mensajesError.AddMensaje(CodigoError.V0038, $"codMoneda = {_cre.codMoneda}");
             }
 
             #region Validar que se envíen valores positivos y con longitud decimal correcta
 
-            if (_cre.tasaRetencion < 0 || _cre.tasaRetencion >= 100)
+            if (_cre.tasaRetencion < 0)
             {
-                _mensajesError.AddMensaje(CodigoError.V0100, "tasaRetencion");
+                _mensajesError.AddMensaje(CodigoError.V0012, "tasaRetencion");
             }
 
             if (_cre.importeTotalRetenido < 0)
@@ -232,7 +229,7 @@ namespace GasperSoft.SUNAT.DTO.Validar
                 {
                     if (item.documentoRelacionadoCodMoneda != "PEN")
                     {
-                        _mensajesError.AddMensaje(CodigoError.V0103, $"detalle[{_idRecord}].tipoCambio");
+                        _mensajesError.AddMensaje(CodigoError.V0102, $"detalle[{_idRecord}].tipoCambio");
                         _valorCalculoValidado = false;
                     }
                 }

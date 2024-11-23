@@ -121,13 +121,13 @@ namespace GasperSoft.SUNAT.UBL.V2
                         Value = $"{signature}"
                     },
 
-                    Note = new NoteType[]
-                    {
-                        new NoteType()
-                        {
-                            Value = "GASPERSOFT"
-                        }
-                    },
+                    //Note = new NoteType[]
+                    //{
+                    //    new NoteType()
+                    //    {
+                    //        Value = "GASPERSOFT"
+                    //    }
+                    //},
 
                     SignatoryParty = new PartyType()
                     {

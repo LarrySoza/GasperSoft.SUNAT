@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace GasperSoft.SUNAT.DTO.Validar
+namespace GasperSoft.SUNAT
 {
-    internal static class Extensores
+    internal static class ListErrorExtensions
     {
         public static void AddMensaje(this List<Error> lista, string mensaje)
         {

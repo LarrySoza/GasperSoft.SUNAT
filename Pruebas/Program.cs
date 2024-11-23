@@ -6,7 +6,6 @@ using GasperSoft.SUNAT;
 using GasperSoft.SUNAT.DTO;
 using GasperSoft.SUNAT.DTO.CPE;
 using GasperSoft.SUNAT.DTO.GRE;
-using GasperSoft.SUNAT.DTO.Validar;
 using GasperSoft.SUNAT.UBL.V2;
 using System.ComponentModel.DataAnnotations;
 using System.IO;

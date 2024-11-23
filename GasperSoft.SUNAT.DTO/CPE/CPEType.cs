@@ -170,11 +170,6 @@ namespace GasperSoft.SUNAT.DTO.CPE
         /// </summary>
         public decimal sumatoriaIGVGratuitas { get; set; }
 
-        /// <summary>
-        /// Representa el % del IGV valor del 1 al 100
-        /// </summary>
-        public decimal tasaIGV { get; set; }
-
         #endregion
 
         #region ICBPER
