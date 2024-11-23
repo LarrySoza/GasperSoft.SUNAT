@@ -16,10 +16,12 @@ Un conjunto de librerías para .NET que permite la fácil generación de los XML
 
 # Proyecto "Pruebas"
 - Se necesita un certificado de prueba que se puede generar de manera gratuita en https://llama.pe/certificado-digital-de-prueba-sunat), actualmente se tienen los siguientes ejemplos:
-  - Ejemplo XML FACTURA SIMPLE
-  - Ejemplo XML FACTURA GRATUITA
-  - Ejemplo XML NOTA CREDITO MOTIVO 13
-  - Ejemplo XML GUIA REMISION REMITENTE (Transporte Publico)
+  - FACTURA SIMPLE
+  - FACTURA GRATUITA
+  - NOTA CREDITO MOTIVO 13
+  - GUIA REMISION REMITENTE - Transporte Publico
+  - GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)
+  - GUIA REMISION REMITENTE - Transporte Privado (M1 o L)
 
 # Validar XML generado
 - Se puede validar el XML generado en https://probar-xml.nubefact.com

@@ -632,6 +632,14 @@ namespace GasperSoft.SUNAT
                         }
                     }
                 }
+                else
+                {
+                    if (_gre.datosEnvio.modalidadTraslado == "02"
+                        && (_gre.datosEnvio.indicadoresGRERemitente?.indTrasladoVehiculoM1L ?? false) == false)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2566, $"datosEnvio.vehiculos debe contener al menos un vehículo");
+                    }
+                }
             }
 
             if (_mensajesError.Count > 0)
@@ -689,11 +697,19 @@ namespace GasperSoft.SUNAT
                         _idRecord++;
                     }
                 }
-
-                if (_mensajesError.Count > 0)
+            }
+            else
+            {
+                if (_gre.datosEnvio.modalidadTraslado == "02"
+                    && (_gre.datosEnvio.indicadoresGRERemitente?.indTrasladoVehiculoM1L ?? false) == false)
                 {
-                    return false;
+                    _mensajesError.AddMensaje(CodigoError.S3357, $"datosEnvio.conductores debe contener al menos un conductor");
                 }
+            }
+
+            if (_mensajesError.Count > 0)
+            {
+                return false;
             }
 
             #endregion

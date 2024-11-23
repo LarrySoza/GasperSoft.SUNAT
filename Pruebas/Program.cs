@@ -48,13 +48,20 @@ namespace Pruebas
             while (!salir)
             {
                 Console.Clear();
-                Console.WriteLine("Seleccione Opción:");
+                Console.WriteLine("Seleccione Ejemplo:");
                 Console.WriteLine("==================");
-                Console.WriteLine("1: Ejemplo XML FACTURA SIMPLE");
-                Console.WriteLine("2: Ejemplo XML FACTURA GRATUITA");
-                Console.WriteLine("3: Ejemplo XML NOTA CREDITO MOTIVO 13");
-                Console.WriteLine("4: Ejemplo XML GUIA REMISION REMITENTE (Transporte Publico)");
-                Console.WriteLine("S: Salir");
+                Console.WriteLine("1: FACTURA SIMPLE");
+                Console.WriteLine("2: FACTURA GRATUITA");
+                Console.WriteLine("3: NOTA CREDITO MOTIVO 13");
+                Console.WriteLine("4: GUIA REMISION REMITENTE - Transporte Publico");
+                Console.WriteLine("5: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
+                Console.WriteLine("6: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("\nX");
+                Console.ForegroundColor = _colorOriginal;
+                Console.WriteLine(": Salir");
+                
 
                 var _input = Console.ReadLine();
 
@@ -72,11 +79,16 @@ namespace Pruebas
                         EjemploCPE(CPE3.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "4":
-                        var _gre = GRERemitente1.GetDocumento(_emisor);
-                        EjemploGRE(_gre, _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente1.GetDocumento(_emisor), _emisor, _certificado, _signature);
                         break;
-                    case "S":
-                    case "s":
+                    case "5":
+                        EjemploGRE(GRERemitente2.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        break;
+                    case "6":
+                        EjemploGRE(GRERemitente3.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        break;
+                    case "X":
+                    case "x":
                         salir = true;
                         break;
                     default:

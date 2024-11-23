@@ -15,6 +15,7 @@ namespace GasperSoft.SUNAT
         public const string S2511 = "S2511:El tipo de documento no es aceptado, para 'Guías Remisión Remitente', el tipo de documento de identificación del remitente debe ser '6'(RUC)";
         public const string S2523 = "S2523:El valor del atributo es diferente 'KGM' y diferente de 'TNE'";
         public const string S2532 = "S2532:No existe información de modalidad de transporte";
+        public const string S2566 = "S2566:El XML no contiene el tag o no existe informacion del Numero de placa del vehículo";
         public const string S2567 = "S2567:Placa debe ser un valor alfanumérico de 6 a 8 caracteres";
         public const string S2573 = "S2573:Licencia de conducir debe ser un valor alfanumérico de 9 a 10 caracteres (no se permite solamente ceros)";
         public const string S2642 = "S2642:Operaciones de exportación, deben consignar Tipo Afectación igual a 40(en todos los ítems)";
@@ -37,6 +38,7 @@ namespace GasperSoft.SUNAT
         public const string S3347 = "S3347:No debe consignar los datos del transportista para una operacion de Transporte Privado";
         public const string S3352 = "S3352:Si ingreso un documento relacionado tipo '49' (solo en caso de GRE-Remitente) u '80', debe existir al menos un item con Partida arancelaria";
         public const string S3355 = "S3355:El Numero de Constancia de Inscripcion Vehicular o Certificado de Habilitacion Vehicular o la TUC (fisica o electronica) no cumple con el formato establecido";
+        public const string S3357 = "S3357:Debe consignar informacion del conductor principal";
         public const string S3377 = "S3377:La Partida arancelaria no cumple con el formato establecido";
         public const string S3414 = "S3414:El Numero de RUC  asociado al punto de partida/llegada debe ser el igual al Numero de RUC del remitente";
         public const string S3426 = "S3426:Si se trata de un bien normalizado por SUNAT, debe indicarse la Partida arancelaria";

@@ -54,7 +54,7 @@ namespace GasperSoft.SUNAT.DTO.GRE
         /// <summary>
         /// Información de los Vehículos, según las validaciones de SUNAT se permiten máximo 3 unidades uno principal y otros 2 secundarios
         /// </summary>
-        public List<InfoVehiculo> vehiculos { get; set; }
+        public List<InfoVehiculoType> vehiculos { get; set; }
 
         /// <summary>
         /// Informacion de los conductores

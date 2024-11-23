@@ -9,7 +9,7 @@ using System.Text;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
-    public class InfoVehiculo
+    public class InfoVehiculoType
     {
         /// <summary>
         /// Número de placa del vehiculo

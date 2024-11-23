@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Pruebas
 {
-    internal class GRERemitente1
+    internal class GRERemitente3
     {
         /// <summary>
-        /// Guia de remision Remitente con modalidad de transporte Publico
+        /// Guia de remision Remitente con modalidad de transporte Privado no incluir informacion de vehiculo ni conductor (M1 o L) 
         /// </summary>
         /// <returns>>GREType con informacion de una guia remision remitente</returns>
         public static GREType GetDocumento(EmisorType emisor)
@@ -36,14 +36,6 @@ namespace Pruebas
                 nombre = "BERTA ATENCIA LLANOS"
             };
 
-            //Informacion del transportista(Empresa publica que realiza el transporte de la mercaderia)
-            var _transportista = new InfoTransportistaType()
-            {
-                ruc = "20602712592",
-                razonSocial = "CHOCANO CARGO S.A.C.",
-                registroMTC = null //de saber el registroMTC colocarlo aqui para evitar la observacion 4391
-            };
-
             //detalles a transportar
             var _detalles = new List<ItemGREType>()
             {
@@ -59,11 +51,10 @@ namespace Pruebas
             {
                 tipoGuia = "09",
                 serie = "T001",
-                numero = 1,
+                numero = 2,
                 fechaEmision = DateTime.Now,
                 horaEmision = DateTime.Now.ToString("HH:mm:ss"),
                 remitente = _remitente,
-                transportista = _transportista,
                 destinatario = _destinatario,
                 datosEnvio = new DatosEnvioGREType()
                 {
@@ -71,7 +62,7 @@ namespace Pruebas
                     descripcionMotivoTraslado = "VENTA DE PRODUCTOS",
                     pesoBrutoTotalBienes = 1,
                     unidadMedidaPesoBruto = "KGM",//Catalogo N° 03
-                    modalidadTraslado = "01",//Catalogo N° 18
+                    modalidadTraslado = "02",//Catalogo N° 18
                     fechaInicioTraslado = DateTime.Now.Date.AddDays(1),
                     puntoLlegada = new InfoDireccionGREType()
                     {
@@ -82,6 +73,10 @@ namespace Pruebas
                     {
                         ubigeo = "150115",
                         direccion = "AV. 28 DE JULIO 1275 - 1281, LA VICTORIA - LIMA - LIMA - LIMA - LA VICTORIA",
+                    },
+                    indicadoresGRERemitente = new IndicadoresGRERemitenteType()
+                    {
+                        indTrasladoVehiculoM1L = true
                     }
                 },
                 detalles = _detalles
