@@ -10,10 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasperSoft.SUNAT.UBL.V1", "GasperSoft.SUNAT.UBL.V1\GasperSoft.SUNAT.UBL.V1.csproj", "{9D9BC680-934C-485B-825B-0DD5147BEF74}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GasperSoft.SUNAT.UBL.V2", "GasperSoft.SUNAT.UBL.V2\GasperSoft.SUNAT.UBL.V2.csproj", "{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pruebas", "Pruebas\Pruebas.csproj", "{A11079D2-FA73-4DDF-A06C-EB077E7B8437}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{E51E8091-7C4E-42F7-99CE-D3D6C24B7892}"
@@ -22,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución",
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasperSoft.SUNAT", "GasperSoft.SUNAT\GasperSoft.SUNAT.csproj", "{5A5425B9-369C-41AA-9E6F-4FFB350EDE0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasperSoft.SUNAT.UBL", "GasperSoft.SUNAT.UBL\GasperSoft.SUNAT.UBL.csproj", "{87AA218A-4A31-45D9-A6C1-BC4057AB76A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +31,6 @@ Global
 		{B056B16A-9FAC-410C-8218-620911FB2D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B056B16A-9FAC-410C-8218-620911FB2D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B056B16A-9FAC-410C-8218-620911FB2D1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D9BC680-934C-485B-825B-0DD5147BEF74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEAC4191-2ED8-454A-9D9F-BAB4410E1FDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A11079D2-FA73-4DDF-A06C-EB077E7B8437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A11079D2-FA73-4DDF-A06C-EB077E7B8437}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A11079D2-FA73-4DDF-A06C-EB077E7B8437}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +39,10 @@ Global
 		{5A5425B9-369C-41AA-9E6F-4FFB350EDE0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A5425B9-369C-41AA-9E6F-4FFB350EDE0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A5425B9-369C-41AA-9E6F-4FFB350EDE0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87AA218A-4A31-45D9-A6C1-BC4057AB76A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87AA218A-4A31-45D9-A6C1-BC4057AB76A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87AA218A-4A31-45D9-A6C1-BC4057AB76A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87AA218A-4A31-45D9-A6C1-BC4057AB76A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
