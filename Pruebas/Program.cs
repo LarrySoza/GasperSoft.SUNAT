@@ -12,6 +12,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
+using System.Text;
+using System.IO.Compression;
 
 namespace Pruebas
 {
@@ -50,12 +52,14 @@ namespace Pruebas
                 Console.Clear();
                 Console.WriteLine("Seleccione Ejemplo:");
                 Console.WriteLine("==================");
-                Console.WriteLine("1: FACTURA SIMPLE");
+                Console.WriteLine("1: FACTURA CREDITO");
                 Console.WriteLine("2: FACTURA GRATUITA");
-                Console.WriteLine("3: NOTA CREDITO MOTIVO 13");
-                Console.WriteLine("4: GUIA REMISION REMITENTE - Transporte Publico");
-                Console.WriteLine("5: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
-                Console.WriteLine("6: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
+                Console.WriteLine("3: FACTURA CONTADO CON DETRACCION");
+                Console.WriteLine("4: NOTA CREDITO MOTIVO 13");
+                Console.WriteLine("5: GUIA REMISION REMITENTE - Transporte Publico");
+                Console.WriteLine("6: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
+                Console.WriteLine("7: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
+                Console.WriteLine("8: GUIA REMISION TRANSPORTISTA");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\nX");
@@ -70,22 +74,28 @@ namespace Pruebas
                 switch (_input)
                 {
                     case "1":
-                        EjemploCPE(CPE1.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "2":
-                        EjemploCPE(CPE2.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "3":
-                        EjemploCPE(CPE3.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura3.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "4":
-                        EjemploGRE(GRERemitente1.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        EjemploCPE(CPENotaCredito1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "5":
-                        EjemploGRE(GRERemitente2.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente1.GetDocumento(_emisor), _emisor, _certificado, _signature);
                         break;
                     case "6":
+                        EjemploGRE(GRERemitente2.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        break;
+                    case "7":
                         EjemploGRE(GRERemitente3.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        break;
+                    case "8":
+                        EjemploGRE(GRETransportista1.GetDocumento(_emisor), _emisor, _certificado, _signature);
                         break;
                     case "X":
                     case "x":
@@ -135,8 +145,8 @@ namespace Pruebas
                 //Generamos el XML
                 var _xml = GetXML(gre, emisor, certificado, out _digestValue, signature);
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
-                var _nombreXml = $"{emisor.ruc}-{gre.tipoGuia}-{gre.serie}-{gre.numero}.xml";
-                GuardarXml(_nombreXml, _xml, _digestValue);
+                var _nombreArchivo = $"{emisor.ruc}-{gre.tipoGuia}-{gre.serie}-{gre.numero}";
+                GuardarXml(_nombreArchivo, _xml, _digestValue);
             }
             else
             {
@@ -158,8 +168,8 @@ namespace Pruebas
                 //Generamos el XML
                 var _xml = GetXML(cpe, emisor, certificado, out _digestValue, signature);
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
-                var _nombreXml = $"{emisor.ruc}-{cpe.tipoDocumento}-{cpe.serie}-{cpe.numero}.xml";
-                GuardarXml(_nombreXml, _xml, _digestValue);
+                var _nombreArchivo = $"{emisor.ruc}-{cpe.tipoDocumento}-{cpe.serie}-{cpe.numero}";
+                GuardarXml(_nombreArchivo, _xml, _digestValue);
             }
             else
             {
@@ -169,14 +179,39 @@ namespace Pruebas
 
         static void GuardarXml(string nombre, string xml, string digestValue)
         {
-            File.WriteAllText(nombre, xml);
+            #region Generar Zip y Guardar el XML
+
+            //Importante guardar el XML como zip para no perder el encoding del XML y un posible error 2335(XMl adulterado)
+
+            var _dataBytes = XmlUtil.GlobalEncoding.GetBytes(xml);
+
+            byte[]? _bytesZip = null;
+
+            using (var memDestino = new MemoryStream())
+            {
+                using (var fileZip = new ZipArchive(memDestino, ZipArchiveMode.Create))
+                {
+                    ZipArchiveEntry zipItem = fileZip.CreateEntry($"{nombre}.xml");
+
+                    using (Stream ZipFile = zipItem.Open())
+                    {
+                        ZipFile.Write(_dataBytes, 0, _dataBytes.Length);
+                    }
+                }
+
+                _bytesZip = memDestino.ToArray();
+            }
+
+            File.WriteAllBytes($"{nombre}.zip", _bytesZip);
+
+            #endregion
 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Archivo guardado correctamente");
             Console.WriteLine("==============================");
             Console.ForegroundColor = _colorOriginal;
 
-            Console.WriteLine($"Nombre archivo: {nombre}");
+            Console.WriteLine($"Nombre archivo: {nombre}.zip");
             Console.WriteLine($"DigestValue: {digestValue}");
             Console.WriteLine($"Directorio: {AppDomain.CurrentDomain.BaseDirectory}");
             Console.ForegroundColor = ConsoleColor.Green;

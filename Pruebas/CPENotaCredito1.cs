@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Pruebas
 {
-    internal class CPE3
+    internal class CPENotaCredito1
     {
         /// <summary>
         /// Nota de credito Motivo 13 para modificar las cuotas

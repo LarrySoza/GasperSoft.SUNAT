@@ -459,32 +459,41 @@ namespace GasperSoft.SUNAT
 
             if (_cpe.detraccion != null)
             {
-                if (string.IsNullOrEmpty(_cpe.detraccion.numeroCuentaBancoNacion))
-                {
-                    _mensajesError.AddMensaje(CodigoError.S3034, "detraccion.numeroCuentaBancoNacion");
-                }
+                var _tiposOperacionDetraccion = new List<string>() { "1001", "1002", "1003", "1004" };
 
-                if (_cpe.detraccion.codMoneda != "PEN")
+                if (!_tiposOperacionDetraccion.Contains(_cpe.codigoTipoOperacion))
                 {
-                    _mensajesError.AddMensaje(CodigoError.S3208);
+                    _mensajesError.AddMensaje(CodigoError.S3128, "codigoTipoOperacion debe ser \"1001\", \"1002\", \"1003\" o \"1004\"");
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(_cpe.detraccion.numeroCuentaBancoNacion))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S3034, "detraccion.numeroCuentaBancoNacion");
+                    }
 
-                if (_cpe.detraccion.porcentaje < 0)
-                {
-                    _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.porcentaje");
-                }
-                else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.porcentaje, 2))
-                {
-                    _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.porcentaje");
-                }
+                    if (_cpe.detraccion.codMoneda != "PEN")
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S3208);
+                    }
 
-                if (_cpe.detraccion.importe < 0)
-                {
-                    _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.importe");
-                }
-                else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.importe, 2))
-                {
-                    _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.importe");
+                    if (_cpe.detraccion.porcentaje < 0)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.porcentaje");
+                    }
+                    else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.porcentaje, 2))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.porcentaje");
+                    }
+
+                    if (_cpe.detraccion.importe < 0)
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.importe");
+                    }
+                    else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.importe, 2))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.importe");
+                    }
                 }
             }
 

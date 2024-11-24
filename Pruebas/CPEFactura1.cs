@@ -12,12 +12,10 @@ using System.Threading.Tasks;
 
 namespace Pruebas
 {
-    internal class CPE2
+    internal class CPEFactura1
     {
         /// <summary>
-        /// Este ejemplo genera el XML para una factura gratuita sacado de la pagina 98 del manual oficial de SUNAT
-        /// URL: https://drive.google.com/file/d/15EdGzxHUC0vwclVxNjjYnPU0FyKR2x-a/view?usp=sharing
-        /// la unicas diferencias son el emisor, receptor, codigo de establecimiento y serie-numero
+        /// Factura al crédito, con un único detalle de S/. 100 +IGV
         /// </summary>
         /// <returns>CPEType con informacion de factura</returns>
         public static CPEType GetDocumento()
@@ -36,25 +34,40 @@ namespace Pruebas
             {
                 new ItemCPEType()
                 {
-                    codigoProductoSunat="52161505",
-                    nombre = "TELEVISOR PLASMA DE 42”, MARCA “RCA”",
+                    codigoProducto = "00001",
+                    nombre = "PRODUCTO DE PRUEBA",
                     unidadMedida = "NIU",//Catalogo N° 03
                     cantidad = 1,
-                    valorVentaUnitario = 0,
-                    precioVentaUnitario = 1250,
-                    valorVenta = 1250,
-                    montoBaseIGV = 1250,
-                    montoIGV = 0,
-                    tasaIGV = 0,
-                    codAfectacionIGV = "35",//Catalogo N° 07
-                    sumatoriaImpuestos = 0
+                    valorVentaUnitario=100,
+                    precioVentaUnitario = 118,
+                    valorVenta = 100,
+                    montoBaseIGV = 100,
+                    montoIGV = 18,
+                    tasaIGV = 18,
+                    codAfectacionIGV = "10",//Catalogo N° 07
+                    sumatoriaImpuestos = 18
                 }
             };
 
             //Forma de pago al contado
+            //var _informacionPago = new InformacionPagoType()
+            //{
+            //    formaPago = FormaPagoType.Contado
+            //};
+
+            //Forma de pago al credito en una cuota
             var _informacionPago = new InformacionPagoType()
             {
-                formaPago = FormaPagoType.Contado
+                formaPago = FormaPagoType.Credito,
+                montoPendientePago = 118,
+                cuotas = new List<CuotaType>()
+                {
+                    new CuotaType()
+                    {
+                        fechaPago = DateTime.Now.AddDays(30).Date,
+                        monto = 118
+                    }
+                }
             };
 
             //Cuerpo de una factura
@@ -62,21 +75,22 @@ namespace Pruebas
             {
                 codigoTipoOperacion = "0101",//Catalogo N° 51
                 codigoEstablecimiento = "0000",
+                ordenCompra = "000055",
                 informacionPago = _informacionPago,
                 fechaEmision = DateTime.Now.Date,
                 horaEmision = DateTime.Now.ToString("HH:mm:ss"),
                 tipoDocumento = "01",//Catalogo N° 01
                 serie = "F001",
-                numero = 4,
+                numero = 1,
                 adquirente = _adquirente,
                 detalles = _detalles,
                 codMoneda = "PEN",//Catalogo N° 02
-                totalOperacionesGratuitas = 1250,
-                sumatoriaIGV = 0,
-                sumatoriaImpuestos = 0,
-                valorVenta = 0,
-                precioVenta = 0,
-                importeTotal = 0,
+                totalOperacionesGravadas = 100,
+                sumatoriaIGV = 18,
+                sumatoriaImpuestos = 18,
+                valorVenta = 100,
+                precioVenta = 118,
+                importeTotal = 118,
             };
 
             return _cpe;

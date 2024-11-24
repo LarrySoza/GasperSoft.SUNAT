@@ -14,7 +14,7 @@ namespace GasperSoft.SUNAT
 {
     public class XmlUtil
     {
-        internal static Encoding GlobalEncoding => Encoding.GetEncoding("ISO-8859-1");
+        public static Encoding GlobalEncoding => Encoding.GetEncoding("ISO-8859-1");
 
         internal static XmlWriterSettings GetXmlWriterSettings()
         {

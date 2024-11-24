@@ -265,8 +265,6 @@ namespace GasperSoft.SUNAT
                 }
             }
 
-
-
             //Si no existen mensajes de Error entonces la validacion esta OK
             return !(_mensajesError.Count > 0);
         }

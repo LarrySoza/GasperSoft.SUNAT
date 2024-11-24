@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net462;net472;net481;netstandard2.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net462;net472;net481;netstandard2.0;net7.0;net8.0</TargetFrameworks>
     <Title>GasperSoft.SUNAT.DTO</Title>
     <RepositoryUrl>https://github.com/LarrySoza/GasperSoft.SUNAT</RepositoryUrl>
     <PackageTags>GASPERSOFT SUNAT DTO</PackageTags>
@@ -11,7 +11,7 @@
     <Description>Métodos utilizados para convertir los Objetos (DTOs) de GasperSoft.SUNAT.DTO(CPETye, CREType, GREType)  a XML</Description>
     <Copyright>Copyright (C) 2024 GasperSoft.</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.0</FileVersion>
+    <FileVersion>1.0.1</FileVersion>
     <Version>$(FileVersion)</Version>
   </PropertyGroup>
 
@@ -70,8 +70,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GasperSoft.SUNAT.DTO\GasperSoft.SUNAT.DTO.csproj" />
-    <ProjectReference Include="..\GasperSoft.SUNAT.UBL.V1\GasperSoft.SUNAT.UBL.V1.csproj" />
-    <ProjectReference Include="..\GasperSoft.SUNAT.UBL.V2\GasperSoft.SUNAT.UBL.V2.csproj" />
+    <ProjectReference Include="..\GasperSoft.SUNAT.UBL\GasperSoft.SUNAT.UBL.csproj" />
   </ItemGroup>
 
 </Project>
