@@ -15,6 +15,7 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.IO.Compression;
 using GasperSoft.SUNAT.DTO.Resumen;
+using GasperSoft.SUNAT.UBL.V1;
 
 namespace Pruebas
 {
@@ -63,6 +64,7 @@ namespace Pruebas
                 Console.WriteLine("8: GUIA REMISION TRANSPORTISTA");
                 Console.WriteLine("9: RESUMEN DIARIO DE BOLETAS - INFORMAR");
                 Console.WriteLine("10: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
+                Console.WriteLine("11: COMUNICACION DE BAJA (SOLO FACTURAS)");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\nX");
@@ -105,6 +107,9 @@ namespace Pruebas
                     case "10":
                         EjemploResumenDiario(ResumenDiario2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
+                    case "11":
+                        EjemploComunicacionBaja(ComunicacionBaja1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
                     case "X":
                     case "x":
                         salir = true;
@@ -121,6 +126,17 @@ namespace Pruebas
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Bye");
             Console.ForegroundColor = _colorOriginal;
+        }
+
+        private static void EjemploComunicacionBaja(ComunicacionBajaType baja, EmisorType emisor, X509Certificate2 certificado, string signature)
+        {
+            //aqui se almacena el digestValue del xml firmado
+            string _digestValue;
+            //Generamos el XML
+            var _xml = GetXML(baja, emisor, certificado, out _digestValue, signature);
+            //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
+            var _nombreArchivo = $"{emisor.ruc}-{baja.id}";
+            GuardarXml(_nombreArchivo, _xml, _digestValue);
         }
 
         private static void EjemploResumenDiario(ResumenDiarioV2Type resumen, EmisorType emisor, X509Certificate2 certificado, string signature)
@@ -283,6 +299,18 @@ namespace Pruebas
         static string GetXML(ResumenDiarioV2Type resumen, EmisorType emisor, X509Certificate2 certificado, out string digestValue, string signature)
         {
             var _resumenType = ResumenDiarioV2.GetDocumento(resumen, emisor, signature);
+
+            var _xml = XmlUtil.Serializar(_resumenType);
+
+            //Firmar el XML y obtener el digestValue
+            var _xmlFirmado = XmlUtil.FirmarXml(_xml, certificado, out digestValue, signature);
+
+            return _xmlFirmado;
+        }
+
+        static string GetXML(ComunicacionBajaType baja, EmisorType emisor, X509Certificate2 certificado, out string digestValue, string signature)
+        {
+            var _resumenType = ComunicacionBaja.GetDocumento(baja, emisor, signature);
 
             var _xml = XmlUtil.Serializar(_resumenType);
 

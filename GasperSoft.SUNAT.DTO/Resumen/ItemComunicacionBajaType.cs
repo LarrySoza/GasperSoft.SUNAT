@@ -7,7 +7,9 @@ namespace GasperSoft.SUNAT.DTO.Resumen
     public class ItemComunicacionBajaType
     {
         /// <summary>
-        /// El identificador unico del comprobante en Simple-Ubl
+        /// El identificador unico del comprobante en los sistemas del contribuyente
+        /// Nota: Esta propiedad no se usa en la generación del XML pero puede ser útil para integración en los sistemas 
+        /// que requieran un identificador único del documento a dar de baja.
         /// </summary>
         public string comprobanteId { get; set; }
 
