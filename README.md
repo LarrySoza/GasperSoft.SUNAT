@@ -38,7 +38,7 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
   - [GUIA REMISION TRANSPORTISTA](/Xml/20606433094-31-V001-1.xml)
   - [RESUMEN DIARIO DE BOLETAS - INFORMAR](/Xml/20606433094-RC-20241125-1.xml)
   - [RESUMEN DIARIO DE BOLETAS - DAR DE BAJA](/Xml/20606433094-RC-20241125-2.xml)
-  - [COMUNICACION DE BAJA (SOLO FACTURAS)](/Xml/20606433094-RA-20241125-1)
+  - [COMUNICACION DE BAJA (SOLO FACTURAS)](/Xml/20606433094-RA-20241125-1.xml)
 
 # Validar XML generado
 - Se puede validar el XML generado en https://probar-xml.nubefact.com, Sin embargo debe considerar que el solo hecho de copiar y pegar en esta página podría adulterar el contenido del XML y tener un mensaje de error 2335(Como en el ejemplo de "FACTURA CONTADO CON DETRACCION"), de ser ese el caso puede marcar la opcion Firmar.
