@@ -19,7 +19,6 @@ namespace Pruebas
         /// URL: https://drive.google.com/file/d/15EdGzxHUC0vwclVxNjjYnPU0FyKR2x-a/view?usp=sharing
         /// la unicas diferencias son el emisor, receptor, codigo de establecimiento y serie-numero
         /// </summary>
-        /// <returns>CPEType con informacion de factura</returns>
         public static CPEType GetDocumento()
         {
             //Informacion del Receptor
@@ -77,6 +76,7 @@ namespace Pruebas
                 valorVenta = 0,
                 precioVenta = 0,
                 importeTotal = 0,
+                indTransferenciaGratuita = true //Esto es opcional
             };
 
             return _cpe;

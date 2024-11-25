@@ -17,15 +17,14 @@ namespace Pruebas
         /// <summary>
         /// Guia de remision Remitente con modalidad de transporte Privado no incluir informacion de vehiculo ni conductor (M1 o L) 
         /// </summary>
-        /// <returns>>GREType con informacion de una guia remision remitente</returns>
-        public static GREType GetDocumento(EmisorType emisor)
+        public static GREType GetDocumento()
         {
             //Al ser una guia de remision remitente usamos los datos del emisor
             var _remitente = new InfoRemitenteType()
             {
                 tipoDocumentoIdentificacion = "6",
-                numeroDocumentoIdentificacion = emisor.ruc,
-                nombre = emisor.razonSocial
+                numeroDocumentoIdentificacion = "20606433094",
+                nombre = "GASPERSOFT EIRL"
             };
 
             //Los datos del destinatario

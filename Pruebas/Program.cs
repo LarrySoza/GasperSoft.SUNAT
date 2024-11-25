@@ -14,6 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.IO.Compression;
+using GasperSoft.SUNAT.DTO.Resumen;
 
 namespace Pruebas
 {
@@ -60,12 +61,13 @@ namespace Pruebas
                 Console.WriteLine("6: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
                 Console.WriteLine("7: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
                 Console.WriteLine("8: GUIA REMISION TRANSPORTISTA");
+                Console.WriteLine("9: RESUMEN DIARIO DE BOLETAS - INFORMAR");
+                Console.WriteLine("10: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\nX");
                 Console.ForegroundColor = _colorOriginal;
                 Console.WriteLine(": Salir");
-                
 
                 var _input = Console.ReadLine();
 
@@ -86,16 +88,22 @@ namespace Pruebas
                         EjemploCPE(CPENotaCredito1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "5":
-                        EjemploGRE(GRERemitente1.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "6":
-                        EjemploGRE(GRERemitente2.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "7":
-                        EjemploGRE(GRERemitente3.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente3.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "8":
-                        EjemploGRE(GRETransportista1.GetDocumento(_emisor), _emisor, _certificado, _signature);
+                        EjemploGRE(GRETransportista1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "9":
+                        EjemploResumenDiario(ResumenDiario1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "10":
+                        EjemploResumenDiario(ResumenDiario2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "X":
                     case "x":
@@ -113,6 +121,17 @@ namespace Pruebas
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Bye");
             Console.ForegroundColor = _colorOriginal;
+        }
+
+        private static void EjemploResumenDiario(ResumenDiarioV2Type resumen, EmisorType emisor, X509Certificate2 certificado, string signature)
+        {
+            //aqui se almacena el digestValue del xml firmado
+            string _digestValue;
+            //Generamos el XML
+            var _xml = GetXML(resumen, emisor, certificado, out _digestValue, signature);
+            //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
+            var _nombreArchivo = $"{emisor.ruc}-{resumen.id}";
+            GuardarXml(_nombreArchivo, _xml, _digestValue);
         }
 
         private static void EjemploGRE(GREType gre, EmisorType emisor, X509Certificate2 certificado, string signature)
@@ -254,6 +273,18 @@ namespace Pruebas
             var _cpeType = GuiaRemision.GetDocumento(gre, emisor, signature);
 
             var _xml = XmlUtil.Serializar(_cpeType);
+
+            //Firmar el XML y obtener el digestValue
+            var _xmlFirmado = XmlUtil.FirmarXml(_xml, certificado, out digestValue, signature);
+
+            return _xmlFirmado;
+        }
+
+        static string GetXML(ResumenDiarioV2Type resumen, EmisorType emisor, X509Certificate2 certificado, out string digestValue, string signature)
+        {
+            var _resumenType = ResumenDiarioV2.GetDocumento(resumen, emisor, signature);
+
+            var _xml = XmlUtil.Serializar(_resumenType);
 
             //Firmar el XML y obtener el digestValue
             var _xmlFirmado = XmlUtil.FirmarXml(_xml, certificado, out digestValue, signature);

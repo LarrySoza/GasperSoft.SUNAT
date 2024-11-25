@@ -24,6 +24,8 @@ Un conjunto de librerías para .NET que permite la fácil generación de los XML
   - GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)
   - GUIA REMISION REMITENTE - Transporte Privado (M1 o L)
   - GUIA REMISION TRANSPORTISTA
+  - RESUMEN DIARIO DE BOLETAS - INFORMAR;
+  - RESUMEN DIARIO DE BOLETAS - DAR DE BAJA;
 
 # Validar XML generado
 - Se puede validar el XML generado en https://probar-xml.nubefact.com, Sin embargo debe considerar que el solo hecho de copiar y pegar en esta página podría adulterar el contenido del XML y tener un mensaje de error 2335(Como en el ejemplo de "FACTURA CONTADO CON DETRACCION"), de ser ese el caso puede marcar la opcion Firmar.

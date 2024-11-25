@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Pruebas
 {
@@ -17,14 +18,13 @@ namespace Pruebas
         /// <summary>
         /// Guia de remision Transportista 
         /// </summary>
-        /// <returns>>GREType con informacion de una guia remision remitente</returns>
-        public static GREType GetDocumento(EmisorType emisor)
+        public static GREType GetDocumento()
         {
             //Los datos de la informacion del transportista son los mismo que del emisor
             var _transportista = new InfoTransportistaType()
             {
-                ruc = emisor.ruc,
-                razonSocial = emisor.razonSocial,
+                ruc = "20606433094",
+                razonSocial = "GASPERSOFT EIRL",
                 registroMTC = "ABCDEFG12345" //de saber el registroMTC colocarlo aqui para evitar la observacion 4391
             };
 

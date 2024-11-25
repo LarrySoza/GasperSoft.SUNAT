@@ -17,7 +17,6 @@ namespace Pruebas
         /// <summary>
         /// Factura al contado con detraccion del 12%
         /// </summary>
-        /// <returns>CPEType con informacion de factura</returns>
         public static CPEType GetDocumento()
         {
             //Informacion del Receptor

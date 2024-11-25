@@ -9,55 +9,6 @@ namespace GasperSoft.SUNAT
 {
     public class Validaciones
     {
-        #region Private
-        private static bool Valruc(string input)
-        {
-            input = input.Trim();
-            if (IsInteger(input))
-            {
-                if (input.Length == 8)
-                {
-                    var suma = 0;
-                    for (int i = 0; i < input.Length - 1; i++)
-                    {
-                        var digito = input[i] - '0';
-                        if (i == 0) suma += (digito * 2);
-                        else suma += (digito * (input.Length - i));
-                    }
-                    var resto = suma % 11;
-                    if (resto == 1) resto = 11;
-                    if (resto + (input[input.Length - 1] - '0') == 11)
-                    {
-                        return true;
-                    }
-                }
-                else if (input.Length == 11)
-                {
-                    var suma = 0;
-                    var x = 6;
-                    for (int i = 0; i < input.Length - 1; i++)
-                    {
-                        if (i == 4) x = 8;
-                        var digito = input[i] - '0';
-                        x--;
-                        if (i == 0) suma += (digito * x);
-                        else suma += (digito * x);
-                    }
-                    var resto = suma % 11;
-                    resto = 11 - resto;
-
-                    if (resto >= 10) resto -= 10;
-                    if (resto == input[input.Length - 1] - '0')
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        #endregion
-
         internal static bool ValidarToleranciaCalculo(decimal valorEnviado, decimal valorCalculado, decimal toleranciaCalculo)
         {
             if (toleranciaCalculo < 0.20m)
@@ -229,7 +180,34 @@ namespace GasperSoft.SUNAT
 
         public static bool IsValidRuc(string input)
         {
-            return (!(string.IsNullOrEmpty(input) || !IsInteger(input) || !(input.Length == 11) || !Valruc(input)));
+            if (string.IsNullOrEmpty(input) || !IsInteger(input) || !(input.Length == 11))
+            {
+                return false;
+            }
+
+            var suma = 0;
+            var x = 6;
+
+            for (int i = 0; i < input.Length - 1; i++)
+            {
+                if (i == 4) x = 8;
+                var digito = input[i] - '0';
+                x--;
+                if (i == 0) suma += (digito * x);
+                else suma += (digito * x);
+            }
+
+            var resto = suma % 11;
+            resto = 11 - resto;
+
+            if (resto >= 10) resto -= 10;
+
+            if (resto == input[input.Length - 1] - '0')
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static bool IsValidDni(string input)

@@ -17,7 +17,6 @@ namespace Pruebas
         /// <summary>
         /// Factura al crédito, con un único detalle de S/. 100 +IGV
         /// </summary>
-        /// <returns>CPEType con informacion de factura</returns>
         public static CPEType GetDocumento()
         {
             //Informacion del Receptor

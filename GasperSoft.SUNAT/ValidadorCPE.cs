@@ -231,9 +231,9 @@ namespace GasperSoft.SUNAT
                 _mensajesError.AddMensaje(CodigoError.V0102, "fechaEmision");
             }
 
-            var documentosPermitidos = new List<string> { "01", "03", "07", "08" };
+            var _documentosPermitidos = new List<string> { "01", "03", "07", "08" };
 
-            if (!documentosPermitidos.Contains(_cpe.tipoDocumento))
+            if (!_documentosPermitidos.Contains(_cpe.tipoDocumento))
             {
                 _mensajesError.AddMensaje(CodigoError.V0027, "tipoDocumento");
                 return false;
@@ -562,6 +562,21 @@ namespace GasperSoft.SUNAT
 
                     foreach (var item in _cpe.motivosNota)
                     {
+                        if (!Validaciones.IsValidSeries(item.tipoDocumento, item.serie))
+                        {
+                            _mensajesError.AddMensaje(CodigoError.V0015, $"motivosNota[{indexMotivoNota}].serie");
+                            continue;
+                        }
+
+                        if (item.serie.StartsWith("F") || item.serie.StartsWith("B"))
+                        {
+                            if (_cpe.serie[0] != item.serie[0])
+                            {
+                                _mensajesError.AddMensaje(CodigoError.V0016);
+                                continue;
+                            }
+                        }
+
                         #region Validaciones Nota de Credito 
 
                         if (_cpe.tipoDocumento == "07")
@@ -1304,60 +1319,7 @@ namespace GasperSoft.SUNAT
                 _mensajesError.AddMensaje(CodigoError.V0018);
             }
 
-            //Agregamos la leyenda 1002 si no es un comprobante oneroso
-            if (!_comprobanteOneroso)
-            {
-                _cpe.indTransferenciaGratuita = true;
-            }
-
-
             #endregion
-
-            //#region Validacion de detraccion
-
-            //if (_CPE.detraccion != null)
-            //{
-            //    if (_CPE.detraccion.datosAdiconales == null)
-            //    {
-            //        _mensajes.AddMensaje(new MensajeType("A043");
-            //    }
-            //    else
-            //    {
-            //        var _adicionalesDetraccion = dCatalogoSunatDato.Listar("15").Where(r => (r.codigo.StartsWith("30"))).ToList();
-            //        var _codigosExistentes = new List<string>();
-
-            //        foreach (var item in _CPE.detraccion.datosAdiconales)
-            //        {
-            //            //Verificamos que la leyenda exista
-            //            if (_adicionalesDetraccion.Where(r => (r.codigo == item.codigo)).ToList().Count == 0)
-            //            {
-            //                _mensajes.AddMensaje(new MensajeType("A044", item.codigo));
-            //            }
-            //            else
-            //            {
-            //                if (string.IsNullOrEmpty(item.valor))
-            //                {
-            //                    //Prevenimos error 2066 de SUNAT
-            //                    _mensajes.AddMensaje(new MensajeType("A045", item.codigo));
-            //                }
-            //                else
-            //                {
-            //                    if (_codigosExistentes.Contains(item.codigo))
-            //                    {
-            //                        //Prevenimos error 2407 de SUNAT
-            //                        _mensajes.AddMensaje(new MensajeType("A046", item.codigo));
-            //                    }
-            //                    else
-            //                    {
-            //                        _codigosExistentes.Add(item.codigo);
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            //#endregion
 
             #region validaciones de totales
 

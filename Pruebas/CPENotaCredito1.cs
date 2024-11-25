@@ -17,7 +17,6 @@ namespace Pruebas
         /// <summary>
         /// Nota de credito Motivo 13 para modificar las cuotas
         /// </summary>
-        /// <returns>CPEType con informacion de factura</returns>
         public static CPEType GetDocumento()
         {
             //Informacion del Receptor
