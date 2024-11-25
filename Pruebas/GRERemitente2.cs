@@ -64,7 +64,7 @@ namespace Pruebas
             {
                 tipoGuia = "09",
                 serie = "T001",
-                numero = 1,
+                numero = 2,
                 fechaEmision = DateTime.Now,
                 horaEmision = DateTime.Now.ToString("HH:mm:ss"),
                 remitente = _remitente,
