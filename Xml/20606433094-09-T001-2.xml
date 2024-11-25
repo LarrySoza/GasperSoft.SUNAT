@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<DespatchAdvice xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">
+  <ext:UBLExtensions>
+    <ext:UBLExtension><ext:ExtensionContent><Signature Id="signatureMIEMPRESA" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><DigestValue>K389cXIXPZS8pxYZPQzHRF3C0P8UdQPbLNJdC6Kukhg=</DigestValue></Reference></SignedInfo><SignatureValue>KKMFAE9Myti25I3qJlim/pgNpLbRQ7pr/ZfxdJZZ1SlPHetD6sZ0lgEtDc/vHusawmDJ6s7auggO3RM8qaDn+ylCPMFbB8id/EFY3rTcbmoqtchJFZGIMIxpe5IQXA+DUMI19p84YICF8CLE9U11YVJ4vk10eaUPyk9kTFfuKyTH2R47kAK2tSCYzaiRMtgfnHQGhkFz7mezqcMmTfZzZYXsuAEbljAjVgk6Qie9KpLTuKSHmGmWxzWaJ0Ee82B/leRW1gHSIBf2Wu39e1df86T9awycN14OOkABO7flkQQYfgBfpDMyCxkXb37c3nls/o683MxyLrVTRI9FCaFaBg==</SignatureValue><KeyInfo><X509Data><X509SubjectName>E=demo@llama.pe, CN=NOMBRE REPRESENTANTE LEGAL - CERTIFICADO PARA DEMOSTRACIÓN, OU=DNI 9999999 RUC 20606433094 - CERTIFICADO PARA DEMOSTRACIÓN, O=TU EMPRESA S.A., L=LIMA, S=LIMA, C=PE, DC=LLAMA.PE SA</X509SubjectName><X509Certificate>MIIFCDCCA/CgAwIBAgIJAJmqr0ynYmE7MA0GCSqGSIb3DQEBCwUAMIIBDTEbMBkGCgmSJomT8ixkARkWC0xMQU1BLlBFIFNBMQswCQYDVQQGEwJQRTENMAsGA1UECAwETElNQTENMAsGA1UEBwwETElNQTEYMBYGA1UECgwPVFUgRU1QUkVTQSBTLkEuMUUwQwYDVQQLDDxETkkgOTk5OTk5OSBSVUMgMjA2MDY0MzMwOTQgLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xRDBCBgNVBAMMO05PTUJSRSBSRVBSRVNFTlRBTlRFIExFR0FMIC0gQ0VSVElGSUNBRE8gUEFSQSBERU1PU1RSQUNJw5NOMRwwGgYJKoZIhvcNAQkBFg1kZW1vQGxsYW1hLnBlMB4XDTI0MTEyMDA0NTA1NVoXDTI2MTEyMDA0NTA1NVowggENMRswGQYKCZImiZPyLGQBGRYLTExBTUEuUEUgU0ExCzAJBgNVBAYTAlBFMQ0wCwYDVQQIDARMSU1BMQ0wCwYDVQQHDARMSU1BMRgwFgYDVQQKDA9UVSBFTVBSRVNBIFMuQS4xRTBDBgNVBAsMPEROSSA5OTk5OTk5IFJVQyAyMDYwNjQzMzA5NCAtIENFUlRJRklDQURPIFBBUkEgREVNT1NUUkFDScOTTjFEMEIGA1UEAww7Tk9NQlJFIFJFUFJFU0VOVEFOVEUgTEVHQUwgLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xHDAaBgkqhkiG9w0BCQEWDWRlbW9AbGxhbWEucGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCUDtOx/MgUiW76TbmmupAVs3LygXjKcPWIdXSjiKEWqJSPY0Xox2XQOVGlYi+HGKOH4HaNUeB8p5kNHuwrXRNUzbI1mvxdSA9ndxSvVcBSzZlB7xqhn2P2Ow4BaKEyXZA91P1ZM+4jhvtF3OiUSlASG1xFTWhAy0VcnDg9hCAW72ptYelO67AezvBZRltQqNb/T9oQU2Yw9+0cmHCdnylPh3FuDuJ8kW57p1Z7HSObUa7UXZEJJIq+6EhpNMLjZZYxIdydo74yTKLb8ZiZa41o7B8dSriUQ6X9T9FPPaUh6nZveIqeJ83QOXxLacfcNMbMLlsG8/6Mn+86uIgOQGMLAgMBAAGjZzBlMB0GA1UdDgQWBBR+0+UPrYXy+5N7gj+8gTVXIAuSCzAfBgNVHSMEGDAWgBR+0+UPrYXy+5N7gj+8gTVXIAuSCzATBgNVHSUEDDAKBggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCB4AwDQYJKoZIhvcNAQELBQADggEBAAiZn7bC8dBEIXwsz+N+N5AAOgS4EIAlbQhqtLAxSCAuQadaS2zUfwlYJ6Kr4FzQtLtpCXJbLdW2Cu1a43dDkHICVCE/71ENmwP6MQGgf3YYSn5/8s0Jivb3KXsRlu95GN36KB5T48mpmzMtz5VcICcf2orfQxeD4upD+d29jJ59xPlPNHNj3iw5yHiF9zLCCTaZSDsFXfQOmnSNWVObdULzT3nvE1wSqes7WRqz3q9m4raCDQChllgZdsZqvqAaFD1glT2RY7MBExueXcxSPQGPXIvAg9rygZCXOsGBEWodsoFECgbdzTo16cqpA9t5v2wYm8myw0vw6rl9xfuQSXA=</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent></ext:UBLExtension>
+  </ext:UBLExtensions>
+  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+  <cbc:CustomizationID schemeAgencyName="PE:SUNAT">2.0</cbc:CustomizationID>
+  <cbc:ID>T001-2</cbc:ID>
+  <cbc:IssueDate>2024-11-25</cbc:IssueDate>
+  <cbc:IssueTime>05:07:01</cbc:IssueTime>
+  <cbc:DespatchAdviceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DespatchAdviceTypeCode>
+  <cac:Signature>
+    <cbc:ID>signatureMIEMPRESA</cbc:ID>
+    <cac:SignatoryParty>
+      <cac:PartyIdentification>
+        <cbc:ID>20606433094</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>GASPERSOFT EIRL</cbc:Name>
+      </cac:PartyName>
+    </cac:SignatoryParty>
+    <cac:DigitalSignatureAttachment>
+      <cac:ExternalReference>
+        <cbc:URI>#signatureMIEMPRESA</cbc:URI>
+      </cac:ExternalReference>
+    </cac:DigitalSignatureAttachment>
+  </cac:Signature>
+  <cac:DespatchSupplierParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20606433094</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>GASPERSOFT EIRL</cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:DespatchSupplierParty>
+  <cac:DeliveryCustomerParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="1" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">40950090</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>BERTA ATENCIA LLANOS</cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:DeliveryCustomerParty>
+  <cac:Shipment>
+    <cbc:ID>SUNAT_Envio</cbc:ID>
+    <cbc:HandlingCode listAgencyName="PE:SUNAT" listName="Motivo de traslado" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo20">01</cbc:HandlingCode>
+    <cbc:HandlingInstructions>VENTA DE PRODUCTOS</cbc:HandlingInstructions>
+    <cbc:GrossWeightMeasure unitCode="KGM">1.000</cbc:GrossWeightMeasure>
+    <cbc:SpecialInstructions>SUNAT_Envio_IndicadorTrasladoVehiculoM1L</cbc:SpecialInstructions>
+    <cac:ShipmentStage>
+      <cbc:TransportModeCode listAgencyName="PE:SUNAT" listName="Modalidad de traslado" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo18">02</cbc:TransportModeCode>
+      <cac:TransitPeriod>
+        <cbc:StartDate>2024-11-26</cbc:StartDate>
+      </cac:TransitPeriod>
+    </cac:ShipmentStage>
+    <cac:Delivery>
+      <cac:DeliveryAddress>
+        <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">250101</cbc:ID>
+        <cac:AddressLine>
+          <cbc:Line>KM 86 (PUNTO DE VENTA) CARRETERA FEDERICO BASADRE KM 86 MZ B LOTE 2 - UCAYALI - CORONEL PORTILLO - CALLERIA</cbc:Line>
+        </cac:AddressLine>
+      </cac:DeliveryAddress>
+      <cac:Despatch>
+        <cac:DespatchAddress>
+          <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">150115</cbc:ID>
+          <cac:AddressLine>
+            <cbc:Line>AV. 28 DE JULIO 1275 - 1281, LA VICTORIA - LIMA - LIMA - LIMA - LA VICTORIA</cbc:Line>
+          </cac:AddressLine>
+        </cac:DespatchAddress>
+      </cac:Despatch>
+    </cac:Delivery>
+  </cac:Shipment>
+  <cac:DespatchLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:DeliveredQuantity unitCode="NIU" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">2.00</cbc:DeliveredQuantity>
+    <cac:OrderLineReference>
+      <cbc:LineID>1</cbc:LineID>
+    </cac:OrderLineReference>
+    <cac:Item>
+      <cbc:Description>JUEGO DE MESA</cbc:Description>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Indicador de bien regulado por SUNAT</cbc:Name>
+        <cbc:NameCode listAgencyName="PE:SUNAT" listName="Propiedad del item" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo55">7022</cbc:NameCode>
+        <cbc:Value>0</cbc:Value>
+      </cac:AdditionalItemProperty>
+    </cac:Item>
+  </cac:DespatchLine>
+</DespatchAdvice>
