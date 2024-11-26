@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
@@ -48,7 +49,7 @@ namespace GasperSoft.SUNAT.DTO.GRE
         /// <summary>
         /// Número de placa(s) del vehiculo
         /// </summary>
-        [Obsolete("Usar la propiedad \"vehículos\" para asignar información de los vehículos usados en el transporte")]
+        //[Obsolete("Usar la propiedad \"vehículos\" para asignar información de los vehículos usados en el transporte")]
         public List<string> placasVehiculo { get; set; }
 
         /// <summary>
