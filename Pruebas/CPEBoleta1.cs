@@ -36,7 +36,7 @@ namespace Pruebas
                 {
                     codigoProducto = "REF564",
                     codigoProductoSunat = "52141501",
-                    nombre = "REFRIGERADORA MARCA “AXM” NO FROST DE 200 LTRS.",
+                    nombre = "REFRIGERADORA MARCA \"AXM\" NO FROST DE 200 LTRS.",
                     unidadMedida = "NIU",//Catalogo N° 03
                     cantidad = 1,
                     valorVentaUnitario= 845.7627118644m,
@@ -52,7 +52,7 @@ namespace Pruebas
                 {
                     codigoProducto = "COC124",
                     codigoProductoSunat = "95141606",
-                    nombre = "COCINA A GAS GLP, MARCA “AXM” DE 5 HORNILLAS",
+                    nombre = "COCINA A GAS GLP, MARCA \"AXM\" DE 5 HORNILLAS",
                     unidadMedida = "NIU",//Catalogo N° 03
                     cantidad = 1,
                     valorVentaUnitario= 635.593220339m,
@@ -73,7 +73,7 @@ namespace Pruebas
                 {
                     codigoProducto = "NOB012",
                     codigoProductoSunat = "24121803",
-                    nombre = "SIXPACK DE GASEOSA “GUERENÉ” DE 400 ML",
+                    nombre = "SIXPACK DE GASEOSA \"GUERENÉ\" DE 400 ML",
                     unidadMedida = "NIU",//Catalogo N° 03
                     cantidad = 1,
                     valorVentaUnitario= 0,
