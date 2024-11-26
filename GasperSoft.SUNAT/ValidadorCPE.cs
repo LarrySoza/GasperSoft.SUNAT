@@ -457,10 +457,10 @@ namespace GasperSoft.SUNAT
                 }
             }
 
+            var _tiposOperacionDetraccion = new List<string>() { "1001", "1002", "1003", "1004" };
+
             if (_cpe.detraccion != null)
             {
-                var _tiposOperacionDetraccion = new List<string>() { "1001", "1002", "1003", "1004" };
-
                 if (!_tiposOperacionDetraccion.Contains(_cpe.codigoTipoOperacion))
                 {
                     _mensajesError.AddMensaje(CodigoError.S3128, "codigoTipoOperacion debe ser \"1001\", \"1002\", \"1003\" o \"1004\"");
@@ -494,6 +494,13 @@ namespace GasperSoft.SUNAT
                     {
                         _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.importe");
                     }
+                }
+            }
+            else
+            {
+                if (_tiposOperacionDetraccion.Contains(_cpe.codigoTipoOperacion))
+                {
+                    _mensajesError.AddMensaje(CodigoError.S3127, "detraccion es obligatorio cuando codigoTipoOperacion = \"1001\", \"1002\", \"1003\" o \"1004\"");
                 }
             }
 

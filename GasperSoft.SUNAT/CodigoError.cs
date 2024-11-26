@@ -52,6 +52,7 @@ namespace GasperSoft.SUNAT
         public const string S4392 = "S4392:El Numero de Registro MTC del transportista no cumple con el formato establecido";
         public const string S3034 = "S3034:No existe información en el nro de cuenta de detracción";
         public const string S3101 = "S3101:El factor de afectación de IGV por linea debe ser igual a 0.00 para Exoneradas, Inafectas, Exportación, Gratuitas de exoneradas o Gratuitas de inafectas";
+        public const string S3127 = "S3127:El XML no contiene el tag o no existe información del Codigo de BBSS de detracción para el tipo de operación";
         public const string S3128 = "S3128:El XML contiene información de codigo de bien y servicio de detracción que no corresponde al tipo de operación";
         public const string S3203 = "S3203:El tipo de nota es un dato único (Notas de crédito y débito deben consignar un único elemento en la propiedad 'motivosNota')";
         public const string S3244 = "S3244:Debe consignar la informacion del tipo de transaccion del comprobante('informacionPago' es requerido para facturas y notas de crédito motivo 13)";
