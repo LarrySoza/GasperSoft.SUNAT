@@ -15,9 +15,8 @@ namespace Pruebas
     internal class CPEFactura2
     {
         /// <summary>
-        /// Este ejemplo genera el XML para una factura gratuita sacado de la pagina 98 del manual oficial de SUNAT
-        /// URL: https://drive.google.com/file/d/15EdGzxHUC0vwclVxNjjYnPU0FyKR2x-a/view?usp=sharing
-        /// la unicas diferencias son el emisor, receptor, codigo de establecimiento y serie-numero
+        /// FACTURA GRATUITA - Pagina 98 Manual SUNAT
+        /// la unicas diferencias son el fecha emision, emisor, receptor, codigo de establecimiento y serie-numero
         /// </summary>
         public static CPEType GetDocumento()
         {

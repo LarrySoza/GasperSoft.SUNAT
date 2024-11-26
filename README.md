@@ -26,11 +26,14 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
   - Guías de Remisión Transportista
 
 # Proyecto "Pruebas"
-- Se necesita un certificado de prueba que se puede generar de manera gratuita en https://llama.pe/certificado-digital-de-prueba-sunat), actualmente se tienen los siguientes ejemplos:
+- Se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [NUBEFACT](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
 
+  - [BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-03-B001-1.xml) - [Pagina 60 Manual SUNAT](/ManualesSunat/BoletaDeVentaElectronica2.1.pdf)
   - [FACTURA CREDITO](/Xml/20606433094-01-F001-1.xml)
-  - [FACTURA GRATUITA](/Xml/20606433094-01-F001-2.xml)
+  - [FACTURA GRATUITA](/Xml/20606433094-01-F001-2.xml) - [Pagina 98 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)
   - [FACTURA CONTADO CON DETRACCION](/Xml/20606433094-01-F001-3.xml)
+  <!--- [FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-01-F001-4.xml) - [Pagina 77 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)
+  - [FACTURA CON 2 ÍTEMS E ISC](/Xml/20606433094-01-F001-5.xml) - [Pagina 88 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)-->
   - [NOTA CREDITO MOTIVO 13](/Xml/20606433094-07-F001-1.xml)
   - [GUIA REMISION REMITENTE - Transporte Publico](/Xml/20606433094-09-T001-1.xml)
   - [GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)](/Xml/20606433094-09-T001-2.xml)
@@ -41,7 +44,7 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
   - [COMUNICACION DE BAJA (SOLO FACTURAS)](/Xml/20606433094-RA-20241125-1.xml)
 
 # Validar XML generado
-- Se puede validar el XML generado en https://probar-xml.nubefact.com, Sin embargo debe considerar que el solo hecho de copiar y pegar en esta página podría adulterar el contenido del XML y tener un mensaje de error 2335(Como en el ejemplo de "FACTURA CONTADO CON DETRACCION"), de ser ese el caso puede marcar la opcion Firmar.
+- Se puede validar el XML generado en [NUBEFACT](https://probar-xml.nubefact.com), Sin embargo debe considerar que el solo hecho de copiar y pegar en esta página podría adulterar el contenido del XML y tener un mensaje de error 2335(Como en el ejemplo de "FACTURA CONTADO CON DETRACCION"), de ser ese el caso puede marcar la opcion Firmar.
 
 ![ValidarXml](https://github.com/user-attachments/assets/7f9edb32-7c83-4c02-9c8f-f47972ed8a49)
 
@@ -49,7 +52,10 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
 >A la fecha 24-11-2024 la pagina de nubefact no valida los XML de Guia Transportista
 
 # Envio a SUNAT
-- De momento este proyecto se enfoca exclusivamente en la generación de los XML, puede encontrar código de envió a SUNAT en OpenInvoice https://github.com/erickorlando/openinvoiceperu
+- De momento este proyecto se enfoca exclusivamente en la generación de los XML, puede encontrar código de envió a SUNAT en [OpenInvoice](https://github.com/erickorlando/openinvoiceperu)
+
+>[!NOTE] 
+>La razón para no publicar código de envió es que busco la implementación usando un código compatible con NET Framework y NET 8, y que permita asignar la URL y credenciales, actualmente esto solo lo tengo implementado en NET Framework. En los próximos meses posiblemente el código de envío sea agregado al proyecto **GasperSoft.SUNAT**
 
 ## Asesoría y Soporte ##
 
