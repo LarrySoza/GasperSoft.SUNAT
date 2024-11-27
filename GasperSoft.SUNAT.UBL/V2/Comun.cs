@@ -207,7 +207,7 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         internal static DocumentReferenceType[] GetGuiasRemisionRelacionadas(CPEType datos)
         {
-            if (datos.guiasRemision != null && datos.guiasRemision.Count > 0)
+            if (datos.guiasRemision?.Count > 0)
             {
                 var _documentsReference = new List<DocumentReferenceType>();
 

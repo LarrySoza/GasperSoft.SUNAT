@@ -5,6 +5,7 @@
 using GasperSoft.SUNAT.DTO.CRE;
 using System;
 using System.Collections.Generic;
+using static GasperSoft.SUNAT.Validaciones;
 
 namespace GasperSoft.SUNAT
 {
@@ -50,6 +51,11 @@ namespace GasperSoft.SUNAT
             }
         }
 
+        /// <summary>
+        /// Validar que un valor se encuentre en un determinado catalogo de SUNAT
+        /// </summary>
+        public event ValidarCatalogoSunat OnValidarCatalogoSunat;
+
         public bool Validar()
         {
             _mensajesError.Clear();
@@ -79,7 +85,7 @@ namespace GasperSoft.SUNAT
 
             if (!Validaciones.IsValidTipoDocumentoIdentidad(_cre.proveedor.tipoDocumentoIdentificacion))
             {
-                _mensajesError.AddMensaje(CodigoError.V0001, "proveedor.tipoDocumentoIdentificacion");
+                _mensajesError.AddMensaje(CodigoError.V0001, $"proveedor.tipoDocumentoIdentificacion = '{_cre.proveedor.tipoDocumentoIdentificacion}'");
                 return false;
             }
 
@@ -87,19 +93,19 @@ namespace GasperSoft.SUNAT
             {
                 if (_cre.proveedor.tipoDocumentoIdentificacion == "6")
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0002, "proveedor.numeroDocumentoIdentificacion");
+                    _mensajesError.AddMensaje(CodigoError.V0002, $"proveedor.numeroDocumentoIdentificacion = '{_cre.proveedor.numeroDocumentoIdentificacion}'");
                     return false;
                 }
                 else
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0037, "proveedor.numeroDocumentoIdentificacion");
+                    _mensajesError.AddMensaje(CodigoError.V0037, $"proveedor.numeroDocumentoIdentificacion = '{_cre.proveedor.numeroDocumentoIdentificacion}'");
                     return false;
                 }
             }
 
             if (!Validaciones.IsValidTextSunat(_cre.proveedor.nombre, 3, 1500))
             {
-                _mensajesError.AddMensaje(CodigoError.V0006, "proveedor.nombre");
+                _mensajesError.AddMensaje(CodigoError.V0006, $"proveedor.nombre = '{_cre.proveedor.nombre}'");
                 return false;
             }
 

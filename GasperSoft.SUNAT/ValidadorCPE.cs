@@ -161,24 +161,24 @@ namespace GasperSoft.SUNAT
             {
                 if (_cpe.adquirente.tipoDocumentoIdentificacion == "6")
                 {
-                    _mensajesError.AddMensaje(CodigoError.S2017, "adquirente.numeroDocumentoIdentificacion");
+                    _mensajesError.AddMensaje(CodigoError.S2017, $"adquirente.numeroDocumentoIdentificacion = '{_cpe.adquirente.numeroDocumentoIdentificacion}'");
                     return false;
                 }
                 else if (_cpe.adquirente.tipoDocumentoIdentificacion == "1")
                 {
-                    _mensajesError.AddMensaje(CodigoError.S2801, "adquirente.numeroDocumentoIdentificacion");
+                    _mensajesError.AddMensaje(CodigoError.S2801, $"adquirente.numeroDocumentoIdentificacion = '{_cpe.adquirente.numeroDocumentoIdentificacion}'");
                     return false;
                 }
                 else
                 {
-                    _mensajesError.AddMensaje(CodigoError.S2802, "adquirente.numeroDocumentoIdentificacion");
+                    _mensajesError.AddMensaje(CodigoError.S2802, $"adquirente.numeroDocumentoIdentificacion = '{_cpe.adquirente.numeroDocumentoIdentificacion}'");
                     return false;
                 }
             }
 
             if (!Validaciones.IsValidTextSunat(_cpe.adquirente.nombre, 3, 1500))
             {
-                _mensajesError.AddMensaje(CodigoError.V0006, "adquirente.nombre");
+                _mensajesError.AddMensaje(CodigoError.V0006, $"adquirente.nombre = '{_cpe.adquirente.nombre}'");
                 return false;
             }
 
@@ -251,6 +251,13 @@ namespace GasperSoft.SUNAT
             if (_cpe.numero.ToString().Length > 8)
             {
                 _mensajesError.AddMensaje(CodigoError.V0010);
+            }
+            else
+            {
+                if (_cpe.numero <= 0)
+                {
+                    _mensajesError.AddMensaje(CodigoError.V0013, $"numero = '{_cpe.numero}'");
+                }
             }
 
             if (!string.IsNullOrEmpty(_cpe.ordenCompra))

@@ -16,6 +16,7 @@ using System.Text;
 using System.IO.Compression;
 using GasperSoft.SUNAT.DTO.Resumen;
 using GasperSoft.SUNAT.UBL.V1;
+using GasperSoft.SUNAT.DTO.CRE;
 
 namespace Pruebas
 {
@@ -68,6 +69,7 @@ namespace Pruebas
                 Console.WriteLine("11: RESUMEN DIARIO DE BOLETAS - INFORMAR");
                 Console.WriteLine("12: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
                 Console.WriteLine("13: COMUNICACION DE BAJA (SOLO FACTURAS)");
+                Console.WriteLine("14: RETENCION FACTURA SOLES");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\nX");
@@ -121,6 +123,9 @@ namespace Pruebas
                         break;
                     case "13":
                         EjemploComunicacionBaja(ComunicacionBaja1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "14":
+                        EjemploCRE(CRE1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "X":
                     case "x":
@@ -224,6 +229,29 @@ namespace Pruebas
             }
         }
 
+        private static void EjemploCRE(CREType cre, EmisorType emisor, X509Certificate2 certificado, string signature)
+        {
+            //Iniciamos la Validacion 
+            var _validador = new ValidadorCRE(cre);
+            _validador.OnValidarCatalogoSunat += ValidarCatalogoSunat;
+            var _validado = _validador.Validar();
+
+            if (_validado)
+            {
+                //aqui se almacena el digestValue del xml firmado
+                string _digestValue;
+                //Generamos el XML
+                var _xml = GetXML(cre, emisor, certificado, out _digestValue, signature);
+                //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
+                var _nombreArchivo = $"{emisor.ruc}-20-{cre.serie}-{cre.numero}";
+                GuardarXml(_nombreArchivo, _xml, _digestValue);
+            }
+            else
+            {
+                MostrarErrores(_validador.Errors);
+            }
+        }
+
         static void GuardarXml(string nombre, string xml, string digestValue)
         {
             #region Generar Zip y Guardar el XML
@@ -288,6 +316,17 @@ namespace Pruebas
                     throw new Exception("Tipo de documento no valido");
             }
 
+            var _xml = XmlUtil.Serializar(_cpeType);
+
+            //Firmar el XML y obtener el digestValue
+            var _xmlFirmado = XmlUtil.FirmarXml(_xml, certificado, out digestValue, signature);
+
+            return _xmlFirmado;
+        }
+
+        static string GetXML(CREType cre, EmisorType emisor, X509Certificate2 certificado, out string digestValue, string signature)
+        {
+            var _cpeType = Retencion.GetDocumento(cre, emisor, signature);
             var _xml = XmlUtil.Serializar(_cpeType);
 
             //Firmar el XML y obtener el digestValue
