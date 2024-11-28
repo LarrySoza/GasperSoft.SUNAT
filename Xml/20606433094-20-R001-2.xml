@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Retention xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns="urn:sunat:names:specification:ubl:peru:schema:xsd:Retention-1">
+  <ext:UBLExtensions>
+    <ext:UBLExtension><ext:ExtensionContent><Signature Id="signatureMIEMPRESA" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><DigestValue>jERU9vbOamPPDpw0CpvtCpRWiG6ZaQzzHHVkebBKyfw=</DigestValue></Reference></SignedInfo><SignatureValue>PSJ5LJWYwUo6d/rY5ZWcvk3ZTuqi/gHmoeUn98ptODtbGCvI7LuCPahxqDgWfA6ZAOFzKasx8jGR2PlFOd6jNjT8wCLxor+fQHFg0YtUnXAImuPyFMKjaDlT4sxjPpxh3aXUjW9GT4ocl2xmaIgPH7HTORuoBvuJDaJNqQdFXooFw3PVK1U8F482BDxhtSSiye6UMK/cpOt3BCk1hbg8vYZ+0k+M/FKurIL4Myez027oT9nKt/NOYl3Utdb/fW2AWNmh3hKR0qR2ZEeiqXWLHG247k6XUuLNJya7ZQuc3JBf9thEb4zFxL7GBofGHmR0Rxrbaa0Y/JBcRXZ41s45Wg==</SignatureValue><KeyInfo><X509Data><X509SubjectName>E=demo@llama.pe, CN=NOMBRE REPRESENTANTE LEGAL - CERTIFICADO PARA DEMOSTRACIÓN, OU=DNI 9999999 RUC 20606433094 - CERTIFICADO PARA DEMOSTRACIÓN, O=TU EMPRESA S.A., L=LIMA, S=LIMA, C=PE, DC=LLAMA.PE SA</X509SubjectName><X509Certificate>MIIFCDCCA/CgAwIBAgIJAJmqr0ynYmE7MA0GCSqGSIb3DQEBCwUAMIIBDTEbMBkGCgmSJomT8ixkARkWC0xMQU1BLlBFIFNBMQswCQYDVQQGEwJQRTENMAsGA1UECAwETElNQTENMAsGA1UEBwwETElNQTEYMBYGA1UECgwPVFUgRU1QUkVTQSBTLkEuMUUwQwYDVQQLDDxETkkgOTk5OTk5OSBSVUMgMjA2MDY0MzMwOTQgLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xRDBCBgNVBAMMO05PTUJSRSBSRVBSRVNFTlRBTlRFIExFR0FMIC0gQ0VSVElGSUNBRE8gUEFSQSBERU1PU1RSQUNJw5NOMRwwGgYJKoZIhvcNAQkBFg1kZW1vQGxsYW1hLnBlMB4XDTI0MTEyMDA0NTA1NVoXDTI2MTEyMDA0NTA1NVowggENMRswGQYKCZImiZPyLGQBGRYLTExBTUEuUEUgU0ExCzAJBgNVBAYTAlBFMQ0wCwYDVQQIDARMSU1BMQ0wCwYDVQQHDARMSU1BMRgwFgYDVQQKDA9UVSBFTVBSRVNBIFMuQS4xRTBDBgNVBAsMPEROSSA5OTk5OTk5IFJVQyAyMDYwNjQzMzA5NCAtIENFUlRJRklDQURPIFBBUkEgREVNT1NUUkFDScOTTjFEMEIGA1UEAww7Tk9NQlJFIFJFUFJFU0VOVEFOVEUgTEVHQUwgLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xHDAaBgkqhkiG9w0BCQEWDWRlbW9AbGxhbWEucGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCUDtOx/MgUiW76TbmmupAVs3LygXjKcPWIdXSjiKEWqJSPY0Xox2XQOVGlYi+HGKOH4HaNUeB8p5kNHuwrXRNUzbI1mvxdSA9ndxSvVcBSzZlB7xqhn2P2Ow4BaKEyXZA91P1ZM+4jhvtF3OiUSlASG1xFTWhAy0VcnDg9hCAW72ptYelO67AezvBZRltQqNb/T9oQU2Yw9+0cmHCdnylPh3FuDuJ8kW57p1Z7HSObUa7UXZEJJIq+6EhpNMLjZZYxIdydo74yTKLb8ZiZa41o7B8dSriUQ6X9T9FPPaUh6nZveIqeJ83QOXxLacfcNMbMLlsG8/6Mn+86uIgOQGMLAgMBAAGjZzBlMB0GA1UdDgQWBBR+0+UPrYXy+5N7gj+8gTVXIAuSCzAfBgNVHSMEGDAWgBR+0+UPrYXy+5N7gj+8gTVXIAuSCzATBgNVHSUEDDAKBggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCB4AwDQYJKoZIhvcNAQELBQADggEBAAiZn7bC8dBEIXwsz+N+N5AAOgS4EIAlbQhqtLAxSCAuQadaS2zUfwlYJ6Kr4FzQtLtpCXJbLdW2Cu1a43dDkHICVCE/71ENmwP6MQGgf3YYSn5/8s0Jivb3KXsRlu95GN36KB5T48mpmzMtz5VcICcf2orfQxeD4upD+d29jJ59xPlPNHNj3iw5yHiF9zLCCTaZSDsFXfQOmnSNWVObdULzT3nvE1wSqes7WRqz3q9m4raCDQChllgZdsZqvqAaFD1glT2RY7MBExueXcxSPQGPXIvAg9rygZCXOsGBEWodsoFECgbdzTo16cqpA9t5v2wYm8myw0vw6rl9xfuQSXA=</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent></ext:UBLExtension>
+  </ext:UBLExtensions>
+  <cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+  <cbc:CustomizationID schemeAgencyName="PE:SUNAT">1.0</cbc:CustomizationID>
+  <cac:Signature>
+    <cbc:ID>signatureMIEMPRESA</cbc:ID>
+    <cac:SignatoryParty>
+      <cac:PartyIdentification>
+        <cbc:ID>20606433094</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>GASPERSOFT EIRL</cbc:Name>
+      </cac:PartyName>
+    </cac:SignatoryParty>
+    <cac:DigitalSignatureAttachment>
+      <cac:ExternalReference>
+        <cbc:URI>#signatureMIEMPRESA</cbc:URI>
+      </cac:ExternalReference>
+    </cac:DigitalSignatureAttachment>
+  </cac:Signature>
+  <cbc:ID>R001-2</cbc:ID>
+  <cbc:IssueDate>2024-11-28</cbc:IssueDate>
+  <cac:AgentParty>
+    <cac:PartyIdentification>
+      <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20606433094</cbc:ID>
+    </cac:PartyIdentification>
+    <cac:PartyLegalEntity>
+      <cbc:RegistrationName>GASPERSOFT EIRL</cbc:RegistrationName>
+      <cac:RegistrationAddress>
+        <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">150125</cbc:ID>
+        <cbc:CityName>LIMA</cbc:CityName>
+        <cbc:CountrySubentity>LIMA</cbc:CountrySubentity>
+        <cbc:District>PUENTE PIEDRA</cbc:District>
+        <cac:AddressLine>
+          <cbc:Line>CAL. LOS LIRIOS INT. 20 LT. 1 MZ. B URB. MONTEGRANDE</cbc:Line>
+        </cac:AddressLine>
+        <cac:Country>
+          <cbc:IdentificationCode listID="ISO 3166-1" listAgencyName="United Nations Economic Commission for Europe" listName="Country">PE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:RegistrationAddress>
+    </cac:PartyLegalEntity>
+  </cac:AgentParty>
+  <cac:ReceiverParty>
+    <cac:PartyIdentification>
+      <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20454738056</cbc:ID>
+    </cac:PartyIdentification>
+    <cac:PartyLegalEntity>
+      <cbc:RegistrationName>CHARACATO EXPRESS S.R.L.</cbc:RegistrationName>
+    </cac:PartyLegalEntity>
+  </cac:ReceiverParty>
+  <sac:SUNATRetentionSystemCode>01</sac:SUNATRetentionSystemCode>
+  <sac:SUNATRetentionPercent>3.00</sac:SUNATRetentionPercent>
+  <cbc:Note>COMPROBANTE DE RETENCION DE PRUEBA</cbc:Note>
+  <cbc:TotalInvoiceAmount currencyID="PEN">113.00</cbc:TotalInvoiceAmount>
+  <cbc:PayableRoundingAmount currencyID="PEN">0.19</cbc:PayableRoundingAmount>
+  <sac:SUNATTotalPaid currencyID="PEN">3660.00</sac:SUNATTotalPaid>
+  <sac:SUNATRetentionDocumentReference>
+    <cbc:ID schemeID="01">F001-1</cbc:ID>
+    <cbc:IssueDate>2024-11-26</cbc:IssueDate>
+    <cbc:TotalInvoiceAmount currencyID="USD">1000.00</cbc:TotalInvoiceAmount>
+    <cac:Payment>
+      <cbc:ID>1</cbc:ID>
+      <cbc:PaidAmount currencyID="USD">1000.00</cbc:PaidAmount>
+      <cbc:PaidDate>2024-11-28</cbc:PaidDate>
+    </cac:Payment>
+    <sac:SUNATRetentionInformation>
+      <sac:SUNATRetentionAmount currencyID="PEN">113.00</sac:SUNATRetentionAmount>
+      <sac:SUNATRetentionDate>2024-11-28</sac:SUNATRetentionDate>
+      <sac:SUNATNetTotalPaid currencyID="PEN">3659.81</sac:SUNATNetTotalPaid>
+      <cac:ExchangeRate>
+        <cbc:SourceCurrencyCode>USD</cbc:SourceCurrencyCode>
+        <cbc:TargetCurrencyCode>PEN</cbc:TargetCurrencyCode>
+        <cbc:CalculationRate>3.773000</cbc:CalculationRate>
+        <cbc:Date>2024-11-28</cbc:Date>
+      </cac:ExchangeRate>
+    </sac:SUNATRetentionInformation>
+  </sac:SUNATRetentionDocumentReference>
+</Retention>

@@ -1337,6 +1337,13 @@ namespace GasperSoft.SUNAT
 
             #region validaciones de totales
 
+            if (Math.Abs(_cpe.totalRedondeo) > 1)
+            {
+                _mensajesError.AddMensaje(CodigoError.S3303, "ValorAbsoluto(totalRedondeo) no puede ser mayor a 1");
+                return false;
+            }
+
+
             decimal _descuentosGlobalesNOAfectaBI = Convert.ToDecimal(_cpe.descuentoGlobalNoAfectaBI?.importe);
             decimal _descuentosxLineaNOAfectaBI = Convert.ToDecimal(_cpe.detalles.Sum(x => x.descuentoNoAfectaBI?.importe));
             decimal _totalAnticiposGravados = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.totalOperacionesGravadas));

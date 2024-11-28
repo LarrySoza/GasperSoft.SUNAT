@@ -18,6 +18,7 @@ namespace GasperSoft.SUNAT
         public const string S2566 = "S2566:El XML no contiene el tag o no existe informacion del Numero de placa del vehículo";
         public const string S2567 = "S2567:Placa debe ser un valor alfanumérico de 6 a 8 caracteres";
         public const string S2573 = "S2573:Licencia de conducir debe ser un valor alfanumérico de 9 a 10 caracteres (no se permite solamente ceros)";
+        public const string S2692 = "S2692:El tipo de documento relacionado no es válido";
         public const string S2642 = "S2642:Operaciones de exportación, deben consignar Tipo Afectación igual a 40(en todos los ítems)";
         public const string S2760 = "S2760:El valor ingresado como tipo de documento del destinatario es incorrecto";
         public const string S2769 = "S2769:El valor ingresado como numero de DAM no cumple con el estandar";
@@ -33,6 +34,7 @@ namespace GasperSoft.SUNAT
         public const string S3206 = "S3206:El dato ingresado como tipo de operación no corresponde a un valor esperado (catálogo nro. 51)";
         public const string S3265 = "S3265:El Monto neto pendiente de pago debe ser menor o igual al Importe total del comprobante";
         public const string S3267 = "S3267:Fecha del pago único o de las cuotas no puede ser anterior o igual a la fecha de emisión del comprobante";
+        public const string S3303 = "S3303:El monto para el redondeo del Importe Total excede el valor permitido";
         public const string S3319 = "S3319:La suma de las cuotas debe ser igual al Monto neto pendiente de pago";
         public const string S3343 = "S3343:La Fecha de inicio del traslado debe ser mayor o igual a la Fecha de emision del documento";
         public const string S3347 = "S3347:No debe consignar los datos del transportista para una operacion de Transporte Privado";
@@ -67,7 +69,7 @@ namespace GasperSoft.SUNAT
         public const string S4403 = "S4403:Debe indicar la entidad autorizadora del vehiculo";
         public const string S4406 = "S4406:El Numero de autorizacion del vehiculo no cumple con el formato establecido";
         public const string S4407 = "S4407:El Codigo de entidad autorizadora del vehiculo no corresponde a un valor esperado(El valor no existe el catalogo N° D37)";
-
+        
         //Validaciones(Les fui asignado un código correlativo)
         public const string V0001 = "V0001:Tipo de documento de identidad no es válido";
         public const string V0002 = "V0002:Ruc no valido";

@@ -70,6 +70,7 @@ namespace Pruebas
                 Console.WriteLine("12: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
                 Console.WriteLine("13: COMUNICACION DE BAJA (SOLO FACTURAS)");
                 Console.WriteLine("14: RETENCION FACTURA SOLES");
+                Console.WriteLine("15: RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\nX");
@@ -126,6 +127,9 @@ namespace Pruebas
                         break;
                     case "14":
                         EjemploCRE(CRE1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "15":
+                        EjemploCRE(CRE2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "X":
                     case "x":

@@ -5,6 +5,7 @@
 using GasperSoft.SUNAT.DTO.CRE;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static GasperSoft.SUNAT.Validaciones;
 
 namespace GasperSoft.SUNAT
@@ -179,8 +180,16 @@ namespace GasperSoft.SUNAT
 
             _idRecord = 0;
 
+            //Segun las validaciones de SUNAT solo estos documentos
+            var _documentosPermitidos = new List<string> { "01", "12", "07", "08", "20" };
+
             foreach (var item in _cre.detalles)
             {
+                if (!_documentosPermitidos.Contains(item.documentoRelacionadoTipoDocumento))
+                {
+                    _mensajesError.AddMensaje(CodigoError.S2692, $"detalle[{_idRecord}].documentoRelacionadoTipoDocumento");
+                }
+
                 bool _valorCalculoValidado = true;
 
                 #region Validacion de longitud decimal
@@ -244,20 +253,20 @@ namespace GasperSoft.SUNAT
 
                 if (_valorCalculoValidado)
                 {
-                    var _importeRetenido = item.pagoTotalSinRetencion * _cre.tasaRetencion / 100;
-                    var _importePagadoConRetencion = item.pagoTotalSinRetencion - _importeRetenido;
+                    var _importeRetenidoCalculado = item.pagoTotalSinRetencion * _cre.tasaRetencion / 100;
+                    var _importePagadoConRetencion = item.pagoTotalSinRetencion - _importeRetenidoCalculado;
 
                     if (item.documentoRelacionadoCodMoneda != "PEN")
                     {
-                        _importeRetenido = _importeRetenido * item.tipoCambio.factorConversion;
+                        _importeRetenidoCalculado = _importeRetenidoCalculado * item.tipoCambio.factorConversion;
 
-                        if (!Validaciones.ValidarToleranciaCalculo(item.importeRetenido, decimal.Round(_importeRetenido, 2), _toleranciaCalculo))
+                        if (!Validaciones.ValidarToleranciaCalculo(item.importeRetenido, decimal.Round(_importeRetenidoCalculado, 2), _toleranciaCalculo))
                         {
-                            _mensajesError.AddMensaje(CodigoError.V2000, $"importeRetenido incorrecto en la linea {_idRecord}, Valor enviado: {item.importeRetenido} Valor calculado: {decimal.Round(_importeRetenido, 2)}; Formula: importeRetenido = (pagoTotalSinRetencion * cre.tasaRetencion / 100) * tipoCambio.factorConversion");
+                            _mensajesError.AddMensaje(CodigoError.V2000, $"importeRetenido incorrecto en la linea {_idRecord}, Valor enviado: {item.importeRetenido} Valor calculado: {decimal.Round(_importeRetenidoCalculado, 2)}; Formula: importeRetenido = (pagoTotalSinRetencion * cre.tasaRetencion / 100) * tipoCambio.factorConversion");
                             continue;
                         }
 
-                        _importePagadoConRetencion = (item.pagoTotalSinRetencion * item.tipoCambio.factorConversion) - _importeRetenido;
+                        _importePagadoConRetencion = (item.pagoTotalSinRetencion * item.tipoCambio.factorConversion) - _importeRetenidoCalculado;
 
                         if (!Validaciones.ValidarToleranciaCalculo(item.importePagadoConRetencion, decimal.Round(_importePagadoConRetencion, 2), _toleranciaCalculo))
                         {
@@ -267,9 +276,9 @@ namespace GasperSoft.SUNAT
                     }
                     else
                     {
-                        if (!Validaciones.ValidarToleranciaCalculo(item.importeRetenido, decimal.Round(_importeRetenido, 2), _toleranciaCalculo))
+                        if (!Validaciones.ValidarToleranciaCalculo(item.importeRetenido, decimal.Round(_importeRetenidoCalculado, 2), _toleranciaCalculo))
                         {
-                            _mensajesError.AddMensaje(CodigoError.V2000, $"importeRetenido incorrecto en la linea {_idRecord}, Valor enviado: {item.importeRetenido} Valor calculado: {decimal.Round(_importeRetenido, 2)}; Formula: importeRetenido = pagoTotalSinRetencion * cre.tasaRetencion / 100");
+                            _mensajesError.AddMensaje(CodigoError.V2000, $"importeRetenido incorrecto en la linea {_idRecord}, Valor enviado: {item.importeRetenido} Valor calculado: {decimal.Round(_importeRetenidoCalculado, 2)}; Formula: importeRetenido = pagoTotalSinRetencion * cre.tasaRetencion / 100");
                             continue;
                         }
 
@@ -293,6 +302,28 @@ namespace GasperSoft.SUNAT
             #endregion
 
             #region validaciones de totales
+
+            if (Math.Abs(_cre.totalRedondeoImporteTotalPagado) > 1)
+            {
+                _mensajesError.AddMensaje(CodigoError.S3303, "ValorAbsoluto(totalRedondeoImporteTotalPagado) no puede ser mayor a 1");
+                return false;
+            }
+
+            var _importeTotalPagadoCalculado = Math.Truncate((_cre.detalles.Where(x => x.documentoRelacionadoTipoDocumento != "07" && x.documentoRelacionadoTipoDocumento != "20").Sum(x => x.importePagadoConRetencion) + _cre.totalRedondeoImporteTotalPagado) * 100) / 100;
+
+            if (_importeTotalPagadoCalculado != _cre.importeTotalPagado)
+            {
+                _mensajesError.AddMensaje(CodigoError.V2000, $"importeTotalPagado incorrecto Valor enviado: {_cre.importeTotalPagado} Valor calculado: {_importeTotalPagadoCalculado}; Formula: importeTotalPagado = Suma del 'importePagadoConRetencion' de cada detalle (sin considerar los tipos de documentos '07' y '20') + totalRedondeoImporteTotalPagado");
+                return false;
+            }
+
+            var _importeTotalRetenidoCalculado = Math.Truncate(_cre.detalles.Where(x => x.documentoRelacionadoTipoDocumento != "07" && x.documentoRelacionadoTipoDocumento != "20").Sum(x => x.importeRetenido) * 100) / 100;
+
+            if (_importeTotalRetenidoCalculado != _cre.importeTotalRetenido)
+            {
+                _mensajesError.AddMensaje(CodigoError.V2000, $"importeTotalRetenido incorrecto Valor enviado: {_cre.importeTotalRetenido} Valor calculado: {_importeTotalRetenidoCalculado}; Formula: importeTotalRetenido = Suma del 'importeRetenido' de cada detalle (sin considerar los tipos de documentos '07' y '20')");
+                return false;
+            }
 
             #endregion
 

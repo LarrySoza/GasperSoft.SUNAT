@@ -43,6 +43,7 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
   - [RESUMEN DIARIO DE BOLETAS - DAR DE BAJA](/Xml/20606433094-RC-20241125-2.xml)
   - [COMUNICACION DE BAJA (SOLO FACTURAS)](/Xml/20606433094-RA-20241125-1.xml)
   - [RETENCION FACTURA SOLES](/Xml/20606433094-20-R001-1.xml)
+  - [RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO](/Xml/20606433094-20-R001-2.xml)
 
 >[!NOTE] 
 >El ejemplo **"FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN - Pagina 77 Manual SUNAT"** es el ejemplo mas completo de todos porque combina el uso de productos grabados, exonerados, bonificaciones y descuentos por ítem y global, por lo que recomiendo darle una observación detalla. La clase **ValidadorCPE.cs** del proyecto **GasperSoft.SUNAT** debería poder ayudarte a corregir errores de cálculo, si no es el caso y pudiste generar el XML pero no paso las validaciones de SUNAT te agradecería que me mandes un ejemplo (como los que se implementan en el proyecto Pruebas) con los datos que llenas y el XML generado a [it@gaspersoft.com](mailto:it@gaspersoft.com), me ayudarías a colocar mas validaciones que no permitan generar XMLs con errores de calculo.
