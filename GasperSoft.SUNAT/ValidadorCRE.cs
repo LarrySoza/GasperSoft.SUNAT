@@ -53,9 +53,9 @@ namespace GasperSoft.SUNAT
         }
 
         /// <summary>
-        /// Validar que un valor se encuentre en un determinado catalogo de SUNAT
+        /// Valida que codigoRegimenRetencion exista y que la tasa corresponda a este codigo
         /// </summary>
-        public event ValidarCatalogoSunat OnValidarCatalogoSunat;
+        public event ValidarTasaRetencion OnValidarTasaRetencion;
 
         public bool Validar()
         {
@@ -80,6 +80,16 @@ namespace GasperSoft.SUNAT
             {
                 _mensajesError.AddMensaje(CodigoError.V0102, "proveedor");
                 return false;
+            }
+
+
+            if (OnValidarTasaRetencion != null)
+            {
+                if (!OnValidarTasaRetencion(_cre.codigoRegimenRetencion, _cre.tasaRetencion))
+                {
+                    _mensajesError.AddMensaje(CodigoError.V0039, $"codigoRegimenRetencion = '{_cre.codigoRegimenRetencion}', tasaRetencion = '{_cre.tasaRetencion}'");
+                    return false;
+                }
             }
 
             #region Validacion del Proveedor

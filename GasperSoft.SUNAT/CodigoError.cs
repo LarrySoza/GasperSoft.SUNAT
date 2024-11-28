@@ -68,7 +68,7 @@ namespace GasperSoft.SUNAT
         public const string S4399 = "S4399:No ha consignado el Numero de Constancia de Inscripcion Vehicular o Certificado de Habilitacion Vehicular o la TUC (fisica o electronica)";
         public const string S4403 = "S4403:Debe indicar la entidad autorizadora del vehiculo";
         public const string S4406 = "S4406:El Numero de autorizacion del vehiculo no cumple con el formato establecido";
-        public const string S4407 = "S4407:El Codigo de entidad autorizadora del vehiculo no corresponde a un valor esperado(El valor no existe el catalogo N° D37)";
+        public const string S4407 = "S4407:El Codigo de entidad autorizadora del vehiculo no corresponde a un valor esperado(El valor no existe el catálogo N° D37)";
         
         //Validaciones(Les fui asignado un código correlativo)
         public const string V0001 = "V0001:Tipo de documento de identidad no es válido";
@@ -89,8 +89,8 @@ namespace GasperSoft.SUNAT
         public const string V0016 = "V0016:El valor de la propiedad 'serie' en todos los elementos de la propiedad 'motivosNota' deben comenzar con la misma letra que el valor de la propiedad 'serie' del documento";
         public const string V0017 = "V0017:No es posible emitir Notas de crédito con motivos 04(descuento global) 05(descuento por ítem) 08(bonificación)";
         public const string V0018 = "V0018:La propiedad 'indTransferenciaGratuita' solo puede ser verdadera cuando todos los detalles del comprobante tienen un código de afectación del IGV no oneroso";
-        public const string V0019 = "V0019:El valor no existe el catalogo N° 09";
-        public const string V0020 = "V0020:El valor no existe el catalogo N° 10";
+        public const string V0019 = "V0019:El valor no existe el catálogo N° 09";
+        public const string V0020 = "V0020:El valor no existe el catálogo N° 10";
         public const string V0021 = "V0021:Las notas de crédito motivo 13 (Ajustes – montos y/o fechas de pago), deben tener 'impoteTotal' igual a cero";
         public const string V0022 = "V0022:El valor de la propiedad debe ser cero, para notas de crédito motivo 13 (Ajustes – montos y/o fechas de pago)";
         public const string V0023 = "V0023:El valor de la propiedad 'tasaIsc' no es válido, si el ítem no está afecto al ISC asigne 0 a la propiedad 'montoIsc'";
@@ -98,9 +98,9 @@ namespace GasperSoft.SUNAT
         public const string V0025 = "V0025:Documento de identidad del adquirente debe ser '1' o '6' cuando la operación no es de exportación";
         public const string V0026 = "V0026:Existe al menos un ítem con 'codAfectacionIgv'= 40 y la propiedad 'codigoTipoOperacion' no es de exportación";
         public const string V0027 = "V0027:Solo se permiten los valores: '01', '03', '07' y '08'";
-        public const string V0028 = "V0028:El valor no existe el catalogo N° 02";
-        public const string V0029 = "V0029:El valor no existe el catalogo N° 03";
-        public const string V0030 = "V0030:El valor no existe el catalogo N° 07";
+        public const string V0028 = "V0028:El valor no existe el catálogo N° 02";
+        public const string V0029 = "V0029:El valor no existe el catálogo N° 03";
+        public const string V0030 = "V0030:El valor no existe el catálogo N° 07";
         public const string V0031 = "V0031:Solo se permite máximo 3 vehículos por GRE (un principal y dos secundarias)";
         public const string V0032 = "V0032:Solo se permite máximo 3 conductores por GRE (uno principal y dos secundarios)";
         public const string V0033 = "V0033:No debe ingresar información de conductores cuando existe el indicador de traslado en vehículos de categoría M1 o L, Cod. SUNAT 3455 y 3456";
@@ -109,6 +109,7 @@ namespace GasperSoft.SUNAT
         public const string V0036 = "V0036:Cantidad no puede ser cero (0)";
         public const string V0037 = "V0037:La propiedad no cumple con el formato requerido por SUNAT";
         public const string V0038 = "V0038:El codigo de moneda de ser PEN";
+        public const string V0039 = "V0039:El valor no existe el catálogo N° 23 o la tasa no corresponde al código de régimen de retención ingresado";
 
         //Mensajes genericos para validar una propiedad
         public const string V0101 = "V0101:El valor de la propiedad deber ser NULL";

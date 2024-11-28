@@ -301,5 +301,12 @@ namespace GasperSoft.SUNAT
         /// <param name="valor">El valor a buscar</param>
         /// <returns></returns>
         public delegate bool ValidarCatalogoSunat(string catalogo, string valor);
+
+        /// <summary>
+        /// Se puede usar para validar con base de datos que codigoRegimenRetencion exista y que la tasa corresponda a este codigo
+        /// </summary>
+        /// <param name="codigoRegimenRetencion">El codigo de retencion (Catalogo 23)</param>
+        /// <param name="tasa">Tasa de retencion (Catalogo 23)</param>
+        public delegate bool ValidarTasaRetencion(string codigoRegimenRetencion, decimal tasa);
     }
 }

@@ -237,7 +237,9 @@ namespace Pruebas
         {
             //Iniciamos la Validacion 
             var _validador = new ValidadorCRE(cre);
-            _validador.OnValidarCatalogoSunat += ValidarCatalogoSunat;
+
+            //Opcional el evento de validacion
+            _validador.OnValidarTasaRetencion += ValidarTasaRetencion;
             var _validado = _validador.Validar();
 
             if (_validado)
@@ -400,6 +402,12 @@ namespace Pruebas
             //Aqui se deberia validar que un determinado 'valor' existe en un determinado catalogo
             //Los catalogos los encontramos en el Anexo 8 de SUNAT
             //Para este ejemplo en donde coloco datos correctos devuelvo siempre verdadero
+            return true;
+        }
+
+        private static bool ValidarTasaRetencion(string codigoRegimenRetencion, decimal tasa)
+        {
+            //Aquí podría colocar código para validar que exista el codigoRegimenRetencion en el catálogo 23 y que la tasa corresponda a ese código
             return true;
         }
     }
