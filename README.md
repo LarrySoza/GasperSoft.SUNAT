@@ -1,6 +1,6 @@
 # GasperSoft.SUNAT
 
-Un conjunto de librerías para .NET que permite la fácil generación de los XML de documentos electrónicos, estas mismas librerías son las que uso en mi plataforma de producción que ofrezco a mis clientes, por lo que están en constante actualización.
+Librerías .NET que permite generar los XML de la Facturación Electrónica SUNAT, estas mismas librerías son las que uso en mi plataforma de producción que ofrezco a mis clientes, por lo que están en constante actualización.
 
 # Como Funciona
 Podría afirmar que existe 4 principales formas de generar XML en .Net: 
