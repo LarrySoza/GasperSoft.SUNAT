@@ -545,16 +545,16 @@ namespace GasperSoft.SUNAT.UBL.V2
             return null;
         }
 
-        internal static ItemIdentificationType GetCodigoProductoGS1Item(string codigo)
+        internal static ItemIdentificationType GetCodigoProductoGS1Item(string tipo, string codigo)
         {
-            if (!string.IsNullOrEmpty(codigo))
+            if (!string.IsNullOrEmpty(tipo) && !string.IsNullOrEmpty(codigo))
             {
                 return new ItemIdentificationType()
                 {
                     ID = new IDType()
                     {
                         Value = codigo,
-                        schemeID = "GTIN"
+                        schemeID = tipo
                     }
                 };
             }
@@ -610,7 +610,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 CommodityClassification = GetCodigoProductoSunatItem(item.codigoProductoSunat),
 
                 //24- Código de producto GS1 (C)
-                StandardItemIdentification = GetCodigoProductoGS1Item(item.codigoProductoGS1),
+                StandardItemIdentification = GetCodigoProductoGS1Item(item.tipoCodigoProductoGS1, item.codigoProductoGS1),
 
                 AdditionalItemProperty = GetPropiedadesAdicionalesItem(item),
 

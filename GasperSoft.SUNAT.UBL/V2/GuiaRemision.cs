@@ -182,7 +182,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                         CommodityClassification = GetCodigoProductoSunatItem(item.codigoProductoSunat),
 
                         //Código de producto GS1 (C)
-                        StandardItemIdentification = GetCodigoProductoGS1Item(item.codigoProductoGS1),
+                        StandardItemIdentification = GetCodigoProductoGS1Item(item.tipoCodigoProductoGS1, item.codigoProductoGS1),
 
                         AdditionalItemProperty = GetAdditionalsItemProperty(item)
                     }

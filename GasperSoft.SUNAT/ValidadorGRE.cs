@@ -814,6 +814,47 @@ namespace GasperSoft.SUNAT
 
             foreach (var item in _gre.detalles)
             {
+                if (!string.IsNullOrWhiteSpace(item.codigoProducto))
+                {
+                    if (!Validaciones.IsValidCodigoProducto(item.codigoProducto))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S4085, $"detalle[{_idRecord}].codigoProducto = '{item.codigoProducto}'");
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(item.codigoProductoGS1))
+                {
+                    if (!string.IsNullOrWhiteSpace(item.tipoCodigoProductoGS1))
+                    {
+                        var _tipoCodigoProductoGS1Permitidos = new List<string> { "GTIN-8", "GTIN-12", "GTIN-13", "GTIN-14" };
+
+                        if (!_tipoCodigoProductoGS1Permitidos.Contains(item.tipoCodigoProductoGS1))
+                        {
+                            _mensajesError.AddMensaje(CodigoError.V0037, $"detalle[{_idRecord}].tipoCodigoProductoGS1 = '{item.tipoCodigoProductoGS1}', solo se permite 'GTIN-8', 'GTIN-12', 'GTIN-13' y 'GTIN-14'");
+                        }
+                        else
+                        {
+                            if (!Validaciones.IsValidCodigoProductoGS1(item.tipoCodigoProductoGS1, item.codigoProductoGS1))
+                            {
+                                _mensajesError.AddMensaje(CodigoError.S3375, $"detalle[{_idRecord}].codigoProductoGS1 = '{item.codigoProductoGS1}'");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0102, $"detalle[{_idRecord}].tipoCodigoProductoGS1 = '{item.tipoCodigoProductoGS1}'");
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(item.codigoProductoSunat))
+                {
+                    //Validar que codigoProductoSunat se encuentre en el catálogo N° 25
+                    if (!OnValidarCatalogoSunat("25", item.codigoProductoSunat))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0040, $"detalle[{_idRecord}].unidadMedida = '{item.codigoProductoSunat}'");
+                    }
+                }
+
                 if (!OnValidarCatalogoSunat("03", item.unidadMedida))
                 {
                     _mensajesError.AddMensaje(CodigoError.V0029, $"detalle[{_idRecord}].unidadMedida");

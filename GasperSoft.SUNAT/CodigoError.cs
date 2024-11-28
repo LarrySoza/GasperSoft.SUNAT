@@ -61,15 +61,22 @@ namespace GasperSoft.SUNAT
         public const string S3249 = "S3249:Si el tipo de transaccion es al Credito debe existir al menos información de una cuota de pago";
         public const string S3356 = "S3356:Solo debe consignar un Numero de autorizacion del vehiculo";
         public const string S3365 = "S3365:Código de establecimiento es obligatorio para el motivo de traslado seleccionado";
+        public const string S3375 = "S3375:El Codigo de Producto GTIN no cumple con el formato establecido";
         public const string S3404 = "S3404:El XML no contiene el tag o no existe informacion del motivo de traslado";
         public const string S3405 = "S3405:El valor ingresado como motivo de traslado no es valido";
         public const string S3462 = "S3462:La tasa del IGV debe ser la misma en todas las líneas o ítems del documento y debe corresponder con una tasa vigente";
+        public const string S4085 = "S4085:Código del Ítem - El dato ingresado no cumple con el formato establecido";
         public const string S4233 = "S4233:El dato ingresado en order de compra no cumple con el formato establecido";
+        public const string S4269 = "S4269:El dato ingresado como codigo de producto no cumple con el formato establecido";
+        public const string S4333 = "S4333:Si utiliza el estandar GS1 debe especificar el tipo de estructura GTIN";
+        public const string S4334 = "S4334:El código de producto GS1 no cumple el estandar";
+        public const string S4335 = "S4335:El tipo de estructura GS1 no tiene un valor permitido";
         public const string S4399 = "S4399:No ha consignado el Numero de Constancia de Inscripcion Vehicular o Certificado de Habilitacion Vehicular o la TUC (fisica o electronica)";
         public const string S4403 = "S4403:Debe indicar la entidad autorizadora del vehiculo";
         public const string S4406 = "S4406:El Numero de autorizacion del vehiculo no cumple con el formato establecido";
         public const string S4407 = "S4407:El Codigo de entidad autorizadora del vehiculo no corresponde a un valor esperado(El valor no existe el catálogo N° D37)";
-        
+
+
         //Validaciones(Les fui asignado un código correlativo)
         public const string V0001 = "V0001:Tipo de documento de identidad no es válido";
         public const string V0002 = "V0002:Ruc no valido";
@@ -110,6 +117,7 @@ namespace GasperSoft.SUNAT
         public const string V0037 = "V0037:La propiedad no cumple con el formato requerido por SUNAT";
         public const string V0038 = "V0038:El codigo de moneda de ser PEN";
         public const string V0039 = "V0039:El valor no existe el catálogo N° 23 o la tasa no corresponde al código de régimen de retención ingresado";
+        public const string V0040 = "V0040:El valor no existe el catálogo N° 25";
 
         //Mensajes genericos para validar una propiedad
         public const string V0101 = "V0101:El valor de la propiedad deber ser NULL";

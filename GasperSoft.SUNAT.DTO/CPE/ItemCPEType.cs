@@ -15,6 +15,11 @@ namespace GasperSoft.SUNAT.DTO.CPE
         public string codigoProducto { get; set; }
 
         /// <summary>
+        /// solo se permite GTIN-8, GTIN-12, GTIN-13, GTIN-14
+        /// </summary>
+        public string tipoCodigoProductoGS1 { get; set; }
+
+        /// <summary>
         /// UBL 2.1
         /// El codigo del Articulo-Servicio GS1 
         /// </summary>

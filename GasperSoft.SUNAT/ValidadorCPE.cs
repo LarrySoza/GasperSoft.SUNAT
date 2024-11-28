@@ -204,7 +204,7 @@ namespace GasperSoft.SUNAT
                     //Validar que codigoTipoOperacion se encuentre en el catálogo N° 51
                     if (!OnValidarCatalogoSunat("51", _cpe.codigoTipoOperacion))
                     {
-                        _mensajesError.AddMensaje(CodigoError.S3206, "codigoTipoOperacion");
+                        _mensajesError.AddMensaje(CodigoError.S3206, $"codigoTipoOperacion = '{_cpe.codigoTipoOperacion}'");
                         return false;
                     }
 
@@ -271,7 +271,7 @@ namespace GasperSoft.SUNAT
             //Validar que codMoneda se encuentre en el catálogo N° 02
             if (!OnValidarCatalogoSunat("02", _cpe.codMoneda))
             {
-                _mensajesError.AddMensaje(CodigoError.V0028, "codMoneda");
+                _mensajesError.AddMensaje(CodigoError.V0028, $"codMoneda = '{_cpe.codMoneda}'");
             }
 
             #region Validar que se envíen valores positivos y con longitud decimal correcta
@@ -598,7 +598,7 @@ namespace GasperSoft.SUNAT
                             //Validar el motivo de la nota de credito con el catalogo N° 09
                             if (!OnValidarCatalogoSunat("09", item.tipoNota))
                             {
-                                _mensajesError.AddMensaje(CodigoError.V0019, $"motivosNota[{indexMotivoNota}].tipoNota");
+                                _mensajesError.AddMensaje(CodigoError.V0019, $"motivosNota[{indexMotivoNota}].tipoNota = '{item.tipoNota}'");
                             }
                             else
                             {
@@ -640,7 +640,7 @@ namespace GasperSoft.SUNAT
                             //Validamos que el tipo de nota de debito sea valido
                             if (!OnValidarCatalogoSunat("10", item.tipoNota))
                             {
-                                _mensajesError.AddMensaje(CodigoError.V0020, $"motivosNota[{indexMotivoNota}].tipoNota");
+                                _mensajesError.AddMensaje(CodigoError.V0020, $"motivosNota[{indexMotivoNota}].tipoNota = '{item.tipoNota}'");
                             }
                             else
                             {
@@ -730,11 +730,52 @@ namespace GasperSoft.SUNAT
                     _detalleGratuito = true;
                 }
 
+                if (!string.IsNullOrWhiteSpace(item.codigoProducto))
+                {
+                    if (!Validaciones.IsValidCodigoProducto(item.codigoProducto))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S4269, $"detalle[{_idRecord}].codigoProducto = '{item.codigoProducto}'");
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(item.codigoProductoGS1))
+                {
+                    if (!string.IsNullOrWhiteSpace(item.tipoCodigoProductoGS1))
+                    {
+                        var _tipoCodigoProductoGS1Permitidos = new List<string> { "GTIN-8", "GTIN-12", "GTIN-13", "GTIN-14" };
+
+                        if (!_tipoCodigoProductoGS1Permitidos.Contains(item.tipoCodigoProductoGS1))
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S4335, $"detalle[{_idRecord}].tipoCodigoProductoGS1 = '{item.tipoCodigoProductoGS1}', solo se permite 'GTIN-8', 'GTIN-12', 'GTIN-13' y 'GTIN-14'");
+                        }
+                        else
+                        {
+                            if (!Validaciones.IsValidCodigoProductoGS1(item.tipoCodigoProductoGS1, item.codigoProductoGS1))
+                            {
+                                _mensajesError.AddMensaje(CodigoError.S4334, $"detalle[{_idRecord}].codigoProductoGS1 = '{item.codigoProductoGS1}'");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S4333, $"detalle[{_idRecord}].tipoCodigoProductoGS1 no puede estar vacío");
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(item.codigoProductoSunat))
+                {
+                    //Validar que codigoProductoSunat se encuentre en el catálogo N° 25
+                    if (!OnValidarCatalogoSunat("25", item.codigoProductoSunat))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0040, $"detalle[{_idRecord}].unidadMedida = '{item.codigoProductoSunat}'");
+                    }
+                }
+
                 #region Unidad de medida
 
                 if (!OnValidarCatalogoSunat("03", item.unidadMedida))
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0029, $"detalle[{_idRecord}].unidadMedida");
+                    _mensajesError.AddMensaje(CodigoError.V0029, $"detalle[{_idRecord}].unidadMedida = '{item.unidadMedida}'");
                 }
 
                 #endregion
@@ -763,7 +804,7 @@ namespace GasperSoft.SUNAT
                 //Validamos el codigo de afectacion del IGV
                 if (!OnValidarCatalogoSunat("07", item.codAfectacionIGV))
                 {
-                    _mensajesError.AddMensaje(CodigoError.V0030, $"detalle[{_idRecord}].codAfectacionIGV");
+                    _mensajesError.AddMensaje(CodigoError.V0030, $"detalle[{_idRecord}].codAfectacionIGV = '{item.codAfectacionIGV}'");
                     continue;
                 }
                 else
@@ -829,7 +870,7 @@ namespace GasperSoft.SUNAT
                 {
                     if (!OnValidarCatalogoSunat("08", item.codSistemaCalculoISC))
                     {
-                        _mensajesError.AddMensaje(CodigoError.V0024, $"detalle[{_idRecord}].codSistemaCalculoISC");
+                        _mensajesError.AddMensaje(CodigoError.V0024, $"detalle[{_idRecord}].codSistemaCalculoISC = '{item.codSistemaCalculoISC}'");
                     }
                 }
 

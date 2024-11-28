@@ -294,6 +294,38 @@ namespace GasperSoft.SUNAT
             }
         }
 
+        public static bool IsValidCodigoProducto(string input)
+        {
+            var regex = new Regex(@"^((?!\s*$)[\s\S]{0,29})$");
+
+            return regex.IsMatch(input ?? "");
+        }
+
+        public static bool IsValidCodigoProductoGS1(string tipo, string codigo)
+        {
+            Regex regex;
+
+            switch (tipo)
+            {
+                case "GTIN-8":
+                    regex = new Regex(@"^((?!\s*$)[\s\S]{8})$");
+                    break;
+                case "GTIN-12":
+                    regex = new Regex(@"^((?!\s*$)[\s\S]{12})$");
+                    break;
+                case "GTIN-13":
+                    regex = new Regex(@"^((?!\s*$)[\s\S]{13})$");
+                    break;
+                case "GTIN-14":
+                    regex = new Regex(@"^((?!\s*$)[\s\S]{14})$");
+                    break;
+                default:
+                    return false;
+            }
+
+            return regex.IsMatch(codigo ?? "");
+        }
+
         /// <summary>
         /// Un delegado que devuelve sin un determinado valor se encuentra en un determinado catálogo de SUNAT (Anexo 8)
         /// </summary>
