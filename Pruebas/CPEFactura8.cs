@@ -15,7 +15,7 @@ namespace Pruebas
     internal class CPEFactura8
     {
         /// <summary>
-        /// FACTURA CON ITEMS AFECTOS A ICBPER
+        /// FACTURA CON RETENCION
         /// </summary>
         public static CPEType GetDocumento()
         {

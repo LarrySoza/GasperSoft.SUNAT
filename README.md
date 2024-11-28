@@ -29,16 +29,17 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
 - Se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [NUBEFACT](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
 
   - [BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-03-B001-1.xml) - [Pagina 60 Manual SUNAT](/ManualesSunat/BoletaDeVentaElectronica2.1.pdf)
-  - [FACTURA CREDITO](/Xml/20606433094-01-F001-1.xml)
+  - [BOLETA CON ICBPER - COBRANDO BOLSA](/Xml/20606433094-03-B001-2.xml)
+  - [BOLETA CON ICBPER - REGALANDO BOLSA](/Xml/20606433094-03-B001-3.xml)
+  - [FACTURA CREDITO (CUOTAS)](/Xml/20606433094-01-F001-1.xml)
   - [FACTURA GRATUITA](/Xml/20606433094-01-F001-2.xml) - [Pagina 98 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)
   - [FACTURA CONTADO CON DETRACCION](/Xml/20606433094-01-F001-3.xml)
   - [FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-01-F001-4.xml) - [Pagina 77 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)
   <!--- [FACTURA CON 2 ÍTEMS E ISC](/Xml/20606433094-01-F001-5.xml) - [Pagina 88 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)-->
   - [FACTURA CON ANTICIPOS - CON MONTO PENDIENTE DE PAGO](/Xml/20606433094-01-F001-6.xml)
   - [FACTURA CON ANTICIPOS - MONTO TOTAL EN CERO](/Xml/20606433094-01-F001-7.xml)
-  <!--- [FACTURA CON ITEMS AFECTOS A ICBPER](/Xml/20606433094-01-F001-8.xml)-->
-  <!--- [FACTURA SOLES CON RETENCION](/Xml/20606433094-01-F001-9.xml)-->
-  <!--- [FACTURA SOLES CON PERCEPCION](/Xml/20606433094-01-F001-10.xml)-->
+  <!--- [FACTURA SOLES CON RETENCION](/Xml/20606433094-01-F001-10.xml)-->
+  <!--- [FACTURA SOLES CON PERCEPCION](/Xml/20606433094-01-F001-11.xml)-->
   - [NOTA CREDITO MOTIVO 13](/Xml/20606433094-07-F001-1.xml)
   - [GUIA REMISION REMITENTE - Transporte Publico](/Xml/20606433094-09-T001-1.xml)
   - [GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)](/Xml/20606433094-09-T001-2.xml)

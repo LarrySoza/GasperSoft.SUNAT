@@ -15,7 +15,7 @@ namespace Pruebas
     internal class CPEFactura9
     {
         /// <summary>
-        /// FACTURA CON RETENCION
+        /// FACTURA CON PERCEPCION
         /// </summary>
         public static CPEType GetDocumento()
         {
