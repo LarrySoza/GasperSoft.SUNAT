@@ -76,6 +76,7 @@ namespace Pruebas
                 Console.WriteLine("18: COMUNICACION DE BAJA (SOLO FACTURAS)");
                 Console.WriteLine("19: RETENCION FACTURA SOLES");
                 Console.WriteLine("20: RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO");
+                Console.WriteLine("21: REVERSION (BAJAS DE RETENCIONES)");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\nX");
@@ -150,6 +151,9 @@ namespace Pruebas
                         break;
                     case "20":
                         EjemploCRE(CRE2.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "21":
+                        EjemploComunicacionBaja(ComunicacionBaja2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "X":
                     case "x":
