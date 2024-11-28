@@ -33,7 +33,12 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
   - [FACTURA GRATUITA](/Xml/20606433094-01-F001-2.xml) - [Pagina 98 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)
   - [FACTURA CONTADO CON DETRACCION](/Xml/20606433094-01-F001-3.xml)
   - [FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-01-F001-4.xml) - [Pagina 77 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)
-  - [FACTURA CON 2 ÍTEMS E ISC](/Xml/20606433094-01-F001-5.xml) - [Pagina 88 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)
+  <!--- [FACTURA CON 2 ÍTEMS E ISC](/Xml/20606433094-01-F001-5.xml) - [Pagina 88 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf)-->
+  - [FACTURA CON ANTICIPOS - CON MONTO PENDIENTE DE PAGO](/Xml/20606433094-01-F001-6.xml)
+  - [FACTURA CON ANTICIPOS - MONTO TOTAL EN CERO](/Xml/20606433094-01-F001-7.xml)
+  <!--- [FACTURA CON ITEMS AFECTOS A ICBPER](/Xml/20606433094-01-F001-8.xml)-->
+  <!--- [FACTURA SOLES CON RETENCION](/Xml/20606433094-01-F001-9.xml)-->
+  <!--- [FACTURA SOLES CON PERCEPCION](/Xml/20606433094-01-F001-10.xml)-->
   - [NOTA CREDITO MOTIVO 13](/Xml/20606433094-07-F001-1.xml)
   - [GUIA REMISION REMITENTE - Transporte Publico](/Xml/20606433094-09-T001-1.xml)
   - [GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)](/Xml/20606433094-09-T001-2.xml)

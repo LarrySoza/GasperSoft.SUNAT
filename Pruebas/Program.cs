@@ -61,16 +61,21 @@ namespace Pruebas
                 Console.WriteLine("3: FACTURA CONTADO CON DETRACCION");
                 Console.WriteLine("4: FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN - Pagina 77 Manual SUNAT");
                 Console.WriteLine("5: FACTURA CON 2 ÍTEMS E ISC - Pagina 88 Manual SUNAT");
-                Console.WriteLine("6: NOTA CREDITO MOTIVO 13");
-                Console.WriteLine("7: GUIA REMISION REMITENTE - Transporte Publico");
-                Console.WriteLine("8: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
-                Console.WriteLine("9: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
-                Console.WriteLine("10: GUIA REMISION TRANSPORTISTA");
-                Console.WriteLine("11: RESUMEN DIARIO DE BOLETAS - INFORMAR");
-                Console.WriteLine("12: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
-                Console.WriteLine("13: COMUNICACION DE BAJA (SOLO FACTURAS)");
-                Console.WriteLine("14: RETENCION FACTURA SOLES");
-                Console.WriteLine("15: RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO");
+                Console.WriteLine("6: FACTURA CON ANTICIPOS - CON MONTO PENDIENTE DE PAGO");
+                Console.WriteLine("7: FACTURA CON ANTICIPOS - MONTO TOTAL EN CERO");
+                Console.WriteLine("8: FACTURA CON ITEMS AFECTOS A ICBPER");
+                Console.WriteLine("9: FACTURA CON RETENCION");
+                Console.WriteLine("10: FACTURA CON PERCEPCION");
+                Console.WriteLine("11: NOTA CREDITO MOTIVO 13");
+                Console.WriteLine("12: GUIA REMISION REMITENTE - Transporte Publico");
+                Console.WriteLine("13: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
+                Console.WriteLine("14: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
+                Console.WriteLine("15: GUIA REMISION TRANSPORTISTA");
+                Console.WriteLine("16: RESUMEN DIARIO DE BOLETAS - INFORMAR");
+                Console.WriteLine("17: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
+                Console.WriteLine("18: COMUNICACION DE BAJA (SOLO FACTURAS)");
+                Console.WriteLine("19: RETENCION FACTURA SOLES");
+                Console.WriteLine("20: RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\nX");
@@ -102,33 +107,48 @@ namespace Pruebas
                         EjemploCPE(CPEFactura5.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "6":
-                        EjemploCPE(CPENotaCredito1.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura6.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "7":
-                        EjemploGRE(GRERemitente1.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura7.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "8":
-                        EjemploGRE(GRERemitente2.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura8.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "9":
-                        EjemploGRE(GRERemitente3.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura9.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "10":
-                        EjemploGRE(GRETransportista1.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPEFactura10.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "11":
-                        EjemploResumenDiario(ResumenDiario1.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploCPE(CPENotaCredito1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "12":
-                        EjemploResumenDiario(ResumenDiario2.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente1.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "13":
-                        EjemploComunicacionBaja(ComunicacionBaja1.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "14":
-                        EjemploCRE(CRE1.GetDocumento(), _emisor, _certificado, _signature);
+                        EjemploGRE(GRERemitente3.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "15":
+                        EjemploGRE(GRETransportista1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "16":
+                        EjemploResumenDiario(ResumenDiario1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "17":
+                        EjemploResumenDiario(ResumenDiario2.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "18":
+                        EjemploComunicacionBaja(ComunicacionBaja1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "19":
+                        EjemploCRE(CRE1.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "20":
                         EjemploCRE(CRE2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "X":
