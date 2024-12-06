@@ -1,17 +1,8 @@
 # GasperSoft.SUNAT
+[![NuGet Version](https://img.shields.io/nuget/v/GasperSoft.SUNAT)](https://www.nuget.org/packages/GasperSoft.SUNAT)
+[![GitHub License](https://img.shields.io/github/license/LarrySoza/GasperSoft.SUNAT)](/LICENSE.txt)
 
-Un conjunto de librerías para .NET que permite la fácil generación de los XML de documentos electrónicos, estas mismas librerías son las que uso en mi plataforma de producción que ofrezco a mis clientes, por lo que están en constante actualización.
-
-# Como Funciona
-Podría afirmar que existe 4 principales formas de generar XML en .Net: 
--	**Primer Método:** Usar plantillas o escribir el XML con StringBuilder usando variables que después son remplazadas por datos, este enfoque es el más sencillo, pero podría generar errores.
--	**Segundo Método:** Generar clases clases (Invoice, CreditNote, DebitNote, DespatchAdvice etc) con sus respectivas propiedades heredando la interface IXmlSerializable y escribiendo el método WriteXml que finalmente dará como resultado el XML, este enfoque es incluso mucho más complejo y difícil de mantener.
--	**Tercer Método:** Generar el XML usando XmlDocument que debido a la complejidad de la estructura es mucho más difícil que los dos anteriores métodos. 
--	**Cuarto Método:** Generar código desde los XSD oficiales del estándar UBL/SUNAT, usar estas clases generadas asignarle los datos requeridos y después ser serializados usando XmlSerializer. **Este es el método usado en este proyecto gracias a [UblXsdToCS]( https://github.com/LarrySoza/UblXsdToCS)**, por lo que implementar cualquier atributo requerido parte del estándar UBL/SUNAT es relativamente sencillo, para ello se utiliza el proyecto **GasperSoft.SUNAT.DTO** que contiene clases (CPEType, GREType, ResumenDiarioV2Type etc) que encapsula los requerimientos de SUNAT y después son convertidos a objetos generados desde los XSD usando la librería **GasperSoft.SUNAT.UBL**, finalmente este objetos son serializados usando XmlSerializer.
-
->[!NOTE] 
->El Proyecto **GasperSoft.SUNAT** contiene código para validar y Serializar los objetos GasperSoft.SUNAT.DTO, podrían referenciarlo directamente en su proyecto o hacer su propia implementación de la serialización y validación.
->Pueden encontrar los paquetes publicados en [Nuget]( https://www.nuget.org/packages/GasperSoft.SUNAT.UBL) e instalarla directamente la librería desde ahí, pero tome en cuenta que los ajustes de validaciones y cambios primero se actualizan en este repositorio.
+Librerías .NET que permite generar los XML de la **Facturación Electrónica** en Perú, estas mismas librerías son las que uso en mi plataforma de producción que ofrezco a mis clientes, por lo que están en constante actualización.
 
 # Características #
 - Generación de XML de los siguientes documentos electrónicos:
@@ -25,8 +16,15 @@ Podría afirmar que existe 4 principales formas de generar XML en .Net:
   - Guías de Remisión Remitente
   - Guías de Remisión Transportista
 
-# Proyecto "Pruebas"
-- Se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [NUBEFACT](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
+# Como Funciona
+Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **gracias a [UblXsdToCS]( https://github.com/LarrySoza/UblXsdToCS)**, estas clases contienen la estructura completa del estándar UBL/SUNAT, entonces implementar cualquier atributo adicional requerido parte de SUNAT es relativamente sencillo. Sin embargo dado la gran cantidad de propiedades que existen en el estándar UBL, en este proyecto se emplean objetos intermedios más sencillos que cumplen con todos los requerimientos de SUNAT, estas clases están definidas en **GasperSoft.SUNAT.DTO.dll** (CPEType, CREType, GREType, ResumenDiarioV2Type, ComunicacionBajaType), posteriormente después de asignar las propiedades correspondientes son convertidos usando la librería **GasperSoft.SUNAT.UBL.dll** a clases generadas desde los XSD (InvoiceType, DespatchAdviceType, SummaryDocumentsType, VoidedDocumentsType, RetentionType), finalmente son serializados a XML y firmado utilizando métodos definidos en **GasperSoft.SUNAT.dll**.
+
+>[!NOTE] 
+>El Proyecto **GasperSoft.SUNAT** es compatible con net462, net472, net481, netstandard2.0 y net8.0. **GasperSoft.SUNAT.DTO** y **GasperSoft.SUNAT.UBL** lo son con net35, net452, net462, net472, net481, netstandard2.0, net6.0, net7.0 y net8.0.
+**GasperSoft.SUNAT.DTO.dll** y **GasperSoft.SUNAT.UBL.dll** no dependen de **GasperSoft.SUNAT.dll**, sin embargo es esta la librería que permite validar, serializar y firmar los XML, si necesita compatibilidad con net35 o un framework no soportado deberá implementar sus propios métodos.
+
+# Como se usa
+- En el proyecto pruebas encontrara ejemplos de código de como generar y firmar los XML, se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [NUBEFACT](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
 
   - [BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-03-B001-1.xml) - [Pagina 60 Manual SUNAT](/ManualesSunat/BoletaDeVentaElectronica2.1.pdf)
   - [BOLETA CON ICBPER - COBRANDO BOLSA](/Xml/20606433094-03-B001-2.xml)
