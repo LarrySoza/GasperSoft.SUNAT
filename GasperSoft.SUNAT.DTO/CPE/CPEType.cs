@@ -12,11 +12,6 @@ namespace GasperSoft.SUNAT.DTO.CPE
     /// </summary>
     public class CPEType
     {
-        ///// <summary>
-        ///// Representa la version Ubl del xml a generar(2.0 ó 2.1)
-        ///// </summary>
-        //public string versionUbl { get; set; }
-
         /// <summary>
         /// UBL 2.1
         /// Para efectos de identificar la transacción se deberá indicar el código de operación que

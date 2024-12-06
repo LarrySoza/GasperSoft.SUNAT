@@ -659,8 +659,6 @@ namespace GasperSoft.SUNAT.UBL.V2
                         }
                     });
 
-                    var _id = $"{item.serie}-{item.numero}";
-
                     if (string.IsNullOrEmpty(item.tipoDocumento))
                     {
                         if (datos.tipoDocumento == "01")//Es factura
@@ -683,18 +681,11 @@ namespace GasperSoft.SUNAT.UBL.V2
                         item.numeroDocumentoIdentificacionEmisor = emisor.ruc;
                     }
 
-                    //Para el caso de reorganización de empresas
-                    if ($"{item.tipoDocumentoIdentificacionEmisor}{item.numeroDocumentoIdentificacionEmisor}" !=
-                        $"{emisor.tipoDocumentoIdentificacion}{emisor.ruc}")
-                    {
-                        _id = $"{item.numeroDocumentoIdentificacionEmisor}-{_id}";
-                    }
-
                     _documentsReference.Add(new DocumentReferenceType()
                     {
                         ID = new IDType()
                         {
-                            Value = _id
+                            Value = $"{item.serie}-{item.numero}"
                         },
 
                         //Tipo de documento - Catálogo No. 12

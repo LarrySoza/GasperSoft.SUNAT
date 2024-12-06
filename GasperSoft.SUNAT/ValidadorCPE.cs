@@ -272,7 +272,80 @@ namespace GasperSoft.SUNAT
             if (!OnValidarCatalogoSunat("02", _cpe.codMoneda))
             {
                 _mensajesError.AddMensaje(CodigoError.V0028, $"codMoneda = '{_cpe.codMoneda}'");
+                return false;
             }
+
+            if (_cpe.anticipos?.Count > 0)
+            {
+                //Solo se permite:
+                // '02' = FACTURA – EMITIDA POR ANTICIPOS
+                // '03' = BOLETA DE VENTA – EMITIDA POR ANTICIPOS
+                var _documentosAnticipoPermitidos = new List<string> { "02", "03" };
+
+                _idRecord = 0;
+
+                foreach (var item in _cpe.anticipos)
+                {
+                    if (!_documentosAnticipoPermitidos.Contains(item.tipoDocumento))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2505, $"anticipos[{_idRecord}].tipoDocumento = '{item.tipoDocumento}'");
+                    }
+
+                    _idRecord++;
+                }
+            }
+
+            #region Detraccion
+
+            var _tiposOperacionDetraccion = new List<string>() { "1001", "1002", "1003", "1004" };
+
+            if (_cpe.detraccion != null)
+            {
+                if (!_tiposOperacionDetraccion.Contains(_cpe.codigoTipoOperacion))
+                {
+                    _mensajesError.AddMensaje(CodigoError.S3128, "codigoTipoOperacion debe ser '1001', '1002', '1003' o '1004' cuando existe detracción");
+                    return false;
+                }
+            }
+            else
+            {
+                if (_tiposOperacionDetraccion.Contains(_cpe.codigoTipoOperacion))
+                {
+                    _mensajesError.AddMensaje(CodigoError.S3127, "detracción es obligatorio cuando codigoTipoOperacion = '1001', '1002', '1003' o '1004'");
+                    return false;
+                }
+            }
+
+            #endregion
+
+            #region Percepcion
+
+            if (_cpe.percepcion != null)
+            {
+                if (_cpe.codigoTipoOperacion != "2001")
+                {
+                    _mensajesError.AddMensaje(CodigoError.S3308, "codigoTipoOperacion debe ser '2001' cuando existe percepción");
+                    return false;
+                }
+
+                var _importePercepcionCalculado = _cpe.percepcion.montoBase * _cpe.percepcion.tasa;
+
+                if (!Validaciones.ValidarToleranciaCalculo(_cpe.percepcion.importe, decimal.Round(_importePercepcionCalculado, 2), _toleranciaCalculo))
+                {
+                    _mensajesError.AddMensaje(CodigoError.V2000, $"percepcion.importe incorrecto Valor enviado: {_cpe.percepcion.importe} Valor calculado: {decimal.Round(_importePercepcionCalculado, 2)}; Formula: percepcion.importe = percepcion.montoBase * percepcion.tasa");
+                    return false;
+                }
+            }
+            else
+            {
+                if (_cpe.codigoTipoOperacion == "2001")
+                {
+                    _mensajesError.AddMensaje(CodigoError.S3093, "percepción es obligatorio cuando codigoTipoOperacion = '2001'");
+                    return false;
+                }
+            }
+
+            #endregion
 
             #region Validar que se envíen valores positivos y con longitud decimal correcta
 
@@ -464,50 +537,34 @@ namespace GasperSoft.SUNAT
                 }
             }
 
-            var _tiposOperacionDetraccion = new List<string>() { "1001", "1002", "1003", "1004" };
-
             if (_cpe.detraccion != null)
             {
-                if (!_tiposOperacionDetraccion.Contains(_cpe.codigoTipoOperacion))
+                if (string.IsNullOrEmpty(_cpe.detraccion.numeroCuentaBancoNacion))
                 {
-                    _mensajesError.AddMensaje(CodigoError.S3128, "codigoTipoOperacion debe ser \"1001\", \"1002\", \"1003\" o \"1004\"");
+                    _mensajesError.AddMensaje(CodigoError.S3034, "detraccion.numeroCuentaBancoNacion");
                 }
-                else
+
+                if (_cpe.detraccion.codMoneda != "PEN")
                 {
-                    if (string.IsNullOrEmpty(_cpe.detraccion.numeroCuentaBancoNacion))
-                    {
-                        _mensajesError.AddMensaje(CodigoError.S3034, "detraccion.numeroCuentaBancoNacion");
-                    }
-
-                    if (_cpe.detraccion.codMoneda != "PEN")
-                    {
-                        _mensajesError.AddMensaje(CodigoError.S3208);
-                    }
-
-                    if (_cpe.detraccion.porcentaje < 0)
-                    {
-                        _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.porcentaje");
-                    }
-                    else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.porcentaje, 2))
-                    {
-                        _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.porcentaje");
-                    }
-
-                    if (_cpe.detraccion.importe < 0)
-                    {
-                        _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.importe");
-                    }
-                    else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.importe, 2))
-                    {
-                        _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.importe");
-                    }
+                    _mensajesError.AddMensaje(CodigoError.S3208);
                 }
-            }
-            else
-            {
-                if (_tiposOperacionDetraccion.Contains(_cpe.codigoTipoOperacion))
+
+                if (_cpe.detraccion.porcentaje < 0)
                 {
-                    _mensajesError.AddMensaje(CodigoError.S3127, "detraccion es obligatorio cuando codigoTipoOperacion = \"1001\", \"1002\", \"1003\" o \"1004\"");
+                    _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.porcentaje");
+                }
+                else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.porcentaje, 2))
+                {
+                    _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.porcentaje");
+                }
+
+                if (_cpe.detraccion.importe < 0)
+                {
+                    _mensajesError.AddMensaje(CodigoError.V0012, "detraccion.importe");
+                }
+                else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.detraccion.importe, 2))
+                {
+                    _mensajesError.AddMensaje(CodigoError.V0011, "detraccion.importe");
                 }
             }
 
@@ -578,7 +635,7 @@ namespace GasperSoft.SUNAT
                     {
                         if (!Validaciones.IsValidSeries(item.tipoDocumento, item.serie))
                         {
-                            _mensajesError.AddMensaje(CodigoError.V0015, $"motivosNota[{indexMotivoNota}].serie");
+                            _mensajesError.AddMensaje(CodigoError.V0015, $"motivosNota[{indexMotivoNota}].serie = '{item.serie}' no valido para motivosNota[{indexMotivoNota}].tipoDocumento = '{item.tipoDocumento}' ");
                             continue;
                         }
 
@@ -604,7 +661,7 @@ namespace GasperSoft.SUNAT
                             {
                                 if (item.tipoDocumento != "01" && item.tipoDocumento != "03" && item.tipoDocumento != "12")
                                 {
-                                    _mensajesError.AddMensaje(CodigoError.V0014, $"motivosNota[{indexMotivoNota}].tipoDocumento");
+                                    _mensajesError.AddMensaje(CodigoError.V0014, $"motivosNota[{indexMotivoNota}].tipoDocumento = '{item.tipoDocumento}'");
                                 }
                                 else
                                 {
@@ -613,7 +670,7 @@ namespace GasperSoft.SUNAT
                                         //No es posible emitir Notas de crédito con motivos 04(descuento global) 05(descuento por ítem) 08(bonificación).
                                         if (item.tipoNota == "04" || item.tipoNota == "05" || item.tipoNota == "08")
                                         {
-                                            _mensajesError.AddMensaje(CodigoError.V0017, $"motivosNota[{indexMotivoNota}].tipoNota");
+                                            _mensajesError.AddMensaje(CodigoError.V0017, $"motivosNota[{indexMotivoNota}].tipoNota = '{item.tipoNota}'");
                                         }
                                     }
                                 }
@@ -871,6 +928,15 @@ namespace GasperSoft.SUNAT
                     if (!OnValidarCatalogoSunat("08", item.codSistemaCalculoISC))
                     {
                         _mensajesError.AddMensaje(CodigoError.V0024, $"detalle[{_idRecord}].codSistemaCalculoISC = '{item.codSistemaCalculoISC}'");
+                        continue;
+                    }
+
+                    var _montoISCCalculado = item.montoBaseISC * item.tasaISC / 100;
+
+                    if (!Validaciones.ValidarToleranciaCalculo(item.montoISC, decimal.Round(_montoISCCalculado, 2), _toleranciaCalculo))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V2000, $"montoISC incorrecto en la linea {_idRecord}, Valor enviado: {item.montoISC} Valor calculado: {decimal.Round(_montoISCCalculado, 2)}; Formula: montoISC = montoBaseISC * tasaISC / 100");
+                        continue;
                     }
                 }
 

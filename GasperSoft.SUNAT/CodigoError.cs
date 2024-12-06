@@ -12,6 +12,7 @@ namespace GasperSoft.SUNAT
         //Validaciones SUNAT
         public const string S2017 = "S2017:El numero de documento de identidad del receptor debe ser  RUC";
         public const string S2329 = "S2329:La fecha de emision se encuentra fuera del limite permitido";
+        public const string S2505 = "S2505:Código de documento de referencia debe ser 02 o 03";
         public const string S2511 = "S2511:El tipo de documento no es aceptado, para 'Guías Remisión Remitente', el tipo de documento de identificación del remitente debe ser '6'(RUC)";
         public const string S2523 = "S2523:El valor del atributo es diferente 'KGM' y diferente de 'TNE'";
         public const string S2532 = "S2532:No existe información de modalidad de transporte";
@@ -29,12 +30,14 @@ namespace GasperSoft.SUNAT
         public const string S2802 = "S2802:El dato ingresado como numero de documento de identidad del receptor no cumple con el formato establecido";
         public const string S2993 = "S2993:El factor de afectación de IGV por linea debe ser diferente a 0.00";
         public const string S3030 = "S3030:No existe información del código de local anexo del emisor";
+        public const string S3093 = "S3093:Si operación es sujeta a percepción y la forma de pago es Contado, debe ingresar cargo para Percepción";
         public const string S3205 = "S3205:Debe consignar el tipo de operación";
         public const string S3208 = "S3208:La moneda del monto de la detracción debe ser PEN";
         public const string S3206 = "S3206:El dato ingresado como tipo de operación no corresponde a un valor esperado (catálogo nro. 51)";
         public const string S3265 = "S3265:El Monto neto pendiente de pago debe ser menor o igual al Importe total del comprobante";
         public const string S3267 = "S3267:Fecha del pago único o de las cuotas no puede ser anterior o igual a la fecha de emisión del comprobante";
         public const string S3303 = "S3303:El monto para el redondeo del Importe Total excede el valor permitido";
+        public const string S3308 = "S3308:Solo debe consignar informacion de percepciones si el tipo de operación es 2001-Operación sujeta a Percepcion";
         public const string S3319 = "S3319:La suma de las cuotas debe ser igual al Monto neto pendiente de pago";
         public const string S3343 = "S3343:La Fecha de inicio del traslado debe ser mayor o igual a la Fecha de emision del documento";
         public const string S3347 = "S3347:No debe consignar los datos del transportista para una operacion de Transporte Privado";
@@ -63,7 +66,7 @@ namespace GasperSoft.SUNAT
         public const string S3365 = "S3365:Código de establecimiento es obligatorio para el motivo de traslado seleccionado";
         public const string S3375 = "S3375:El Codigo de Producto GTIN no cumple con el formato establecido";
         public const string S3404 = "S3404:El XML no contiene el tag o no existe informacion del motivo de traslado";
-        public const string S3405 = "S3405:El valor ingresado como motivo de traslado no es valido";
+        public const string S3405 = "S3405:El valor ingresado como motivo de traslado no es valido(El valor no existe el catálogo N° 20)";
         public const string S3462 = "S3462:La tasa del IGV debe ser la misma en todas las líneas o ítems del documento y debe corresponder con una tasa vigente";
         public const string S4085 = "S4085:Código del Ítem - El dato ingresado no cumple con el formato establecido";
         public const string S4233 = "S4233:El dato ingresado en order de compra no cumple con el formato establecido";
