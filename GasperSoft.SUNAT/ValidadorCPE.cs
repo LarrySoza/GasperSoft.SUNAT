@@ -328,6 +328,12 @@ namespace GasperSoft.SUNAT
                     return false;
                 }
 
+                if (_cpe.informacionPago?.formaPago != FormaPagoType.Contado)
+                {
+                    _mensajesError.AddMensaje(CodigoError.S3330);
+                    return false;
+                }
+
                 var _importePercepcionCalculado = _cpe.percepcion.montoBase * _cpe.percepcion.tasa;
 
                 if (!Validaciones.ValidarToleranciaCalculo(_cpe.percepcion.importe, decimal.Round(_importePercepcionCalculado, 2), _toleranciaCalculo))
@@ -335,12 +341,20 @@ namespace GasperSoft.SUNAT
                     _mensajesError.AddMensaje(CodigoError.V2000, $"percepcion.importe incorrecto Valor enviado: {_cpe.percepcion.importe} Valor calculado: {decimal.Round(_importePercepcionCalculado, 2)}; Formula: percepcion.importe = percepcion.montoBase * percepcion.tasa");
                     return false;
                 }
+
+                var _codigosPercepcionPermitidos = new List<string>() { "51", "52", "53" };
+
+                if (!_codigosPercepcionPermitidos.Contains(_cpe.percepcion.codigo))
+                {
+                    _mensajesError.AddMensaje(CodigoError.S3093, $"percepcion.codigo ='{_cpe.percepcion.codigo}' Solo se permite '51', '52' o '53'");
+                    return false;
+                }
             }
             else
             {
                 if (_cpe.codigoTipoOperacion == "2001")
                 {
-                    _mensajesError.AddMensaje(CodigoError.S3093, "percepción es obligatorio cuando codigoTipoOperacion = '2001'");
+                    _mensajesError.AddMensaje(CodigoError.V0102, "'percepcion' es obligatorio cuando codigoTipoOperacion = '2001'");
                     return false;
                 }
             }
@@ -466,6 +480,15 @@ namespace GasperSoft.SUNAT
             else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.sumatoriaOtrosCargosNoAfectaBI, 2))
             {
                 _mensajesError.AddMensaje(CodigoError.V0011, "sumatoriaOtrosCargosNoAfectaBI");
+            }
+
+            if (_cpe.precioVenta < 0)
+            {
+                _mensajesError.AddMensaje(CodigoError.V0012, "precioVenta");
+            }
+            else if (!Validaciones.IsValidCantidadDecimalesMaximos(_cpe.precioVenta, 2))
+            {
+                _mensajesError.AddMensaje(CodigoError.V0011, "precioVenta");
             }
 
             if (_cpe.importeTotal < 0)
@@ -614,8 +637,6 @@ namespace GasperSoft.SUNAT
             var _esNotaCreditoMotivo13 = false;
             var _esNotaCreditoDebito = false;
             decimal _tasaIGVOperacionesGravadas = 0;
-
-            _idRecord = 0;
 
             #region Validaciones Nota de credito debito
 
@@ -773,8 +794,14 @@ namespace GasperSoft.SUNAT
 
             #endregion
 
+            //"_idRecord" recién aumenta en una unidad al final de las validaciones pero si se usa "continue" en alguna validación
+            //su valor no será el correcto, Entonces la solución es comenzar en -1 y colocar "_idRecord++" al inicio del bucle (quiero contar desde 0)
+            _idRecord = -1;
+
             foreach (var item in _cpe.detalles)
             {
+                _idRecord++;
+
                 bool _valorCalculoValidado = true;
 
                 if (_codigosOperacionOnerosa.Contains(item.codAfectacionIGV))
@@ -877,66 +904,6 @@ namespace GasperSoft.SUNAT
                         {
                             _mensajesError.AddMensaje(CodigoError.S2642, $"detalle[{_idRecord}].codAfectacionIGV");
                         }
-                    }
-                }
-
-                #endregion
-
-                #region TasaIGV
-
-                //Si es una operacion grabada se debe mandar la tasa de IGV > 0
-                if (item.codAfectacionIGV.StartsWith("1"))
-                {
-                    if (item.tasaIGV == 0)
-                    {
-                        _mensajesError.AddMensaje(CodigoError.S2993, $"detalle[{_idRecord}].tasaIGV");
-                        continue;
-                    }
-                    else
-                    {
-                        if (_tasaIGVOperacionesGravadas != 0)
-                        {
-                            //Todos los detalles de Operaciones Grabadas deben tener la misma tasa de IGV
-                            if (item.tasaIGV != _tasaIGVOperacionesGravadas)
-                            {
-                                _mensajesError.AddMensaje(CodigoError.S3462, $"detalle[{_idRecord}].tasaIGV = {item.tasaIGV} debe ser {_tasaIGVOperacionesGravadas}");
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            //Guardamos la primera tasa de IGV de operaciones grabadas
-                            _tasaIGVOperacionesGravadas = item.tasaIGV;
-                        }
-                    }
-                }
-                else
-                {
-                    if (item.tasaIGV != 0)
-                    {
-                        _mensajesError.AddMensaje(CodigoError.S3101, $"detalle[{_idRecord}].tasaIGV");
-                        continue;
-                    }
-                }
-
-                #endregion
-
-                #region montoISC
-
-                if (item.montoISC > 0)
-                {
-                    if (!OnValidarCatalogoSunat("08", item.codSistemaCalculoISC))
-                    {
-                        _mensajesError.AddMensaje(CodigoError.V0024, $"detalle[{_idRecord}].codSistemaCalculoISC = '{item.codSistemaCalculoISC}'");
-                        continue;
-                    }
-
-                    var _montoISCCalculado = item.montoBaseISC * item.tasaISC / 100;
-
-                    if (!Validaciones.ValidarToleranciaCalculo(item.montoISC, decimal.Round(_montoISCCalculado, 2), _toleranciaCalculo))
-                    {
-                        _mensajesError.AddMensaje(CodigoError.V2000, $"montoISC incorrecto en la linea {_idRecord}, Valor enviado: {item.montoISC} Valor calculado: {decimal.Round(_montoISCCalculado, 2)}; Formula: montoISC = montoBaseISC * tasaISC / 100");
-                        continue;
                     }
                 }
 
@@ -1143,6 +1110,72 @@ namespace GasperSoft.SUNAT
 
                 if (_valorCalculoValidado && !_esNotaCreditoMotivo13)
                 {
+                    #region TasaIGV
+
+                    //Si es una operacion grabada se debe mandar la tasa de IGV > 0
+                    if (item.codAfectacionIGV.StartsWith("1"))
+                    {
+                        if (item.tasaIGV == 0)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S2993, $"detalle[{_idRecord}].tasaIGV");
+                            continue;
+                        }
+                        else
+                        {
+                            if (_tasaIGVOperacionesGravadas != 0)
+                            {
+                                //Todos los detalles de Operaciones Grabadas deben tener la misma tasa de IGV
+                                if (item.tasaIGV != _tasaIGVOperacionesGravadas)
+                                {
+                                    _mensajesError.AddMensaje(CodigoError.S3462, $"detalle[{_idRecord}].tasaIGV = {item.tasaIGV} debe ser {_tasaIGVOperacionesGravadas}");
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                //Guardamos la primera tasa de IGV de operaciones grabadas
+                                _tasaIGVOperacionesGravadas = item.tasaIGV;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (item.tasaIGV != 0)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3101, $"detalle[{_idRecord}].tasaIGV");
+                            continue;
+                        }
+                    }
+
+                    #endregion
+
+                    #region montoISC
+
+                    if (item.montoISC > 0)
+                    {
+                        if (!OnValidarCatalogoSunat("08", item.codSistemaCalculoISC))
+                        {
+                            _mensajesError.AddMensaje(CodigoError.V0024, $"detalle[{_idRecord}].codSistemaCalculoISC = '{item.codSistemaCalculoISC}'");
+                            continue;
+                        }
+
+                        if (item.tasaISC == 0)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3104, $"detalle[{_idRecord}].tasaISC");
+                            continue;
+                        }
+
+                        var _montoISCCalculado = item.montoBaseISC * item.tasaISC / 100;
+
+                        if (!Validaciones.ValidarToleranciaCalculo(item.montoISC, decimal.Round(_montoISCCalculado, 2), _toleranciaCalculo))
+                        {
+                            _mensajesError.AddMensaje(CodigoError.V2000, $"montoISC incorrecto en la linea {_idRecord}, Valor enviado: {item.montoISC} Valor calculado: {decimal.Round(_montoISCCalculado, 2)}; Formula: montoISC = montoBaseISC * tasaISC / 100");
+                            continue;
+                        }
+                    }
+
+                    #endregion
+
                     if (item.precioVentaUnitario == 0)
                     {
                         _mensajesError.AddMensaje(CodigoError.V2000, $"precioVentaUnitario incorrecto en la linea {_idRecord}, debe ser mayor a 0.00, Valor enviado: {item.precioVentaUnitario}");
@@ -1408,8 +1441,6 @@ namespace GasperSoft.SUNAT
                         _mensajesError.AddMensaje(CodigoError.V0022, $"detalle[{_idRecord}] 'sumatoriaImpuestos'");
                     }
                 }
-
-                _idRecord++;
             }
 
             //Existe algun error en los detalles entonces ya no continuamos
@@ -1450,12 +1481,12 @@ namespace GasperSoft.SUNAT
                 return false;
             }
 
-
             decimal _descuentosGlobalesNOAfectaBI = Convert.ToDecimal(_cpe.descuentoGlobalNoAfectaBI?.importe);
             decimal _descuentosxLineaNOAfectaBI = Convert.ToDecimal(_cpe.detalles.Sum(x => x.descuentoNoAfectaBI?.importe));
             decimal _totalAnticiposGravados = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.totalOperacionesGravadas));
             decimal _totalAnticiposExonerados = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.totalOperacionesExoneradas));
             decimal _totalAnticiposInafectos = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.totalOperacionesInafectas));
+            decimal _totalAnticiposISC = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.totalISC));
             decimal _totalDescuentosNOAfectaBICalculado = _descuentosxLineaNOAfectaBI + _descuentosGlobalesNOAfectaBI;
 
             decimal _operacionesGravadasxLinea = _cpe.detalles.Where(x => x.codAfectacionIGV == "10").Sum(x => x.valorVenta);
@@ -1476,15 +1507,24 @@ namespace GasperSoft.SUNAT
 
             decimal _valorVentaxLinea = _cpe.detalles.Where(x => x.codAfectacionIGV == "10" || x.codAfectacionIGV == "20" || x.codAfectacionIGV == "30" || x.codAfectacionIGV == "40").Sum(x => x.valorVenta);
             decimal _valorVentaCalculado = _valorVentaxLinea - _descuentoGlobalAfectaBICalculado;
-            decimal _sumatoriaISCCalculado = _cpe.detalles.Sum(x => x.montoISC);
-            decimal _sumatoriaICBPERCalculado = _cpe.detalles.Sum(x => x.montoICBPER);
-            decimal _sumatoriaOTHCalculado = _cpe.detalles.Sum(x => x.montoOTH);
 
-            //No implementado
-            decimal _anticiposISC = 0;
+            //Codigo de validacion 3296
+            decimal _sumatoriaMontoBaseISCCalculado = _cpe.detalles.Where(x => x.codAfectacionIGV == "10" || x.codAfectacionIGV == "20" || x.codAfectacionIGV == "30" || x.codAfectacionIGV == "40").Sum(x => x.montoBaseISC);
+
+            //Codigo de validacion 3297
+            decimal _sumatoriaMontoBaseOTHCalculado = _cpe.detalles.Sum(x => x.montoBaseOTH);
+
+            //Codigo de validacion 3298
+            decimal _sumatoriaISCCalculado = _cpe.detalles.Where(x => x.codAfectacionIGV == "10" || x.codAfectacionIGV == "20" || x.codAfectacionIGV == "30" || x.codAfectacionIGV == "40").Sum(x => x.montoISC) - _totalAnticiposISC;
+
+            //Codigo de validacion 3306
+            decimal _sumatoriaICBPERCalculado = _cpe.detalles.Sum(x => x.montoICBPER);
 
             //Codigo de validacion 3291
-            decimal _sumatoriaIGVCalculado = _totalOperacionesGravadasCalculado * _tasaIGVOperacionesGravadas / 100;
+            decimal _sumatoriaIGVCalculado = _cpe.detalles.Sum(x => x.montoIGV);
+
+            //Codigo de validacion 3299
+            decimal _sumatoriaOTHCalculado = _cpe.detalles.Sum(x => x.montoOTH);
 
             //Codigo de validacion 3294
             decimal _sumatoriaImpuestosCalculado = _sumatoriaIGVCalculado + _sumatoriaISCCalculado + _sumatoriaOTHCalculado + _sumatoriaICBPERCalculado;
@@ -1502,7 +1542,7 @@ namespace GasperSoft.SUNAT
             }
 
             //Codigo de validacion 3279
-            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _anticiposISC + _sumatoriaOTHCalculado + ((_operacionesGravadasxLinea - _descuentoGlobalAfectaBICalculado) * _tasaIGVOperacionesGravadas / 100);
+            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _totalAnticiposISC + _sumatoriaOTHCalculado + _sumatoriaIGVCalculado;
             decimal _totalAnticiposCalculado = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.importeTotal));
             decimal _totalRedondeo = _cpe.totalRedondeo;
             decimal _importeTotalCalculado = _precioVentaCalculado + _sumatoriaOtrosCargosNoAfectaBICalculado - _totalDescuentosNOAfectaBICalculado - _totalAnticiposCalculado + _totalRedondeo;
@@ -1628,9 +1668,46 @@ namespace GasperSoft.SUNAT
 
             #endregion
 
+
+            if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaMontoBaseISC, decimal.Round(_sumatoriaMontoBaseISCCalculado, 2), _toleranciaCalculo))
+            {
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaMontoBaseISC incorrecto Valor enviado: {_cpe.sumatoriaMontoBaseISC} Valor calculado: {decimal.Round(_sumatoriaMontoBaseISCCalculado, 2)}; Formula: sumatoriaMontoBaseISC = Suma del 'montoBaseISC' de cada detalle que no es gratuito");
+
+                return false;
+            }
+
+            if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaMontoBaseOTH, decimal.Round(_sumatoriaMontoBaseOTHCalculado, 2), _toleranciaCalculo))
+            {
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaMontoBaseOTH incorrecto Valor enviado: {_cpe.sumatoriaMontoBaseOTH} Valor calculado: {decimal.Round(_sumatoriaMontoBaseOTHCalculado, 2)}; Formula: sumatoriaMontoBaseOTH = Suma del 'montoBaseOTH' de cada detalle");
+
+                return false;
+            }
+
+            if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaISC, decimal.Round(_sumatoriaISCCalculado, 2), _toleranciaCalculo))
+            {
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaISC incorrecto Valor enviado: {_cpe.sumatoriaISC} Valor calculado: {decimal.Round(_sumatoriaISCCalculado, 2)}; Formula: sumatoriaISC = Suma del 'montoISC' de cada detalle que no es gratuito - Suma del 'totalISC' de los anticipos");
+
+                return false;
+            }
+
+            if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaICBPER, decimal.Round(_sumatoriaICBPERCalculado, 2), _toleranciaCalculo))
+            {
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaICBPER incorrecto Valor enviado: {_cpe.sumatoriaICBPER} Valor calculado: {decimal.Round(_sumatoriaICBPERCalculado, 2)}; Formula: sumatoriaICBPER = Suma del 'montoICBPER' de cada detalle");
+
+                return false;
+            }
+
+            if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaOTH, decimal.Round(_sumatoriaOTHCalculado, 2), _toleranciaCalculo))
+            {
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaOTH incorrecto Valor enviado: {_cpe.sumatoriaOTH} Valor calculado: {decimal.Round(_sumatoriaOTHCalculado, 2)}; Formula: sumatoriaOTH = Suma del 'montoOTH' de cada detalle");
+
+                return false;
+            }
+
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaIGV, decimal.Round(_sumatoriaIGVCalculado, 2), _toleranciaCalculo))
             {
-                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = totalOperacionesGravadas * tasaIGV / 100");
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = Suma del 'montoIGV' de cada detalle");
+                                
                 return false;
             }
 
@@ -1710,7 +1787,7 @@ namespace GasperSoft.SUNAT
 
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.precioVenta, decimal.Round(_precioVentaCalculado, 2), _toleranciaCalculo))
             {
-                _mensajesError.AddMensaje(CodigoError.V2000, $"precioVenta incorrecto Valor enviado: {_cpe.precioVenta} Valor calculado: {decimal.Round(_precioVentaCalculado, 2)}; Formula: precioVenta = valorVenta + sumatoriaICBPER + sumatoriaISC + sumatoriaOTH + (((Suma del 'valorVenta' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe) * tasaIGV / 100)");
+                _mensajesError.AddMensaje(CodigoError.V2000, $"precioVenta incorrecto Valor enviado: {_cpe.precioVenta} Valor calculado: {decimal.Round(_precioVentaCalculado, 2)}; Formula: precioVenta = valorVenta + sumatoriaICBPER + sumatoriaISC + (Suma del 'totalISC' de los anticipos) + sumatoriaOTH + sumatoriaIGV");
                 return false;
             }
 

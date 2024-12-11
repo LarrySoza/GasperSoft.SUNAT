@@ -39,6 +39,7 @@ namespace GasperSoft.SUNAT
         public const string S3303 = "S3303:El monto para el redondeo del Importe Total excede el valor permitido";
         public const string S3308 = "S3308:Solo debe consignar informacion de percepciones si el tipo de operación es 2001-Operación sujeta a Percepcion";
         public const string S3319 = "S3319:La suma de las cuotas debe ser igual al Monto neto pendiente de pago";
+        public const string S3330 = "S3330:Solo debe consignar informacion de percepciones si la forma de pago es 'Contado'";
         public const string S3343 = "S3343:La Fecha de inicio del traslado debe ser mayor o igual a la Fecha de emision del documento";
         public const string S3347 = "S3347:No debe consignar los datos del transportista para una operacion de Transporte Privado";
         public const string S3352 = "S3352:Si ingreso un documento relacionado tipo '49' (solo en caso de GRE-Remitente) u '80', debe existir al menos un item con Partida arancelaria";
@@ -57,6 +58,7 @@ namespace GasperSoft.SUNAT
         public const string S4392 = "S4392:El Numero de Registro MTC del transportista no cumple con el formato establecido";
         public const string S3034 = "S3034:No existe información en el nro de cuenta de detracción";
         public const string S3101 = "S3101:El factor de afectación de IGV por linea debe ser igual a 0.00 para Exoneradas, Inafectas, Exportación, Gratuitas de exoneradas o Gratuitas de inafectas";
+        public const string S3104 = "S3104:El factor de afectación de ISC por linea debe ser diferente a 0.00";
         public const string S3127 = "S3127:El XML no contiene el tag o no existe información del Codigo de BBSS de detracción para el tipo de operación";
         public const string S3128 = "S3128:El XML contiene información de codigo de bien y servicio de detracción que no corresponde al tipo de operación";
         public const string S3203 = "S3203:El tipo de nota es un dato único (Notas de crédito y débito deben consignar un único elemento en la propiedad 'motivosNota')";

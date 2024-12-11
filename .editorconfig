@@ -1,5 +1,5 @@
 ﻿[*.cs]
-file_header_template = Licencia MIT \nCopyright (C) 2023 GasperSoft.\nContacto: it@gaspersoft.com
+file_header_template = Licencia MIT \nCopyright (C) 2024 GasperSoft.\nContacto: it@gaspersoft.com
 
 # IDE1006: Estilos de nombres
 dotnet_diagnostic.IDE1006.severity = none

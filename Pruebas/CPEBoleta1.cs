@@ -66,9 +66,9 @@ namespace Pruebas
                 },
                 //Mirar que a pesar de ser gratuito mando:
                 //  precioVentaUnitario = 4.8m,
-                //  valorVenta = 4.8m,
-                //  montoBaseIGV = 4.8m,
-                //Esto es por diseño y esta informacion es de referencia segun lo establecido por SUNAT
+                //  valorVenta = 4.8m <== precioVentaUnitario * cantidad
+                //  montoBaseIGV = 4.8m <== precioVentaUnitario * cantidad
+                //Esto es porque la SUNAT requiere información del precio de referencia y así está diseñada esta librería para poder generar el XML correctamente
                 new ItemCPEType()
                 {
                     codigoProducto = "NOB012",

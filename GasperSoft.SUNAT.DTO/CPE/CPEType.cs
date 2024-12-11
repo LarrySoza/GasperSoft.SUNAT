@@ -144,7 +144,7 @@ namespace GasperSoft.SUNAT.DTO.CPE
         /// UBL 2.1
         /// Representa el monto sobre el cual se calcula el ISC
         /// </summary>
-        public decimal montoBaseISC { get; set; }
+        public decimal sumatoriaMontoBaseISC { get; set; }
 
         /// <summary>
         /// La sumatoria de la propiedad montoISC de cada item
@@ -182,7 +182,7 @@ namespace GasperSoft.SUNAT.DTO.CPE
         /// UBL 2.1
         /// Representa el monto sobre el cual se calcula el valor otros tributos(sumatoriaOth)
         /// </summary>
-        public decimal montoBaseOTH { get; set; }
+        public decimal sumatoriaMontoBaseOTH { get; set; }
 
         /// <summary>
         /// La suma total de otros tributos aplicados al comprobante

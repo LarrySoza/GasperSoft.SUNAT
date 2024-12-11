@@ -62,5 +62,10 @@ namespace GasperSoft.SUNAT.DTO.CPE
         ///  Genera Un AllowanceCharge con AllowanceChargeReasonCode = '06'
         /// </summary>
         public decimal totalOperacionesInafectas { get; set; }
+
+        /// <summary>
+        ///  Genera Un AllowanceCharge con AllowanceChargeReasonCode = '20'
+        /// </summary>
+        public decimal totalISC { get; set; }
     }
 }

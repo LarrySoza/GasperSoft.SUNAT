@@ -1939,7 +1939,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     //Monto base
                     TaxableAmount = new TaxableAmountType()
                     {
-                        Value = datos.montoBaseISC,
+                        Value = datos.sumatoriaMontoBaseISC,
                         currencyID = datos.codMoneda
                     },
 
@@ -2030,7 +2030,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     //Monto base
                     TaxableAmount = new TaxableAmountType()
                     {
-                        Value = datos.montoBaseOTH,
+                        Value = datos.sumatoriaMontoBaseOTH,
                         currencyID = datos.codMoneda
                     },
 
@@ -2442,6 +2442,31 @@ namespace GasperSoft.SUNAT.UBL.V2
                             Amount = new AmountType2()
                             {
                                 Value = item.totalOperacionesExportacion,
+                                currencyID = datos.codMoneda
+                            }
+                        });
+                    }
+
+                    if (item.totalISC > 0)
+                    {
+                        _descuentosCargos.Add(new AllowanceChargeType()
+                        {
+                            ChargeIndicator = new ChargeIndicatorType()
+                            {
+                                Value = false
+                            },
+
+                            AllowanceChargeReasonCode = new AllowanceChargeReasonCodeType()
+                            {
+                                Value = "20",
+                                listAgencyName = "PE:SUNAT",
+                                listName = "Cargo/descuento",
+                                listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53"
+                            },
+
+                            Amount = new AmountType2()
+                            {
+                                Value = item.totalISC,
                                 currencyID = datos.codMoneda
                             }
                         });
