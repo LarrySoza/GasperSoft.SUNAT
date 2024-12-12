@@ -1521,7 +1521,8 @@ namespace GasperSoft.SUNAT
             decimal _sumatoriaICBPERCalculado = _cpe.detalles.Sum(x => x.montoICBPER);
 
             //Codigo de validacion 3291
-            decimal _sumatoriaIGVCalculado = (_totalOperacionesGravadasCalculado + _sumatoriaISCCalculado) * _tasaIGVOperacionesGravadas / 100;
+            //decimal _sumatoriaIGVCalculado = (_totalOperacionesGravadasCalculado + _sumatoriaISCCalculado) * _tasaIGVOperacionesGravadas / 100;
+            decimal _sumatoriaIGVCalculado = (_cpe.detalles.Where(x => x.codAfectacionIGV == "10").Sum(x => x.montoBaseIGV) - _descuentoGlobalAfectaBICalculado - _totalAnticiposGravados - _totalAnticiposISC) * _tasaIGVOperacionesGravadas / 100;
 
             //Codigo de validacion 3299
             decimal _sumatoriaOTHCalculado = _cpe.detalles.Sum(x => x.montoOTH);
@@ -1705,7 +1706,7 @@ namespace GasperSoft.SUNAT
 
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaIGV, decimal.Round(_sumatoriaIGVCalculado, 2), _toleranciaCalculo))
             {
-                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = (totalOperacionesGravadas + sumatoriaISC) * TasaIGV / 100 ");
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = ((Suma del 'montoBaseIGV' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe - (Suma de 'totalOperacionesGravadas' de cada anticipo) - (Suma de 'totalISC' de cada anticipo)) * TasaIGV / 100");
                 return false;
             }
 
