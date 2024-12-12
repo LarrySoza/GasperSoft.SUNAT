@@ -1521,7 +1521,7 @@ namespace GasperSoft.SUNAT
             decimal _sumatoriaICBPERCalculado = _cpe.detalles.Sum(x => x.montoICBPER);
 
             //Codigo de validacion 3291
-            decimal _sumatoriaIGVCalculado = _cpe.detalles.Sum(x => x.montoIGV);
+            decimal _sumatoriaIGVCalculado = (_totalOperacionesGravadasCalculado + _sumatoriaISCCalculado) * _tasaIGVOperacionesGravadas / 100;
 
             //Codigo de validacion 3299
             decimal _sumatoriaOTHCalculado = _cpe.detalles.Sum(x => x.montoOTH);
@@ -1668,7 +1668,6 @@ namespace GasperSoft.SUNAT
 
             #endregion
 
-
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaMontoBaseISC, decimal.Round(_sumatoriaMontoBaseISCCalculado, 2), _toleranciaCalculo))
             {
                 _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaMontoBaseISC incorrecto Valor enviado: {_cpe.sumatoriaMontoBaseISC} Valor calculado: {decimal.Round(_sumatoriaMontoBaseISCCalculado, 2)}; Formula: sumatoriaMontoBaseISC = Suma del 'montoBaseISC' de cada detalle que no es gratuito");
@@ -1706,8 +1705,7 @@ namespace GasperSoft.SUNAT
 
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaIGV, decimal.Round(_sumatoriaIGVCalculado, 2), _toleranciaCalculo))
             {
-                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = Suma del 'montoIGV' de cada detalle");
-                                
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = (totalOperacionesGravadas + sumatoriaISC) * TasaIGV / 100 ");
                 return false;
             }
 

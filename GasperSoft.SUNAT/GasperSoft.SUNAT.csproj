@@ -11,7 +11,7 @@
     <Description>Métodos utilizados para convertir los Objetos (DTOs) de GasperSoft.SUNAT.DTO(CPETye, CREType, GREType)  a XML</Description>
     <Copyright>Copyright (C) 2024 GasperSoft.</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.2</FileVersion>
+    <FileVersion>1.0.3</FileVersion>
     <Version>$(FileVersion)</Version>
   </PropertyGroup>
 
