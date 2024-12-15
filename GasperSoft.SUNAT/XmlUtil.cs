@@ -2,7 +2,11 @@
 // Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
+using GasperSoft.SUNAT.DTO.CPE;
+using GasperSoft.SUNAT.DTO.GRE;
+using GasperSoft.SUNAT.UBL.V2;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography.X509Certificates;
@@ -50,15 +54,33 @@ namespace GasperSoft.SUNAT
         public static string Serializar(object documento, Encoding encoding = null)
         {
             if (encoding == null) encoding = SunatEncoding;
+            bool _informacionAdicionalEnXml = false;
 
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces(
-                new[]
-                {
-                    new XmlQualifiedName("cbc","urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"),
-                    new XmlQualifiedName("cac","urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"),
-                    new XmlQualifiedName("ext","urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"),
-                    new XmlQualifiedName("sac","urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1"),
-                });
+            if (documento is InvoiceType)
+            {
+                _informacionAdicionalEnXml = (documento as InvoiceType).UBLExtensions?[0]?.ExtensionContent != null;
+            }
+
+            if (documento is DespatchAdviceType)
+            {
+                _informacionAdicionalEnXml = (documento as DespatchAdviceType).UBLExtensions?[0]?.ExtensionContent != null;
+            }
+
+            var _nss = new List<XmlQualifiedName>()
+            {
+                new XmlQualifiedName("cbc","urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"),
+                new XmlQualifiedName("cac","urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"),
+                new XmlQualifiedName("ext","urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"),
+                new XmlQualifiedName("sac","urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1")
+            };
+
+            if (_informacionAdicionalEnXml)
+            {
+                _nss.Add(new XmlQualifiedName("cacadd", "urn:e-billing:aggregates"));
+                _nss.Add(new XmlQualifiedName("cbcadd", "urn:e-billing:basics"));
+            }
+
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces(_nss.ToArray());
 
             XmlSerializer serializer = new XmlSerializer(documento.GetType());
 
@@ -69,7 +91,13 @@ namespace GasperSoft.SUNAT
                     serializer.SerializeWithDecimalFormatting(xmlWriter, documento, ns);
                 }
 
-                return encoding.GetString(stream.ToArray());
+                var _xml = encoding.GetString(stream.ToArray());
+
+                //Esto es por compatibilidad con un Proveedor de Firma que requiere que el XML contenga si o si un "<ext:ExtensionContent/>"
+                //donde colocar la firma
+                _xml = _xml.Replace("<ext:UBLExtension />", "<ext:UBLExtension>\r\n      <ext:ExtensionContent/>\r\n    </ext:UBLExtension>");
+
+                return _xml;
             }
         }
 
@@ -130,10 +158,14 @@ namespace GasperSoft.SUNAT
             _xmlDoc.PreserveWhitespace = true;
             _xmlDoc.LoadXml(encoding.GetString(_bytesXml));
 
+            //Leer el nodo ExtensionContent
+            var _extensionContentNode = _xmlDoc.GetElementsByTagName("ExtensionContent", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
+            XmlNode _extensionContent = _extensionContentNode.Count > 1 ? _extensionContentNode.Item(1) : _extensionContentNode.Item(0);
+
             //Agregamos un nuevo nodo donde colocar la firma digital
-            XmlNode _extensionContent = _xmlDoc.CreateNode(XmlNodeType.Element, "ext", "ExtensionContent", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
-            var _UBLExtension = _xmlDoc.GetElementsByTagName("UBLExtension", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
-            _UBLExtension.Item(0)?.AppendChild(_extensionContent);
+            //XmlNode _extensionContent = _xmlDoc.CreateNode(XmlNodeType.Element, "ext", "ExtensionContent", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
+            //var _UBLExtension = _xmlDoc.GetElementsByTagName("UBLExtension", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
+            //_UBLExtension.Item(0)?.AppendChild(_extensionContent);
 
             // Creamos el objeto SignedXml.
             var signedXml = new SignedXml(_xmlDoc) { SigningKey = _rsaKey };

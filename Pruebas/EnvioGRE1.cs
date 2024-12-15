@@ -2,6 +2,7 @@
 // Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
+using GasperSoft.SUNAT;
 using System.Net;
 
 namespace Pruebas

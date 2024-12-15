@@ -11,7 +11,7 @@
     <Description>Librería para generar el XML de Factura, Boleta, Nota de crédito/débito, Guías Remitente/Transportista, Retencion, Resumen diario y Comunicaciones de baja con la estructura UBL requerida por SUNAT.</Description>
     <Copyright>Copyright (C) 2024 GasperSoft.</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.1</FileVersion>
+    <FileVersion>1.0.2</FileVersion>
     <Version>$(FileVersion)</Version>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

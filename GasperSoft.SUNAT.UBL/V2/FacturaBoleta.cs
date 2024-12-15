@@ -447,10 +447,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 //Fecha de vencimiento (YYYY-MM-DD C)
                 DueDate = GetFechaVencimiento(datos.fechaVencimiento),
 
-                UBLExtensions = new UBLExtensionType[]
-                {
-                    new UBLExtensionType(){ }
-                },
+                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? GetUBLExtensions(datos.informacionAdicional) : GetUBLExtensions(),
 
                 //Firma Digital
                 Signature = GetSignature(emisor, signature),

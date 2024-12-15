@@ -7,6 +7,8 @@ using GasperSoft.SUNAT.DTO.CPE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace GasperSoft.SUNAT.UBL.V2
 {
@@ -2480,6 +2482,50 @@ namespace GasperSoft.SUNAT.UBL.V2
             }
 
             return null;
+        }
+
+        internal static UBLExtensionType[] GetUBLExtensions()
+        {
+            var _ublExtension = new UBLExtensionType[]
+            {
+                new UBLExtensionType() {
+                    
+                }
+            };
+
+            return _ublExtension;
+        }
+
+        internal static UBLExtensionType[] GetUBLExtensions(List<DatoAdicionalType> informacionAdicional)
+        {
+            var _xmlDoc = new XmlDocument();
+            var nsa = "urn:e-billing:aggregates";
+            var nsb = "urn:e-billing:basics";
+
+            XmlElement _extensionContent = _xmlDoc.CreateElement("cacadd", "ExtraParameters", nsa);
+            XmlNode _customText = _xmlDoc.CreateNode(XmlNodeType.Element, "cacadd", "ExtraParameters", nsa);
+
+            foreach (var item in informacionAdicional)
+            {
+                XmlNode _text = _xmlDoc.CreateNode(XmlNodeType.Element, "cbcadd", "Text", nsb);
+                ((XmlElement)_text).SetAttribute("name", item.codigo);
+                _text.InnerText = item.valor;
+
+                _customText.AppendChild(_text);
+            }
+
+            _extensionContent.AppendChild(_customText);
+
+            var _ublExtension = new UBLExtensionType[]
+            {
+                new UBLExtensionType() {
+                    ExtensionContent= _extensionContent
+                },
+                new UBLExtensionType() {
+                },
+            };
+
+            return _ublExtension;
         }
     }
 }

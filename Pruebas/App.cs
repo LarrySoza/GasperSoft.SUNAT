@@ -78,6 +78,8 @@ namespace Pruebas
                 ConsoleEx.WriteLine("20: RETENCION FACTURA SOLES");
                 ConsoleEx.WriteLine("21: RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO");
                 ConsoleEx.WriteLine("22: REVERSION (BAJAS DE RETENCIONES)");
+                ConsoleEx.WriteLine("23: GUIA REMITENTE CON INFORMACION ADICIONAL EN 'UBLExtension'", ConsoleColor.Blue);
+                ConsoleEx.WriteLine("24: FACTURA CON INFORMACION ADICIONAL EN 'UBLExtension'", ConsoleColor.Blue);
 
                 //Pruebas de envio()
                 ConsoleEx.WriteLine("P1: ENVIAR GUIA REMITENTE");
@@ -159,6 +161,12 @@ namespace Pruebas
                         break;
                     case "22":
                         EjemploComunicacionBaja(ComunicacionBaja2.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "23":
+                        EjemploGRE(GRERemitente4.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "24":
+                        EjemploCPE(CPEFactura10.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "P1":
                         EnvioGRE1.Run();
@@ -298,7 +306,7 @@ namespace Pruebas
             ConsoleEx.WriteLine("==============================", ConsoleColor.Blue);
             ConsoleEx.WriteLine($"Nombre archivo: {nombreArchivo}.zip");
             ConsoleEx.WriteLine($"DigestValue: {digestValue}");
-            ConsoleEx.WriteLine($"Directorio: {_pathArchivoZipXml}");
+            ConsoleEx.WriteLine($"Directorio: {GetPathStorage}");
             ConsoleEx.WriteLine("-------------------------", ConsoleColor.Green);
             ConsoleEx.WriteLine("\nPresione una tecla para continuar.");
             ConsoleEx.ReadKey();

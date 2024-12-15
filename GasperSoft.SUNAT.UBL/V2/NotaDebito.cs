@@ -217,11 +217,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     Value = datos.codMoneda
                 },
 
-                //Firma Digital
-                UBLExtensions = new UBLExtensionType[]
-                {
-                    new UBLExtensionType(){ }
-                },
+                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? GetUBLExtensions(datos.informacionAdicional) : GetUBLExtensions(),
 
                 Signature = GetSignature(emisor, signature),
 

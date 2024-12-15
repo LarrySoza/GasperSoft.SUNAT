@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<DespatchAdvice xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:cacadd="urn:e-billing:aggregates" xmlns:cbcadd="urn:e-billing:basics" xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">
+  <ext:UBLExtensions>
+    <ext:UBLExtension>
+      <ext:ExtensionContent>
+        <cacadd:ExtraParameters>
+          <cacadd:ExtraParameters>
+            <cbcadd:Text name="PrecioReferencialMercaderia">S/ 3000.00</cbcadd:Text>
+            <cbcadd:Text name="TipoServicio">Premium</cbcadd:Text>
+            <cbcadd:Text name="TarifaFlete">S/ 200.00</cbcadd:Text>
+          </cacadd:ExtraParameters>
+        </cacadd:ExtraParameters>
+      </ext:ExtensionContent>
+    </ext:UBLExtension>
+    <ext:UBLExtension>
+      <ext:ExtensionContent><Signature Id="signatureMIEMPRESA" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><DigestValue>oOU8qtRvyI1vxb/OolJ0aMyXLyq3ZvvAk6MKFd5UJyw=</DigestValue></Reference></SignedInfo><SignatureValue>bsOdESkoFFqWXJfAZ7AMgcflu5gMsN8lZG1gw2XP/u0BRZaAUXouczzKYchCiFCEiRt0KToo6A6/dDUe13aC4Gvuuh7DmWcSWxLdGE3CXNJGIz2Btlw5ByQjlTy/a6OIJn8y6+azFWo0GYeHy5Wqi5jzFpmDgvN9OkYi+fNYaukKerCO2EOpcSjCe0dSkEiDBXE0vuLoQaTPRLmq7Im1EV+zWIUg1Dx/xpHloskqhJY2r3GXiPlZW5fSczzuIejtItz3S/sjXNmwAqQdtH/UWtivUFSl1otyzVNAcv/B5Mc9gaMVNk6HtXCtcTJqgRLwcdtSe/Q47GmZ2aBoC06NUg==</SignatureValue><KeyInfo><X509Data><X509SubjectName>E=demo@llama.pe, CN=NOMBRE REPRESENTANTE LEGAL - CERTIFICADO PARA DEMOSTRACIÓN, OU=DNI 9999999 RUC 20606433094 - CERTIFICADO PARA DEMOSTRACIÓN, O=TU EMPRESA S.A., L=LIMA, S=LIMA, C=PE, DC=LLAMA.PE SA</X509SubjectName><X509Certificate>MIIFCDCCA/CgAwIBAgIJAJC4aOs5cMRWMA0GCSqGSIb3DQEBCwUAMIIBDTEbMBkGCgmSJomT8ixkARkWC0xMQU1BLlBFIFNBMQswCQYDVQQGEwJQRTENMAsGA1UECAwETElNQTENMAsGA1UEBwwETElNQTEYMBYGA1UECgwPVFUgRU1QUkVTQSBTLkEuMUUwQwYDVQQLDDxETkkgOTk5OTk5OSBSVUMgMjA2MDY0MzMwOTQgLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xRDBCBgNVBAMMO05PTUJSRSBSRVBSRVNFTlRBTlRFIExFR0FMIC0gQ0VSVElGSUNBRE8gUEFSQSBERU1PU1RSQUNJw5NOMRwwGgYJKoZIhvcNAQkBFg1kZW1vQGxsYW1hLnBlMB4XDTI0MTIxNTA5MjM0M1oXDTI2MTIxNTA5MjM0M1owggENMRswGQYKCZImiZPyLGQBGRYLTExBTUEuUEUgU0ExCzAJBgNVBAYTAlBFMQ0wCwYDVQQIDARMSU1BMQ0wCwYDVQQHDARMSU1BMRgwFgYDVQQKDA9UVSBFTVBSRVNBIFMuQS4xRTBDBgNVBAsMPEROSSA5OTk5OTk5IFJVQyAyMDYwNjQzMzA5NCAtIENFUlRJRklDQURPIFBBUkEgREVNT1NUUkFDScOTTjFEMEIGA1UEAww7Tk9NQlJFIFJFUFJFU0VOVEFOVEUgTEVHQUwgLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xHDAaBgkqhkiG9w0BCQEWDWRlbW9AbGxhbWEucGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2ZKO2IDtvveLCmcK+cwa9vRaZw/T70evViom5kf+V4KnamKRekRVQjcsVlmsxq0+NHerEdZnD58oC0855aRVutSqcD7+pFKJ0/Jc45IgwK7ktK38tlUbj8i90Gk4asLaSe+iYVgqNuolIrRWMhe7ZZL8ex7O2Mi1nwFx9IYxap0D3ORehLjrbbzvQV/WJwsXjZNRiwb/WddNfQo2EE4/ossEIqx2tLpTkJQg1Fp+jI9EjFT3CHlJ9GzO1FV8LYrnQvGtdNiJZWTvHvx5jMG51zvMweQxK6HYOAeonEkd71v6pxRaFhLIZPYHoM5m52T47yZ8Wp/EVvul2z1S02azHAgMBAAGjZzBlMB0GA1UdDgQWBBSLk9AuKwg7/PbH2bOMsZf0GFS6rjAfBgNVHSMEGDAWgBSLk9AuKwg7/PbH2bOMsZf0GFS6rjATBgNVHSUEDDAKBggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCB4AwDQYJKoZIhvcNAQELBQADggEBABZYzgCUbndFOCEghmcEYjcG7ZnuoyotFWsA7AuL3mGD6O/Y4nSk1XQOGX3mw1G8g8LGSdhOFXJDTJh4Fi45GaBtaJUTMZLLFTbqc5u2yJjBgozHjOQOQwULdej16WcYuGlmSCMT+FEjgyFejYBFQ0rB5jUhv2AZQ4sf7eG8PCQPaN3gbS3dSi42gCG+cg5G3ioIIzU4j0AvkG9K0jMJ6PMU4KmqpOU1XJAyzft4bmqj4rytFISzmWModUe0W4bFQWIfgr6PFd8aC3KviTFODUKk6OnDNowkpCwQSWr+XJc0p7JFHajBCc4XWpuRHRSCYiZwC0l7/hYm/2gfLohoNV8=</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent>
+    </ext:UBLExtension>
+  </ext:UBLExtensions>
+  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+  <cbc:CustomizationID schemeAgencyName="PE:SUNAT">2.0</cbc:CustomizationID>
+  <cbc:ID>T001-4</cbc:ID>
+  <cbc:IssueDate>2024-12-15</cbc:IssueDate>
+  <cbc:IssueTime>14:37:33</cbc:IssueTime>
+  <cbc:DespatchAdviceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DespatchAdviceTypeCode>
+  <cac:Signature>
+    <cbc:ID>signatureMIEMPRESA</cbc:ID>
+    <cac:SignatoryParty>
+      <cac:PartyIdentification>
+        <cbc:ID>20606433094</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>GASPERSOFT EIRL</cbc:Name>
+      </cac:PartyName>
+    </cac:SignatoryParty>
+    <cac:DigitalSignatureAttachment>
+      <cac:ExternalReference>
+        <cbc:URI>#signatureMIEMPRESA</cbc:URI>
+      </cac:ExternalReference>
+    </cac:DigitalSignatureAttachment>
+  </cac:Signature>
+  <cac:DespatchSupplierParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20606433094</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>GASPERSOFT EIRL</cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:DespatchSupplierParty>
+  <cac:DeliveryCustomerParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="1" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">40950090</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>BERTA ATENCIA LLANOS</cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:DeliveryCustomerParty>
+  <cac:Shipment>
+    <cbc:ID>SUNAT_Envio</cbc:ID>
+    <cbc:HandlingCode listAgencyName="PE:SUNAT" listName="Motivo de traslado" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo20">01</cbc:HandlingCode>
+    <cbc:HandlingInstructions>VENTA DE PRODUCTOS</cbc:HandlingInstructions>
+    <cbc:GrossWeightMeasure unitCode="KGM">1.000</cbc:GrossWeightMeasure>
+    <cbc:SpecialInstructions>SUNAT_Envio_IndicadorTrasladoVehiculoM1L</cbc:SpecialInstructions>
+    <cac:ShipmentStage>
+      <cbc:TransportModeCode listAgencyName="PE:SUNAT" listName="Modalidad de traslado" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo18">02</cbc:TransportModeCode>
+      <cac:TransitPeriod>
+        <cbc:StartDate>2024-12-16</cbc:StartDate>
+      </cac:TransitPeriod>
+    </cac:ShipmentStage>
+    <cac:Delivery>
+      <cac:DeliveryAddress>
+        <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">250101</cbc:ID>
+        <cac:AddressLine>
+          <cbc:Line>KM 86 (PUNTO DE VENTA) CARRETERA FEDERICO BASADRE KM 86 MZ B LOTE 2 - UCAYALI - CORONEL PORTILLO - CALLERIA</cbc:Line>
+        </cac:AddressLine>
+      </cac:DeliveryAddress>
+      <cac:Despatch>
+        <cac:DespatchAddress>
+          <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">150115</cbc:ID>
+          <cac:AddressLine>
+            <cbc:Line>AV. 28 DE JULIO 1275 - 1281, LA VICTORIA - LIMA - LIMA - LIMA - LA VICTORIA</cbc:Line>
+          </cac:AddressLine>
+        </cac:DespatchAddress>
+      </cac:Despatch>
+    </cac:Delivery>
+  </cac:Shipment>
+  <cac:DespatchLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:DeliveredQuantity unitCode="NIU" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">2.00</cbc:DeliveredQuantity>
+    <cac:OrderLineReference>
+      <cbc:LineID>1</cbc:LineID>
+    </cac:OrderLineReference>
+    <cac:Item>
+      <cbc:Description>JUEGO DE MESA</cbc:Description>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Indicador de bien regulado por SUNAT</cbc:Name>
+        <cbc:NameCode listAgencyName="PE:SUNAT" listName="Propiedad del item" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo55">7022</cbc:NameCode>
+        <cbc:Value>0</cbc:Value>
+      </cac:AdditionalItemProperty>
+    </cac:Item>
+  </cac:DespatchLine>
+</DespatchAdvice>

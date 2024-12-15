@@ -50,8 +50,14 @@ Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **g
   - [XML RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO](/Xml/20606433094-20-R001-2.xml) - [C#](/Pruebas/CRE2.cs)
   - [XML REVERSION (BAJAS DE RETENCIONES)](/Xml/20606433094-RR-20241127-1.xml) - [C#](/Pruebas/ComunicacionBaja2.cs)
 
+- Estos ejemplos son solo una forma de como incluir datos adicionales en el XML, SUNAT no lo exige y podrían incluirse en otras partes del documento, se tomó de ejemplo una Factura emitida por una entidad Financiera
+ 
+  - [XML GUIA REMITENTE CON INFORMACION ADICIONAL EN 'UBLExtension'](/Xml/20606433094-09-T001-4.xml) - [C#](/Pruebas/GRERemitente4.cs)
+  - [XML FACTURA CON INFORMACION ADICIONAL EN 'UBLExtension'](/Xml/20606433094-01-F001-10.xml) - [C#](/Pruebas/CPEFactura10.cs)
+
 >[!NOTE] 
 >El ejemplo **"FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN - Pagina 77 Manual SUNAT"** es el ejemplo mas completo de todos porque combina el uso de productos grabados, exonerados, bonificaciones y descuentos por ítem y global, por lo que recomiendo darle una observación detalla. La clase **ValidadorCPE.cs** del proyecto **GasperSoft.SUNAT** debería poder ayudarte a corregir errores de cálculo, si no es el caso y pudiste generar el XML pero no paso las validaciones de SUNAT te agradecería que me mandes un ejemplo (como los que se implementan en el proyecto Pruebas) con los datos que llenas y el XML generado a [it@gaspersoft.com](mailto:it@gaspersoft.com), me ayudarías a colocar mas validaciones que no permitan generar XMLs con errores de calculo.
+
 
 # Validar XML generado
 - Se puede validar el XML generado en [NUBEFACT](https://probar-xml.nubefact.com), Sin embargo debe considerar que el solo hecho de copiar y pegar en esta página podría adulterar el contenido del XML y tener un mensaje de error 2335(Como en el ejemplo de "FACTURA CONTADO CON DETRACCION"), de ser ese el caso puede marcar la opcion Firmar.
@@ -65,7 +71,8 @@ Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **g
 - De momento este proyecto se enfoca exclusivamente en la generación de los XML, puede encontrar código de envió a SUNAT en [OpenInvoice](https://github.com/erickorlando/openinvoiceperu)
 
 >[!NOTE] 
->La razón para no publicar código de envió es que busco la implementación usando un código compatible con NET Framework y NET 8, y que permita asignar la URL y credenciales, actualmente esto solo lo tengo implementado en NET Framework. En los próximos meses posiblemente el código de envío sea agregado al proyecto **GasperSoft.SUNAT**
+>Actualmente existe una Clase para el envió de Guías Electrónicas usando **GasperSoft.SUNAT.dll** [ClientGRE.cs](/GasperSoft.SUNAT/ClientGRE.cs). Un ejemplo de uso en [EnvioGRE1.cs](/Pruebas/EnvioGRE1.cs)
+
 
 ## Asesoría y Soporte ##
 

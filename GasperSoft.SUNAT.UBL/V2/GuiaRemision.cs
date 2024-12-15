@@ -445,10 +445,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01"
                 },
 
-                UBLExtensions = new UBLExtensionType[]
-                {
-                    new UBLExtensionType() { }
-                },
+                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? GetUBLExtensions(datos.informacionAdicional) : GetUBLExtensions(),
 
                 Signature = GetSignature(emisor, signature),
 

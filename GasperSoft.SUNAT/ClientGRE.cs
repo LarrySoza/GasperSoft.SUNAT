@@ -4,12 +4,13 @@
 
 using RestSharp;
 using RestSharp.Authenticators;
+using System;
 using System.Security.Cryptography;
 using System.Text.Json;
 
-namespace Pruebas
+namespace GasperSoft.SUNAT
 {
-    internal class ClientGRE
+    public class ClientGRE
     {
         private string _baseUrlServicio;
         private string _baseUrlToken;
@@ -256,7 +257,7 @@ namespace Pruebas
 
                 return true;
             }
-            catch(Exception ex)
+            catch
             {
                 //Cualquier error devolvemos true
                 return true;
