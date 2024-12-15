@@ -2503,7 +2503,7 @@ namespace GasperSoft.SUNAT.UBL.V2
             var nsb = "urn:e-billing:basics";
 
             XmlElement _extensionContent = _xmlDoc.CreateElement("cacadd", "ExtraParameters", nsa);
-            XmlNode _customText = _xmlDoc.CreateNode(XmlNodeType.Element, "cacadd", "ExtraParameters", nsa);
+            XmlNode _customText = _xmlDoc.CreateNode(XmlNodeType.Element, "cacadd", "CustomText", nsa);
 
             foreach (var item in informacionAdicional)
             {
