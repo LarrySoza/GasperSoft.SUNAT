@@ -1,13 +1,8 @@
 ﻿// Licencia MIT 
-// Copyright (C) 2023 GasperSoft.
+// Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
 using GasperSoft.SUNAT.DTO.Resumen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pruebas
 {

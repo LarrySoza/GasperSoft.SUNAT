@@ -24,7 +24,7 @@ Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **g
 **GasperSoft.SUNAT.DTO.dll** y **GasperSoft.SUNAT.UBL.dll** no dependen de **GasperSoft.SUNAT.dll**, sin embargo es esta la librería que permite validar, serializar y firmar los XML, si necesita compatibilidad con net35 o un framework no soportado deberá implementar sus propios métodos.
 
 # Como se usa
-- En el proyecto pruebas encontrara ejemplos de código de como generar y firmar los XML, se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [NUBEFACT](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
+- En el proyecto pruebas encontrara ejemplos de código de como generar y firmar los XML, se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [LLAMA.PE](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
 
   - [XML BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-03-B001-1.xml) - [Pagina 60 Manual SUNAT](/ManualesSunat/BoletaDeVentaElectronica2.1.pdf) - [C#](/Pruebas/CPEBoleta1.cs)
   - [XML BOLETA CON ICBPER - COBRANDO BOLSA](/Xml/20606433094-03-B001-2.xml) - [C#](/Pruebas/CPEBoleta2.cs)

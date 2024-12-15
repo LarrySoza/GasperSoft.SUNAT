@@ -1,5 +1,5 @@
 ﻿// Licencia MIT 
-// Copyright (C) 2023 GasperSoft.
+// Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
 using GasperSoft.SUNAT.DTO.CPE;
@@ -26,7 +26,7 @@ namespace GasperSoft.SUNAT
         /// <param name="monto">el monto a convertir</param>
         /// <param name="tipoCambio">el tipo de cambio a aplicar</param>
         /// <returns></returns>
-        private decimal ConvertirMonedaNacional(string codMoneda, decimal monto, decimal tipoCambio)
+        private static decimal ConvertirMonedaNacional(string codMoneda, decimal monto, decimal tipoCambio)
         {
             if (codMoneda == "PEN")
             {
@@ -41,7 +41,6 @@ namespace GasperSoft.SUNAT
                 throw new Exception($"No esta implementado la conversion para el tipo de moneda '{codMoneda}'");
             }
         }
-
 
         /// <summary>
         /// Inicia una nueva instancia de la clave ValidadorCPE
@@ -1521,7 +1520,6 @@ namespace GasperSoft.SUNAT
             decimal _sumatoriaICBPERCalculado = _cpe.detalles.Sum(x => x.montoICBPER);
 
             //Codigo de validacion 3291
-            //decimal _sumatoriaIGVCalculado = (_totalOperacionesGravadasCalculado + _sumatoriaISCCalculado) * _tasaIGVOperacionesGravadas / 100;
             decimal _sumatoriaIGVCalculado = (_cpe.detalles.Where(x => x.codAfectacionIGV == "10").Sum(x => x.montoBaseIGV) - _descuentoGlobalAfectaBICalculado - _totalAnticiposGravados - _totalAnticiposISC) * _tasaIGVOperacionesGravadas / 100;
 
             //Codigo de validacion 3299
@@ -1706,7 +1704,7 @@ namespace GasperSoft.SUNAT
 
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.sumatoriaIGV, decimal.Round(_sumatoriaIGVCalculado, 2), _toleranciaCalculo))
             {
-                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = ((Suma del 'montoBaseIGV' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe - (Suma de 'totalOperacionesGravadas' de cada anticipo) - (Suma de 'totalISC' de cada anticipo)) * TasaIGV / 100");
+                _mensajesError.AddMensaje(CodigoError.V2000, $"sumatoriaIGV incorrecto Valor enviado: {_cpe.sumatoriaIGV} Valor calculado: {decimal.Round(_sumatoriaIGVCalculado, 2)}; Formula: sumatoriaIGV = [(Suma del 'montoBaseIGV' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe - (Suma de 'totalOperacionesGravadas' de cada anticipo) - (Suma de 'totalISC' de cada anticipo)] * TasaIGV / 100");
                 return false;
             }
 

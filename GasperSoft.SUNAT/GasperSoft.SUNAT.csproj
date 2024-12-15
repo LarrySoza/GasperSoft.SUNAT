@@ -69,6 +69,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GasperSoft.SUNAT.DTO\GasperSoft.SUNAT.DTO.csproj" />
     <ProjectReference Include="..\GasperSoft.SUNAT.UBL\GasperSoft.SUNAT.UBL.csproj" />
   </ItemGroup>

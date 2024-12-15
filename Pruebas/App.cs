@@ -1,45 +1,45 @@
 ﻿// Licencia MIT 
-// Copyright (C) 2023 GasperSoft.
+// Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
 using GasperSoft.SUNAT;
 using GasperSoft.SUNAT.DTO;
 using GasperSoft.SUNAT.DTO.CPE;
+using GasperSoft.SUNAT.DTO.CRE;
 using GasperSoft.SUNAT.DTO.GRE;
-using GasperSoft.SUNAT.UBL.V2;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.IO.Compression;
 using GasperSoft.SUNAT.DTO.Resumen;
 using GasperSoft.SUNAT.UBL.V1;
-using GasperSoft.SUNAT.DTO.CRE;
+using GasperSoft.SUNAT.UBL.V2;
+using System.Drawing;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Pruebas
 {
-    internal class Program
+    internal class App
     {
-        static ConsoleColor _colorOriginal;
-
+        public static string GetPathStorage => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Storage");
+        public static EmisorType GetEmisior => new EmisorType()
+        {
+            ruc = "20606433094",
+            razonSocial = "GASPERSOFT EIRL",
+            codigoUbigeo = "150125",
+            direccion = "CAL. LOS LIRIOS INT. 20 LT. 1 MZ. B URB. MONTEGRANDE",
+            departamento = "LIMA",
+            provincia = "LIMA",
+            distrito = "PUENTE PIEDRA"
+        };
+        
         static void Main(string[] args)
         {
-            //En algunas partes del ejemplo cambio el color de las letras y necesito saber el color original
-            _colorOriginal = Console.ForegroundColor;
+            //Si no existe el Directorio Storage lo creamos
+            if (!Directory.Exists(GetPathStorage))
+            {
+                Directory.CreateDirectory(GetPathStorage);
+            }
 
             //Informacion del Emisor
-            var _emisor = new EmisorType()
-            {
-                ruc = "20606433094",
-                razonSocial = "GASPERSOFT EIRL",
-                codigoUbigeo = "150125",
-                direccion = "CAL. LOS LIRIOS INT. 20 LT. 1 MZ. B URB. MONTEGRANDE",
-                departamento = "LIMA",
-                provincia = "LIMA",
-                distrito = "PUENTE PIEDRA"
-            };
+            var _emisor = GetEmisior;
 
             //Leer el certificado(Estoy usando uno generado de manera gratuita en https://llama.pe/certificado-digital-de-prueba-sunat)
             var _bytesCertificado = File.ReadAllBytes("20606433094.pfx");
@@ -52,41 +52,42 @@ namespace Pruebas
 
             while (!salir)
             {
-                Console.Clear();
-                Console.WriteLine("Seleccione Ejemplo:");
-                Console.WriteLine("==================");
-                Console.WriteLine("0: BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN - Pagina 60 Manual SUNAT");
-                Console.WriteLine("1: BOLETA CON ICBPER - COBRANDO BOLSA");
-                Console.WriteLine("2: BOLETA CON ICBPER - REGALANDO BOLSA");
-                Console.WriteLine("3: FACTURA CREDITO (CUOTAS)");
-                Console.WriteLine("4: FACTURA GRATUITA - Pagina 98 Manual SUNAT");
-                Console.WriteLine("5: FACTURA CONTADO CON DETRACCION");
-                Console.WriteLine("6: FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN - Pagina 77 Manual SUNAT");
-                Console.WriteLine("7: FACTURA CON 2 ÍTEMS E ISC - Pagina 88 Manual SUNAT");
-                Console.WriteLine("8: FACTURA CON ANTICIPOS - CON MONTO PENDIENTE DE PAGO");
-                Console.WriteLine("9: FACTURA CON ANTICIPOS - MONTO TOTAL EN CERO");
-                Console.WriteLine("10: FACTURA CON RETENCION");
-                Console.WriteLine("11: FACTURA CON PERCEPCION");
-                Console.WriteLine("12: NOTA CREDITO MOTIVO 13");
-                Console.WriteLine("13: GUIA REMISION REMITENTE - Transporte Publico");
-                Console.WriteLine("14: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
-                Console.WriteLine("15: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
-                Console.WriteLine("16: GUIA REMISION TRANSPORTISTA");
-                Console.WriteLine("17: RESUMEN DIARIO DE BOLETAS - INFORMAR");
-                Console.WriteLine("18: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
-                Console.WriteLine("19: COMUNICACION DE BAJA (SOLO FACTURAS)");
-                Console.WriteLine("20: RETENCION FACTURA SOLES");
-                Console.WriteLine("21: RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO");
-                Console.WriteLine("22: REVERSION (BAJAS DE RETENCIONES)");
+                ConsoleEx.Clear();
+                ConsoleEx.WriteLine("Seleccione Ejemplo:");
+                ConsoleEx.WriteLine("==================");
+                ConsoleEx.WriteLine("0: BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN - Pagina 60 Manual SUNAT");
+                ConsoleEx.WriteLine("1: BOLETA CON ICBPER - COBRANDO BOLSA");
+                ConsoleEx.WriteLine("2: BOLETA CON ICBPER - REGALANDO BOLSA");
+                ConsoleEx.WriteLine("3: FACTURA CREDITO (CUOTAS)");
+                ConsoleEx.WriteLine("4: FACTURA GRATUITA - Pagina 98 Manual SUNAT");
+                ConsoleEx.WriteLine("5: FACTURA CONTADO CON DETRACCION");
+                ConsoleEx.WriteLine("6: FACTURA CON 4 ÍTEMS Y UNA BONIFICACIÓN - Pagina 77 Manual SUNAT");
+                ConsoleEx.WriteLine("7: FACTURA CON 2 ÍTEMS E ISC - Pagina 88 Manual SUNAT");
+                ConsoleEx.WriteLine("8: FACTURA CON ANTICIPOS - CON MONTO PENDIENTE DE PAGO");
+                ConsoleEx.WriteLine("9: FACTURA CON ANTICIPOS - MONTO TOTAL EN CERO");
+                ConsoleEx.WriteLine("10: FACTURA CON RETENCION");
+                ConsoleEx.WriteLine("11: FACTURA CON PERCEPCION");
+                ConsoleEx.WriteLine("12: NOTA CREDITO MOTIVO 13");
+                ConsoleEx.WriteLine("13: GUIA REMISION REMITENTE - Transporte Publico");
+                ConsoleEx.WriteLine("14: GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)");
+                ConsoleEx.WriteLine("15: GUIA REMISION REMITENTE - Transporte Privado (M1 o L)");
+                ConsoleEx.WriteLine("16: GUIA REMISION TRANSPORTISTA");
+                ConsoleEx.WriteLine("17: RESUMEN DIARIO DE BOLETAS - INFORMAR");
+                ConsoleEx.WriteLine("18: RESUMEN DIARIO DE BOLETAS - DAR DE BAJA");
+                ConsoleEx.WriteLine("19: COMUNICACION DE BAJA (SOLO FACTURAS)");
+                ConsoleEx.WriteLine("20: RETENCION FACTURA SOLES");
+                ConsoleEx.WriteLine("21: RETENCION FACTURA DOLARES - CON TIPO DE CAMBIO");
+                ConsoleEx.WriteLine("22: REVERSION (BAJAS DE RETENCIONES)");
 
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("\nX");
-                Console.ForegroundColor = _colorOriginal;
-                Console.WriteLine(": Salir");
+                //Pruebas de envio()
+                ConsoleEx.WriteLine("P1: ENVIAR GUIA REMITENTE");
 
-                var _input = Console.ReadLine();
+                ConsoleEx.Write("\nX", ConsoleColor.Red);
+                ConsoleEx.WriteLine(": Salir");
 
-                Console.Clear();
+                var _input = (ConsoleEx.ReadLine() ?? "").ToUpper();
+
+                ConsoleEx.Clear();
 
                 switch (_input)
                 {
@@ -159,22 +160,20 @@ namespace Pruebas
                     case "22":
                         EjemploComunicacionBaja(ComunicacionBaja2.GetDocumento(), _emisor, _certificado, _signature);
                         break;
+                    case "P1":
+                        EnvioGRE1.Run();
+                        break;
                     case "X":
-                    case "x":
                         salir = true;
                         break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Opción no valida presione una tecla para continuar.");
-                        Console.ReadKey();
-                        Console.ForegroundColor = _colorOriginal;
+                        ConsoleEx.WriteLine("Opción no valida presione una tecla para continuar.", ConsoleColor.Red);
+                        ConsoleEx.ReadKey();
                         break;
                 }
             }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Bye");
-            Console.ForegroundColor = _colorOriginal;
+            ConsoleEx.WriteLine("Bye", ConsoleColor.Green);
         }
 
         private static void EjemploComunicacionBaja(ComunicacionBajaType baja, EmisorType emisor, X509Certificate2 certificado, string signature)
@@ -185,7 +184,7 @@ namespace Pruebas
             var _xml = GetXML(baja, emisor, certificado, out _digestValue, signature);
             //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
             var _nombreArchivo = $"{emisor.ruc}-{baja.id}";
-            GuardarXml(_nombreArchivo, _xml, _digestValue);
+            GuardarXml(_xml, _nombreArchivo, _digestValue);
         }
 
         private static void EjemploResumenDiario(ResumenDiarioV2Type resumen, EmisorType emisor, X509Certificate2 certificado, string signature)
@@ -196,7 +195,7 @@ namespace Pruebas
             var _xml = GetXML(resumen, emisor, certificado, out _digestValue, signature);
             //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
             var _nombreArchivo = $"{emisor.ruc}-{resumen.id}";
-            GuardarXml(_nombreArchivo, _xml, _digestValue);
+            GuardarXml(_xml, _nombreArchivo, _digestValue);
         }
 
         private static void EjemploGRE(GREType gre, EmisorType emisor, X509Certificate2 certificado, string signature)
@@ -230,7 +229,7 @@ namespace Pruebas
                 var _xml = GetXML(gre, emisor, certificado, out _digestValue, signature);
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
                 var _nombreArchivo = $"{emisor.ruc}-{gre.tipoGuia}-{gre.serie}-{gre.numero}";
-                GuardarXml(_nombreArchivo, _xml, _digestValue);
+                GuardarXml(_xml, _nombreArchivo, _digestValue);
             }
             else
             {
@@ -253,7 +252,7 @@ namespace Pruebas
                 var _xml = GetXML(cpe, emisor, certificado, out _digestValue, signature);
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
                 var _nombreArchivo = $"{emisor.ruc}-{cpe.tipoDocumento}-{cpe.serie}-{cpe.numero}";
-                GuardarXml(_nombreArchivo, _xml, _digestValue);
+                GuardarXml(_xml, _nombreArchivo, _digestValue);
             }
             else
             {
@@ -278,7 +277,7 @@ namespace Pruebas
                 var _xml = GetXML(cre, emisor, certificado, out _digestValue, signature);
                 //Guardamos el XML y luego podemos validarlo en https://probar-xml.nubefact.com/
                 var _nombreArchivo = $"{emisor.ruc}-20-{cre.serie}-{cre.numero}";
-                GuardarXml(_nombreArchivo, _xml, _digestValue);
+                GuardarXml(_xml, _nombreArchivo, _digestValue);
             }
             else
             {
@@ -286,48 +285,23 @@ namespace Pruebas
             }
         }
 
-        static void GuardarXml(string nombre, string xml, string digestValue)
+        static void GuardarXml(string xml, string nombreArchivo, string digestValue)
         {
-            #region Generar Zip y Guardar el XML
+            var _pathArchivoZipXml = Path.Combine(GetPathStorage, $"{nombreArchivo}.zip");
 
             //Importante guardar el XML como zip para no perder el encoding del XML y un posible error 2335(XMl adulterado)
+            var _bytesZip = XmlUtil.Comprimir(xml, $"{nombreArchivo}.xml");
 
-            var _dataBytes = XmlUtil.GlobalEncoding.GetBytes(xml);
+            File.WriteAllBytes(_pathArchivoZipXml, _bytesZip);
 
-            byte[]? _bytesZip = null;
-
-            using (var memDestino = new MemoryStream())
-            {
-                using (var fileZip = new ZipArchive(memDestino, ZipArchiveMode.Create))
-                {
-                    ZipArchiveEntry zipItem = fileZip.CreateEntry($"{nombre}.xml");
-
-                    using (Stream ZipFile = zipItem.Open())
-                    {
-                        ZipFile.Write(_dataBytes, 0, _dataBytes.Length);
-                    }
-                }
-
-                _bytesZip = memDestino.ToArray();
-            }
-
-            File.WriteAllBytes($"{nombre}.zip", _bytesZip);
-
-            #endregion
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Archivo guardado correctamente");
-            Console.WriteLine("==============================");
-            Console.ForegroundColor = _colorOriginal;
-
-            Console.WriteLine($"Nombre archivo: {nombre}.zip");
-            Console.WriteLine($"DigestValue: {digestValue}");
-            Console.WriteLine($"Directorio: {AppDomain.CurrentDomain.BaseDirectory}");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("-------------------------");
-            Console.ForegroundColor = _colorOriginal;
-            Console.WriteLine("\nPresione una tecla para continuar.");
-            Console.ReadKey();
+            ConsoleEx.WriteLine("Archivo guardado correctamente", ConsoleColor.Blue);
+            ConsoleEx.WriteLine("==============================", ConsoleColor.Blue);
+            ConsoleEx.WriteLine($"Nombre archivo: {nombreArchivo}.zip");
+            ConsoleEx.WriteLine($"DigestValue: {digestValue}");
+            ConsoleEx.WriteLine($"Directorio: {_pathArchivoZipXml}");
+            ConsoleEx.WriteLine("-------------------------", ConsoleColor.Green);
+            ConsoleEx.WriteLine("\nPresione una tecla para continuar.");
+            ConsoleEx.ReadKey();
         }
 
         static string GetXML(CPEType cpe, EmisorType emisor, X509Certificate2 certificado, out string digestValue, string signature)
@@ -407,22 +381,18 @@ namespace Pruebas
 
         static void MostrarErrores(List<Error> errors)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Se encontró los siguientes errores al validar el documento");
-            Console.WriteLine("==========================================================");
-            Console.ForegroundColor = _colorOriginal;
+            ConsoleEx.WriteLine("Se encontró los siguientes errores al validar el documento", ConsoleColor.Red);
+            ConsoleEx.WriteLine("==========================================================");
 
             foreach (var _error in errors)
             {
-                Console.WriteLine($"Codigo: {_error.codigo}");
-                Console.WriteLine($"Mensaje: {_error.detalle}");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("-------------------------");
-                Console.ForegroundColor = _colorOriginal;
+                ConsoleEx.WriteLine($"Codigo: {_error.codigo}");
+                ConsoleEx.WriteLine($"Mensaje: {_error.detalle}");
+                ConsoleEx.WriteLine("-------------------------", ConsoleColor.Green);
             }
 
-            Console.WriteLine("\nPresione una tecla para continuar.");
-            Console.ReadKey();
+            ConsoleEx.WriteLine("\nPresione una tecla para continuar.");
+            ConsoleEx.ReadKey();
         }
 
         static bool ValidarCatalogoSunat(string catalogo, string valor)
