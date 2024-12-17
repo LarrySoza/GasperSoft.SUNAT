@@ -108,7 +108,7 @@ namespace GasperSoft.SUNAT
         public const string V0023 = "V0023:El valor de la propiedad 'tasaIsc' no es válido, si el ítem no está afecto al ISC asigne 0 a la propiedad 'montoIsc'";
         public const string V0024 = "V0024:El valor de la propiedad 'codSistemaCalculoIsc' no es válido, si el ítem no está afecto al ISC asigne 0 a la propiedad 'montoIsc'";
         public const string V0026 = "V0026:Existe al menos un ítem con 'codAfectacionIgv'= 40 y la propiedad 'codigoTipoOperacion' no es de exportación";
-        public const string V0027 = "V0027:Solo se permiten los valores: '01', '03', '07' y '08'";
+        public const string V0027 = "V0027:Solo se permiten los valores: '01', '03', '07' y '08' para la propiedad 'tipoDocumento'";
         public const string V0028 = "V0028:El valor no existe el catálogo N° 02";
         public const string V0029 = "V0029:El valor no existe el catálogo N° 03";
         public const string V0030 = "V0030:El valor no existe el catálogo N° 07";

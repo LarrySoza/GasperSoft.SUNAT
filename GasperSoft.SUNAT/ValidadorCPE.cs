@@ -184,7 +184,7 @@ namespace GasperSoft.SUNAT
                 return false;
             }
 
-            if (_cpe.serie.StartsWith("B"))
+            if (_cpe.tipoDocumento == "03")
             {
                 //Obligatorio informar datos del cliente cuando la factura supera los 700 soles
                 if (ConvertirMonedaNacional(_cpe.codMoneda, _cpe.importeTotal, _tipoCambioReferencial) >= _montoMaximoClienteAnonimoBoleta)
@@ -207,7 +207,7 @@ namespace GasperSoft.SUNAT
                 }
             }
 
-            if (_cpe.serie.StartsWith("F"))
+            if (_cpe.tipoDocumento == "01")
             {
                 //Si 'Tipo de operación' es '0200' o '0201' o '0204', y no existe Leyenda con 'Código de leyenda' igual a '2008', el valor del Tag UBL es  '6' 
                 if ((new List<string>() { "0200", "0201", "0203", "0204", "0205", "0206", "0207", "0208" }).Contains(_cpe.codigoTipoOperacion))
@@ -293,11 +293,9 @@ namespace GasperSoft.SUNAT
                 _mensajesError.AddMensaje(CodigoError.V0102, "fechaEmision");
             }
 
-            var _documentosPermitidos = new List<string> { "01", "03", "07", "08" };
-
-            if (!_documentosPermitidos.Contains(_cpe.tipoDocumento))
+            if (!(new List<string> { "01", "03", "07", "08" }).Contains(_cpe.tipoDocumento))
             {
-                _mensajesError.AddMensaje(CodigoError.V0027, "tipoDocumento");
+                _mensajesError.AddMensaje(CodigoError.V0027, $"tipoDocumento = '{_cpe.tipoDocumento}'");
                 return false;
             }
 
@@ -339,16 +337,14 @@ namespace GasperSoft.SUNAT
 
             if (_cpe.anticipos?.Count > 0)
             {
-                //Solo se permite:
-                // '02' = FACTURA – EMITIDA POR ANTICIPOS
-                // '03' = BOLETA DE VENTA – EMITIDA POR ANTICIPOS
-                var _documentosAnticipoPermitidos = new List<string> { "02", "03" };
-
                 _idRecord = 0;
 
                 foreach (var item in _cpe.anticipos)
                 {
-                    if (!_documentosAnticipoPermitidos.Contains(item.tipoDocumento))
+                    //Solo se permite:
+                    // '02' = FACTURA – EMITIDA POR ANTICIPOS
+                    // '03' = BOLETA DE VENTA – EMITIDA POR ANTICIPOS
+                    if (!(new List<string> { "02", "03" }).Contains(item.tipoDocumento))
                     {
                         _mensajesError.AddMensaje(CodigoError.S2505, $"anticipos[{_idRecord}].tipoDocumento = '{item.tipoDocumento}'");
                     }
@@ -404,9 +400,7 @@ namespace GasperSoft.SUNAT
                     return false;
                 }
 
-                var _codigosPercepcionPermitidos = new List<string>() { "51", "52", "53" };
-
-                if (!_codigosPercepcionPermitidos.Contains(_cpe.percepcion.codigo))
+                if (!(new List<string>() { "51", "52", "53" }).Contains(_cpe.percepcion.codigo))
                 {
                     _mensajesError.AddMensaje(CodigoError.S3093, $"percepcion.codigo ='{_cpe.percepcion.codigo}' Solo se permite '51', '52' o '53'");
                     return false;
@@ -863,9 +857,7 @@ namespace GasperSoft.SUNAT
                 {
                     if (!string.IsNullOrWhiteSpace(item.tipoCodigoProductoGS1))
                     {
-                        var _tipoCodigoProductoGS1Permitidos = new List<string> { "GTIN-8", "GTIN-12", "GTIN-13", "GTIN-14" };
-
-                        if (!_tipoCodigoProductoGS1Permitidos.Contains(item.tipoCodigoProductoGS1))
+                        if (!(new List<string> { "GTIN-8", "GTIN-12", "GTIN-13", "GTIN-14" }).Contains(item.tipoCodigoProductoGS1))
                         {
                             _mensajesError.AddMensaje(CodigoError.S4335, $"detalle[{_idRecord}].tipoCodigoProductoGS1 = '{item.tipoCodigoProductoGS1}', solo se permite 'GTIN-8', 'GTIN-12', 'GTIN-13' y 'GTIN-14'");
                         }
