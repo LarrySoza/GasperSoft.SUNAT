@@ -8,7 +8,8 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.UBL.V2
 {
-    public class NotaDebito : Comun
+    /// <remarks/>
+    public static class NotaDebito
     {
         private static ResponseType[] GetMotivosNota(CPEType datos)
         {
@@ -104,7 +105,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                         Value = item.cantidad
                     },
 
-                    Item = GetItem(item),
+                    Item = Comun.GetItem(item),
 
                     //Valor unitario por ítem (an..15 M n(12,2))
                     Price = new PriceType()
@@ -116,9 +117,9 @@ namespace GasperSoft.SUNAT.UBL.V2
                         }
                     },
 
-                    PricingReference = GetPreciosReferenciaItem(item, codMoneda),
+                    PricingReference = Comun.GetPreciosReferenciaItem(item, codMoneda),
 
-                    TaxTotal = GetTotalesItem(item, codMoneda),
+                    TaxTotal = Comun.GetTotalesItem(item, codMoneda),
 
                     //Valor de venta por ítem (M)
                     LineExtensionAmount = new LineExtensionAmountType()
@@ -173,12 +174,12 @@ namespace GasperSoft.SUNAT.UBL.V2
         }
 
         /// <summary>
-        /// Extructura tomada de:
-        /// file:///Users/larry/Downloads/UBL%202.1/anexoVIIc-340-2017.pdf
+        /// Convierte un objeto CPEType a DebitNoteType
         /// </summary>
         /// <param name="datos">Informacion del comprobante</param>
         /// <param name="emisor">Informacion del emisor</param>
-        /// <returns>Clase con extructura UBL 2.1</returns>
+        /// <param name="signature">Una cadena de texto que se usa para "Signature ID", Por defecto se usará la cadena predeterminada "signatureGASPERSOFT"</param>
+        /// <returns>DebitNoteType con la informacion del documento</returns>
         public static DebitNoteType GetDocumento(CPEType datos, EmisorType emisor, string signature = null)
         {
             var _debitNote = new DebitNoteType()
@@ -203,7 +204,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 IssueDate = new IssueDateType() { Value = datos.fechaEmision },
 
                 //Hora de Emision (hh:mm:ss C)
-                IssueTime = GetHoraEmision(datos.horaEmision),
+                IssueTime = Comun.GetHoraEmision(datos.horaEmision),
 
                 //Código de tipo de nota de crédito (M)
                 DiscrepancyResponse = GetMotivosNota(datos),
@@ -217,34 +218,34 @@ namespace GasperSoft.SUNAT.UBL.V2
                     Value = datos.codMoneda
                 },
 
-                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? GetUBLExtensions(datos.informacionAdicional) : GetUBLExtensions(),
+                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? Comun.GetUBLExtensions(datos.informacionAdicional) : Comun.GetUBLExtensions(),
 
-                Signature = GetSignature(emisor, signature),
+                Signature = Comun.GetSignature(emisor, signature),
 
                 //Aqui colocamos la informacion del EMISOR
-                AccountingSupplierParty = GetEmisor(emisor, datos.codigoEstablecimiento),
+                AccountingSupplierParty = Comun.GetEmisor(emisor, datos.codigoEstablecimiento),
 
                 //Aqui colocamos informacion del CLIENTE
-                AccountingCustomerParty = GetAdquiriente(datos.adquirente),
+                AccountingCustomerParty = Comun.GetAdquiriente(datos.adquirente),
 
                 //Documentos que modifica (M)
                 BillingReference = GetDocumentosModifica(datos),
 
                 //Tipo y número de la guía de remisión relacionada (C)
-                DespatchDocumentReference = GetGuiasRemisionRelacionadas(datos),
+                DespatchDocumentReference = Comun.GetGuiasRemisionRelacionadas(datos),
 
                 //Tipo y número de otro documento relacionado (C)
-                AdditionalDocumentReference = GetDocumentosReferenciaAdicionales(datos),
+                AdditionalDocumentReference = Comun.GetDocumentosReferenciaAdicionales(datos),
 
                 //Los detalles del comprobante
                 DebitNoteLine = GetItems(datos.detalles, datos.codMoneda),
 
-                TaxTotal = GetTotales(datos),
+                TaxTotal = Comun.GetTotales(datos),
 
                 RequestedMonetaryTotal = GetRequestedMonetaryTotal(datos),
 
                 //Leyenda
-                Note = GetNotes(datos)
+                Note = Comun.GetNotes(datos)
             };
 
             return _debitNote;

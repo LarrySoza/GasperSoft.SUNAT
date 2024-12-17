@@ -8,7 +8,8 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.UBL.V1
 {
-    public class ComunicacionBaja
+    /// <remarks/>
+    public static class ComunicacionBaja
     {
         private static VoidedDocumentsLineType[] GetItems(List<ItemComunicacionBajaType> items)
         {
@@ -52,6 +53,13 @@ namespace GasperSoft.SUNAT.UBL.V1
             return _voidedDocumentsLines.ToArray();
         }
 
+        /// <summary>
+        /// Convierte un objeto ComunicacionBajaType a VoidedDocumentsType
+        /// </summary>
+        /// <param name="datos">Informacion de la comunicación de baja</param>
+        /// <param name="emisor">Informacion del emisor</param>
+        /// <param name="signature">Una cadena de texto que se usa para "Signature ID", Por defecto se usará la cadena predeterminada "signatureGASPERSOFT"</param>
+        /// <returns>VoidedDocumentsType con la informacion de la comunicación de baja</returns>
         public static VoidedDocumentsType GetDocumento(ComunicacionBajaType datos, EmisorType emisor, string signature = null)
         {
             var _voidedDocuments = new VoidedDocumentsType()

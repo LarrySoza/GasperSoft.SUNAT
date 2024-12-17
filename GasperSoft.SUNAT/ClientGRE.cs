@@ -10,6 +10,9 @@ using System.Text.Json;
 
 namespace GasperSoft.SUNAT
 {
+    /// <summary>
+    /// Clase Para el envió de Guías a SUNAT
+    /// </summary>
     public class ClientGRE
     {
         private string _baseUrlServicio;
@@ -25,6 +28,10 @@ namespace GasperSoft.SUNAT
         private string _mensaje;
         private string _codigoMensaje;
 
+        /// <summary>
+        /// Delegado para el Evento EndGenerarToken
+        /// </summary>
+        /// <param name="token">Token Generado</param>
         public delegate void EventEndGenerarToken(string token);
 
         #region DTO SUNAT
@@ -312,26 +319,41 @@ namespace GasperSoft.SUNAT
         /// </summary>
         public EventEndGenerarToken EndGenerarToken;
 
+        /// <summary>
+        /// Devuelve el Ticket generado por SUNAT
+        /// </summary>
         public string GetTicketSunat
         {
             get { return _ticketSunat; }
         }
 
+        /// <summary>
+        /// Devuelve los Bytes del CDR devuelto por SUNAT
+        /// </summary>
         public byte[] GetBytesCdr
         {
             get { return _bytesCdr; }
         }
 
+        /// <summary>
+        /// Devuelve el mensaje de error generado por alguno de los métodos de envió/consulta SUNAT
+        /// </summary>
         public string GetMensaje
         {
             get { return _mensaje; }
         }
 
+        /// <summary>
+        /// Devuelve el codigo del mensaje de error (de existir) generado por alguno de los métodos de envió/consulta SUNAT
+        /// </summary>
         public string GetCodigoMensaje
         {
             get { return _codigoMensaje; }
         }
 
+        /// <summary>
+        /// Asigna un token de sesion para su uso en los métodos de envió/consulta SUNAT
+        /// </summary>
         public string SetToken
         {
             set

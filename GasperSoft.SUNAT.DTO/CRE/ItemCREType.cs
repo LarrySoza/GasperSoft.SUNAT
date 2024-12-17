@@ -6,6 +6,9 @@ using System;
 
 namespace GasperSoft.SUNAT.DTO.CRE
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ItemCREType
     {
         /// <summary>

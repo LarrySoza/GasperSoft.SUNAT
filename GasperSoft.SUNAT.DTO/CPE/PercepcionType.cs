@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.CPE
 {
+    /// <summary>
+    /// Percepciones
+    /// </summary>
     public class PercepcionType : DescuentoCargoType
     {
         /// <summary>
@@ -11,6 +14,9 @@ namespace GasperSoft.SUNAT.DTO.CPE
         /// </summary>
         public string codigo { get; set; }
 
+        /// <summary>
+        /// Siempre es "PEN"
+        /// </summary>
         public string codMoneda { get; } = "PEN";
 
         /// <summary>

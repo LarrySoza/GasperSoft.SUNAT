@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Información del Remitente de la guía de remisión
+    /// </summary>
     public class InfoRemitenteType : InfoPersonaType
     {
         /// <summary>

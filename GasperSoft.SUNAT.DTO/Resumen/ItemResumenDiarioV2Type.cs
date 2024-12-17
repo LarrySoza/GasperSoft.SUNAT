@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.Resumen
 {
+    /// <summary>
+    /// Detalle de un resumen diario
+    /// </summary>
     public class ItemResumenDiarioV2Type
     {
         /// <summary>
@@ -33,8 +36,19 @@ namespace GasperSoft.SUNAT.DTO.Resumen
 
         #region Percepcion
 
+        /// <summary>
+        /// 51 o 52 o 53 Catálogo No. 53
+        /// </summary>
         public string regimenPercepcion { get; set; }
+
+        /// <summary>
+        /// Tasa de percepcion del item
+        /// </summary>
         public decimal tasaPercepcion { get; set; }
+
+        /// <summary>
+        /// Monto de percepcion del item
+        /// </summary>
         public decimal montoPercepcion { get; set; }
 
         #endregion

@@ -7,10 +7,13 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.DTO.Resumen
 {
+    /// <summary>
+    /// Comunicaciones de Bajas (Facturas/Notas credito debito relacionadas y Retenciones)
+    /// </summary>
     public class ComunicacionBajaType
     {
         /// <summary>
-        /// Este valor se debera inicializar antes de registrar el resumen
+        /// Id del resumen ren formato RA-[yyyyMMdd]-##### (Facturas/Notas credito debito relacionadas) o RR-[yyyyMMdd]-##### (Retenciones)
         /// </summary>
         public string id { get; set; }
 

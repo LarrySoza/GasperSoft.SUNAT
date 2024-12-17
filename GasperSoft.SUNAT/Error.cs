@@ -6,10 +6,19 @@ using System;
 
 namespace GasperSoft.SUNAT
 {
+    /// <summary>
+    /// Clase para el manejo de Códigos de Error en las validaciones
+    /// </summary>
     public class Error
     {
+        /// <summary>
+        /// Código del error
+        /// </summary>
         public string codigo { get; set; }
 
+        /// <summary>
+        /// Detalle del error
+        /// </summary>
         public string detalle { get; set; }
 
         /// <summary>

@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO
 {
+    /// <summary>
+    /// Clase usada para registrar información adicional
+    /// </summary>
     public class DatoAdicionalType
     {
         /// <summary>

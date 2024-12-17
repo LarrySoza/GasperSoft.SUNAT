@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace GasperSoft.SUNAT.UBL.V2
 {
-    public class Comun
+    internal static class Comun
     {
         internal static MonetaryTotalType GetLegalMonetaryTotal(CPEType datos)
         {

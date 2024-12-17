@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.CPE
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ItemCPEType
     {
         /// <summary>

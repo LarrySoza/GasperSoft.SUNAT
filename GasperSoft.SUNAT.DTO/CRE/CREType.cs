@@ -7,14 +7,29 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.DTO.CRE
 {
+    /// <summary>
+    /// Esta clase contiene todos los datos necesarios para armar una Retencion
+    /// </summary>
     public class CREType
     {
+        /// <summary>
+        /// Fecha de Emision
+        /// </summary>
         public DateTime fechaEmision { get; set; }
 
+        /// <summary>
+        /// Serie de la retencion
+        /// </summary>
         public string serie { get; set; }
 
+        /// <summary>
+        /// Numero de retencion
+        /// </summary>
         public int numero { get; set; }
 
+        /// <summary>
+        /// Informacion del proveedor
+        /// </summary>
         public InfoPersonaType proveedor { get; set; }
 
         /// <summary>
@@ -56,5 +71,17 @@ namespace GasperSoft.SUNAT.DTO.CRE
         /// Los items del comprobante
         /// </summary>
         public List<ItemCREType> detalles { get; set; }
+
+        /// <summary>
+        /// Indica si se debe incluir los valores de la propiedad informacionAdicional en el XML
+        /// </summary>
+        public bool informacionAdicionalEnXml { get; set; }
+
+        /// <summary>
+        /// Informacion adicional del comprobante de pago estos datos no se envian a sunat por defecto
+        /// si se requiere estos datos en el XML puede establecer la propiedad "informacionAdicionalEnXml" = true,
+        /// su propósito es poder usar estos datos en la versión impresa del comprobante
+        /// </summary>
+        public List<DatoAdicionalType> informacionAdicional { get; set; }
     }
 }

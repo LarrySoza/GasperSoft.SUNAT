@@ -9,6 +9,9 @@ using System.Text;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Informacion de un vehiculo
+    /// </summary>
     public class InfoVehiculoType
     {
         /// <summary>

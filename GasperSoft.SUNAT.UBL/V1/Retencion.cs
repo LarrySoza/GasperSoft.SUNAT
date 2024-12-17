@@ -9,7 +9,8 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.UBL.V1
 {
-    public class Retencion
+    /// <remarks/>
+    public static class Retencion
     {
         internal static PartyNameType[] GetNombreComercialEmisor(EmisorType emisor)
         {
@@ -298,6 +299,13 @@ namespace GasperSoft.SUNAT.UBL.V1
             return _documentosReferencia.ToArray();
         }
 
+        /// <summary>
+        /// Convierte un objeto CREType a RetentionType
+        /// </summary>
+        /// <param name="datos">Informacion del comprobante</param>
+        /// <param name="emisor">Informacion del emisor</param>
+        /// <param name="signature">Una cadena de texto que se usa para "Signature ID", Por defecto se usará la cadena predeterminada "signatureGASPERSOFT"</param>
+        /// <returns>RetentionType con la informacion del documento</returns>
         public static RetentionType GetDocumento(CREType datos, EmisorType emisor, string signature = null)
         {
             var _retention = new RetentionType()
@@ -315,10 +323,7 @@ namespace GasperSoft.SUNAT.UBL.V1
                     schemeAgencyName = "PE:SUNAT"
                 },
 
-                UBLExtensions = new UBLExtensionType[]
-                {
-                    new UBLExtensionType(){ }
-                },
+                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? Comun.GetUBLExtensions(datos.informacionAdicional) : Comun.GetUBLExtensions(),
 
                 //Firma Digital
                 Signature = Comun.GetSignature(emisor, signature)[0],

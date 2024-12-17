@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.Resumen
 {
+    /// <summary>
+    /// Detalle de una comunicación de baja
+    /// </summary>
     public class ItemComunicacionBajaType
     {
         /// <summary>

@@ -9,7 +9,8 @@ using System.Linq;
 
 namespace GasperSoft.SUNAT.UBL.V2
 {
-    public class FacturaBoleta : Comun
+    /// <remarks/>
+    public static class FacturaBoleta
     {
         private static OrderReferenceType GetOrdenReferencia(CPEType datos)
         {
@@ -103,235 +104,6 @@ namespace GasperSoft.SUNAT.UBL.V2
             invoice.PaymentMeans = _paymentMeans.ToArray();
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="invoice"></param>
-        ///// <param name="datos"></param>
-        //private static void SetDatosGuia(InvoiceType invoice, CPEType datos)
-        //{
-        //    invoice.Delivery = new DeliveryType[]
-        //    {
-        //        new DeliveryType()
-        //        {
-        //            Shipment = new ShipmentType()
-        //            {
-        //                ID = new IDType()
-        //                {
-        //                    schemeName = "Motivo de Traslado",
-        //                    schemeAgencyName = "PE:SUNAT",
-        //                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo20",
-        //                    Value = datos.datosEnvio.motivoTraslado
-        //                },
-
-        //                GrossWeightMeasure = new GrossWeightMeasureType()
-        //                {
-        //                    Value = datos.datosEnvio.pesoBrutoTotalBienes,
-        //                    unitCode = datos.datosEnvio.unidadMedidaPesoBruto,
-        //                },
-
-        //                ShipmentStage = new ShipmentStageType[]
-        //                {
-        //                    new ShipmentStageType()
-        //                    {
-        //                        TransportModeCode = new TransportModeCodeType()
-        //                        {
-        //                            listName = "Modalidad de Transporte",
-        //                            listAgencyName = "PE:SUNAT",
-        //                            listURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo18",
-        //                            Value= datos.datosEnvio.modalidadTraslado
-        //                        },
-
-        //                        TransitPeriod = new PeriodType()
-        //                        {
-        //                            StartDate = new StartDateType()
-        //                            {
-        //                                Value = datos.datosEnvio.fechaInicioTraslado
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    };
-
-        //    //Datos del transportita
-        //    if (datos.datosEnvio.transportista != null)
-        //    {
-        //        invoice.Delivery[0].Shipment.ShipmentStage[0].CarrierParty = new PartyType[]
-        //        {
-        //            new PartyType()
-        //            {
-        //                PartyIdentification = new PartyIdentificationType[]
-        //                {
-        //                    new PartyIdentificationType()
-        //                    {
-        //                        ID = new IDType()
-        //                        {
-        //                            //Numero de RUC transportista
-        //                            Value = datos.datosEnvio.transportista.numeroDocumentoIdentificacion,
-
-        //                            //Tipo de documento del transportista
-        //                            schemeID = datos.datosEnvio.transportista.tipoDocumentoIdentificacion,
-
-        //                            schemeName = "Documento de Identidad",
-        //                            schemeAgencyName = "PE:SUNAT",
-        //                            schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
-        //                        }
-        //                    }
-        //                },
-
-        //                PartyName = new PartyNameType[]
-        //                {
-        //                    new PartyNameType()
-        //                    {
-        //                        //Apellidos y Nombres o denominacion o razon social del transportista
-        //                        Name = new NameType1()
-        //                        {
-        //                            Value = datos.datosEnvio.transportista.nombre
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        };
-        //    }
-
-        //    //Placas de la unidad de transporte
-        //    if (datos.datosEnvio?.placasVehiculo != null && datos.datosEnvio.placasVehiculo.Count > 0)
-        //    {
-        //        invoice.Delivery[0].Shipment.ShipmentStage[0].TransportMeans = new TransportMeansType()
-        //        {
-        //            RoadTransport = new RoadTransportType()
-        //            {
-        //                LicensePlateID = new LicensePlateIDType()
-        //                {
-        //                    Value = datos.datosEnvio.placasVehiculo[0]
-        //                }
-        //            }
-        //        };
-
-        //        var _TransportEquipment = new List<TransportEquipmentType>();
-
-        //        foreach (var item in datos.datosEnvio.placasVehiculo)
-        //        {
-        //            if (item != datos.datosEnvio.placasVehiculo[0])
-        //            {
-        //                _TransportEquipment.Add(new TransportEquipmentType()
-        //                {
-        //                    ID = new IDType()
-        //                    {
-        //                        Value = item
-        //                    }
-        //                });
-        //            }
-        //        }
-
-        //        var _TransportHandlingUnitType = new TransportHandlingUnitType()
-        //        {
-        //            //La primera placa del vehiculo
-        //            ID = new IDType()
-        //            {
-        //                Value = datos.datosEnvio.placasVehiculo[0]
-        //            }
-        //        };
-
-        //        if (_TransportEquipment.Count > 0)
-        //        {
-        //            _TransportHandlingUnitType.TransportEquipment = _TransportEquipment.ToArray();
-        //        }
-
-        //        invoice.Delivery[0].Shipment.TransportHandlingUnit = new TransportHandlingUnitType[]
-        //        {
-        //            _TransportHandlingUnitType
-        //        };
-        //    }
-
-        //    //CONDUCTOR (Transporte Privado)
-        //    if (datos.datosEnvio?.conductores != null && datos.datosEnvio.conductores.Count > 0)
-        //    {
-        //        var _driverPerson = new List<PersonType>();
-
-        //        foreach (var item in datos.datosEnvio.conductores)
-        //        {
-        //            _driverPerson.Add(new PersonType()
-        //            {
-        //                ID = new IDType()
-        //                {
-        //                    //Numero de documento de identidad del conductor
-        //                    Value = item.numeroDocumentoIdentificacion,
-
-        //                    //Tipo de documento de identidad del conductor
-        //                    schemeID = item.tipoDocumentoIdentificacion,
-
-        //                    schemeName = "Documento de Identidad",
-        //                    schemeAgencyName = "PE:SUNAT",
-        //                    schemeURI = "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
-        //                }
-        //            });
-        //        }
-
-        //        invoice.Delivery[0].Shipment.ShipmentStage[0].DriverPerson = _driverPerson.ToArray();
-        //    }
-
-        //    //Direccion punto de llegada
-        //    if (datos.datosEnvio?.puntoLlegada != null)
-        //    {
-        //        invoice.Delivery[0].Shipment.Delivery = new DeliveryType()
-        //        {
-        //            DeliveryAddress = new AddressType()
-        //            {
-        //                //Ubigeo
-
-        //                ID = new IDType()
-        //                {
-        //                    Value = datos.datosEnvio.puntoLlegada.ubigeo,
-        //                    schemeAgencyName = "PE:INEI",
-        //                    schemeName = "Ubigeos"
-        //                },
-
-        //                //Direccion completa y detallada
-        //                AddressLine = new AddressLineType[]
-        //                {
-        //                    new AddressLineType()
-        //                    {
-        //                        Line = new LineType()
-        //                        {
-        //                            Value = datos.datosEnvio.puntoLlegada.direccion
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        };
-        //    }
-
-        //    //Direccion del punto de partida 
-        //    if (datos.datosEnvio?.puntoPartida != null)
-        //    {
-        //        invoice.Delivery[0].Shipment.OriginAddress = new AddressType()
-        //        {
-        //            //Ubigeo
-        //            ID = new IDType()
-        //            {
-        //                Value = datos.datosEnvio.puntoPartida.ubigeo,
-        //                schemeAgencyName = "PE:INEI",
-        //                schemeName = "Ubigeos"
-        //            },
-
-        //            //Direccion completa y detallada
-        //            AddressLine = new AddressLineType[]
-        //            {
-        //                new AddressLineType()
-        //                {
-        //                    Line = new LineType()
-        //                    {
-        //                        Value = datos.datosEnvio.puntoPartida.direccion
-        //                    }
-        //                }
-        //            },
-        //        };
-        //    }
-        //}
-
         private static InvoiceLineType[] GetItems(List<ItemCPEType> items, string codMoneda)
         {
             var _invoiceLines = new List<InvoiceLineType>();
@@ -358,7 +130,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                         Value = item.cantidad
                     },
 
-                    Item = GetItem(item),
+                    Item = Comun.GetItem(item),
 
                     //27- Valor unitario por ítem (an..15 M n(12,10))
                     Price = new PriceType()
@@ -370,9 +142,9 @@ namespace GasperSoft.SUNAT.UBL.V2
                         }
                     },
 
-                    PricingReference = GetPreciosReferenciaItem(item, codMoneda),
+                    PricingReference = Comun.GetPreciosReferenciaItem(item, codMoneda),
 
-                    TaxTotal = GetTotalesItem(item, codMoneda),
+                    TaxTotal = Comun.GetTotalesItem(item, codMoneda),
 
                     //Valor de venta por ítem (M)
                     LineExtensionAmount = new LineExtensionAmountType()
@@ -382,7 +154,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                     },
 
                     //Cargo/descuento por ítem (C)
-                    AllowanceCharge = GetDescuentosCargosItem(item, codMoneda)
+                    AllowanceCharge = Comun.GetDescuentosCargosItem(item, codMoneda)
                 };
 
                 _invoiceLines.Add(_invoiceLine);
@@ -393,12 +165,12 @@ namespace GasperSoft.SUNAT.UBL.V2
         }
 
         /// <summary>
-        /// Extructura tomada de:
-        /// http://orientacion.sunat.gob.pe/images/LEGISLACION/RS-340-2017-SUNAT/anexoVIIa-340-2017.pdf
+        /// Convierte un objeto CPEType a InvoiceType
         /// </summary>
         /// <param name="datos">Informacion del comprobante</param>
         /// <param name="emisor">Informacion del emisor</param>
-        /// <returns></returns>
+        /// <param name="signature">Una cadena de texto que se usa para "Signature ID", Por defecto se usará la cadena predeterminada "signatureGASPERSOFT"</param>
+        /// <returns>InvoiceType con la informacion del documento</returns>
         public static InvoiceType GetDocumento(CPEType datos, EmisorType emisor, string signature = null)
         {
             var _invoice = new InvoiceType()
@@ -420,7 +192,7 @@ namespace GasperSoft.SUNAT.UBL.V2
                 IssueDate = new IssueDateType() { Value = datos.fechaEmision },
 
                 //Hora de Emision (hh:mm:ss C)
-                IssueTime = GetHoraEmision(datos.horaEmision),
+                IssueTime = Comun.GetHoraEmision(datos.horaEmision),
 
                 //Tipo de documento - Catálogo No. 01 (an2 M)
                 InvoiceTypeCode = new InvoiceTypeCodeType()
@@ -445,24 +217,24 @@ namespace GasperSoft.SUNAT.UBL.V2
                 },
 
                 //Fecha de vencimiento (YYYY-MM-DD C)
-                DueDate = GetFechaVencimiento(datos.fechaVencimiento),
+                DueDate = Comun.GetFechaVencimiento(datos.fechaVencimiento),
 
-                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? GetUBLExtensions(datos.informacionAdicional) : GetUBLExtensions(),
+                UBLExtensions = (datos.informacionAdicionalEnXml && datos.informacionAdicional?.Count > 0) ? Comun.GetUBLExtensions(datos.informacionAdicional) : Comun.GetUBLExtensions(),
 
                 //Firma Digital
-                Signature = GetSignature(emisor, signature),
+                Signature = Comun.GetSignature(emisor, signature),
 
                 //Aqui colocamos la informacion del EMISOR
-                AccountingSupplierParty = GetEmisor(emisor, datos.codigoEstablecimiento),
+                AccountingSupplierParty = Comun.GetEmisor(emisor, datos.codigoEstablecimiento),
 
                 //Aqui colocamos informacion del CLIENTE
-                AccountingCustomerParty = GetAdquiriente(datos.adquirente),
+                AccountingCustomerParty = Comun.GetAdquiriente(datos.adquirente),
 
                 //Tipo y número de la guía de remisión relacionada (C)
-                DespatchDocumentReference = GetGuiasRemisionRelacionadas(datos),
+                DespatchDocumentReference = Comun.GetGuiasRemisionRelacionadas(datos),
 
                 //Tipo y número de otro documento relacionado (C)
-                AdditionalDocumentReference = GetDocumentosReferenciaAdicionales(datos),
+                AdditionalDocumentReference = Comun.GetDocumentosReferenciaAdicionales(datos),
 
                 //Cantidad de ítems de la factura
                 LineCountNumeric = new LineCountNumericType()
@@ -473,15 +245,15 @@ namespace GasperSoft.SUNAT.UBL.V2
                 //Los detalles del comprobante
                 InvoiceLine = GetItems(datos.detalles, datos.codMoneda),
 
-                TaxTotal = GetTotales(datos),
+                TaxTotal = Comun.GetTotales(datos),
 
                 //Cargos y Descuentos
-                AllowanceCharge = GetDescuentosCargos(datos),
+                AllowanceCharge = Comun.GetDescuentosCargos(datos),
 
-                LegalMonetaryTotal = GetLegalMonetaryTotal(datos),
+                LegalMonetaryTotal = Comun.GetLegalMonetaryTotal(datos),
 
                 //Leyenda
-                Note = GetNotes(datos),
+                Note = Comun.GetNotes(datos),
 
                 //Número de la orden de compra
                 OrderReference = GetOrdenReferencia(datos)

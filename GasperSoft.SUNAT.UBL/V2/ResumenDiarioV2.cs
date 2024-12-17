@@ -8,7 +8,8 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.UBL.V2
 {
-    public class ResumenDiarioV2
+    /// <remarks/>
+    public static class ResumenDiarioV2
     {
         private static SupplierPartyType GetEmisor(EmisorType emisor)
         {
@@ -573,6 +574,13 @@ namespace GasperSoft.SUNAT.UBL.V2
             return _summaryDocumentsLines.ToArray();
         }
 
+        /// <summary>
+        /// Convierte un objeto ResumenDiarioV2Type a SummaryDocumentsType
+        /// </summary>
+        /// <param name="datos">Informacion del resumen</param>
+        /// <param name="emisor">Informacion del emisor</param>
+        /// <param name="signature">Una cadena de texto que se usa para "Signature ID", Por defecto se usará la cadena predeterminada "signatureGASPERSOFT"</param>
+        /// <returns>SummaryDocumentsType con la informacion del resumen</returns>
         public static SummaryDocumentsType GetDocumento(ResumenDiarioV2Type datos, EmisorType emisor, string signature = null)
         {
             var _summaryDocuments = new SummaryDocumentsType()

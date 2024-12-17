@@ -7,12 +7,13 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.DTO.Resumen
 {
-    [Serializable]
+    /// <summary>
+    /// Resumen diario (Boletas/Notas credito debito relacionadas)
+    /// </summary>
     public class ResumenDiarioV2Type
     {
         /// <summary>
-        /// Este valor es inicializado por Simle-Ubl antes de registrar el resumen
-        /// RC-<Fecha>-#####
+        /// Id del resumen ren formato RC-[yyyyMMdd]-#####
         /// </summary>
         public string id { get; set; }
 
