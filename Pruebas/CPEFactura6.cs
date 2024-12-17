@@ -100,7 +100,7 @@ namespace Pruebas
                 sumatoriaIGV = 144,//Cuando hay anticipos este valor se recalcula en base a las totalOperacionesGravadas * 0.18
                 sumatoriaImpuestos = 144,//en este caso solo hay IGV pero si hubiera ICBPER tambien se suma aqui
                 valorVenta = 1000,//Sumatoria de la propiedad valorVenta de cada item - DescuentoGlobalesAfectaBI(codigo 02 del catalogo 53) + cargosGlobalesAfectaBI(codigo 49 catalogo 53)
-                precioVenta = 1180,//Valor de venta total de la operación incluido los impuestos.(importeTotal - sumatoriaOtrosCargos + totalDescuentos + totalAnticipos - totalRedondeo)
+                precioVenta = 1180,//Valor de venta total de la operación incluido los impuestos => valorVenta + sumatoriaICBPER + sumatoriaISC + (Suma del 'totalISC' de los anticipos) + sumatoriaOTH + ([(Suma del 'valorVenta' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe] * tasaIGV / 100)
                 anticipos = _anticipos,
                 totalAnticipos = 236m,//sumatoria del importeTotal de cada anticipo
                 importeTotal = 944,//precioVenta- total antipos

@@ -315,6 +315,11 @@ namespace GasperSoft.SUNAT.DTO.CPE
         /// </summary>
         public bool indContratosSelva { get; set; }
 
+        /// <summary>
+        /// Agregar la leyenda codigo: 2008("VENTA EXONERADA DEL IGV-ISC-IPM. PROHIBIDA LA VENTA FUERA DE LA ZONA COMERCIAL DE TACNA")
+        /// </summary>
+        public bool indVentaZonaComercialTacna { get; set; }
+
         #endregion
 
         /// <summary>

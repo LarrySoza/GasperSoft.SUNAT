@@ -353,6 +353,18 @@ namespace GasperSoft.SUNAT.UBL.V2
                 });
             }
 
+            if (datos.indVentaZonaComercialTacna)
+            {
+                _additionalPropertys.Add(new NoteType()
+                {
+                    //Código de la leyenda - Catálogo No. 52
+                    languageLocaleID = "2008",
+
+                    //Descripción de la leyenda
+                    Value = "VENTA EXONERADA DEL IGV-ISC-IPM. PROHIBIDA LA VENTA FUERA DE LA ZONA COMERCIAL DE TACNA"
+                });
+            }
+
             if (datos.detraccion != null)
             {
                 _additionalPropertys.Add(new NoteType()

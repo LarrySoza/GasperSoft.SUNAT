@@ -150,10 +150,13 @@ namespace GasperSoft.SUNAT
 
             #region Validacion del Adquirente
 
-            if (!Validaciones.IsValidTipoDocumentoIdentidad(_cpe.adquirente.tipoDocumentoIdentificacion))
+            if (!OnValidarCatalogoSunat("06", _cpe.adquirente.tipoDocumentoIdentificacion))
             {
-                _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion");
-                return false;
+                if (_cpe.adquirente.tipoDocumentoIdentificacion != "-")
+                {
+                    _mensajesError.AddMensaje(CodigoError.V0001, $"adquirente.tipoDocumentoIdentificacion = '{_cpe.adquirente.tipoDocumentoIdentificacion}' (Usar un '-' para clientes varios)");
+                    return false;
+                }
             }
 
             if (!Validaciones.IsValidDocumentoIdentidadSunat(_cpe.adquirente.numeroDocumentoIdentificacion, _cpe.adquirente.tipoDocumentoIdentificacion))
@@ -179,6 +182,66 @@ namespace GasperSoft.SUNAT
             {
                 _mensajesError.AddMensaje(CodigoError.V0006, $"adquirente.nombre = '{_cpe.adquirente.nombre}'");
                 return false;
+            }
+
+            if (_cpe.serie.StartsWith("B"))
+            {
+                //Obligatorio informar datos del cliente cuando la factura supera los 700 soles
+                if (ConvertirMonedaNacional(_cpe.codMoneda, _cpe.importeTotal, _tipoCambioReferencial) >= _montoMaximoClienteAnonimoBoleta)
+                {
+                    if (_cpe.adquirente.tipoDocumentoIdentificacion == "-")
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0008);
+                        return false;
+                    }
+                }
+
+                //Si 'Tipo de operación' es "0200" o "0201" o "0203" o "0204" o "0205" o "0206" o "0207", "0208" o "0401", el valor del Tag UBL es  6-RUC
+                if ((new List<string>() { "0200", "0201", "0203", "0204", "0205", "0206", "0207", "0208", "0401" }).Contains(_cpe.codigoTipoOperacion))
+                {
+                    if (_cpe.adquirente.tipoDocumentoIdentificacion == "6")
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion no puede ser '6'");
+                        return false;
+                    }
+                }
+            }
+
+            if (_cpe.serie.StartsWith("F"))
+            {
+                //Si 'Tipo de operación' es '0200' o '0201' o '0204', y no existe Leyenda con 'Código de leyenda' igual a '2008', el valor del Tag UBL es  '6' 
+                if ((new List<string>() { "0200", "0201", "0203", "0204", "0205", "0206", "0207", "0208" }).Contains(_cpe.codigoTipoOperacion))
+                {
+                    if (!_cpe.indVentaZonaComercialTacna && _cpe.adquirente.tipoDocumentoIdentificacion == "6")
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion no puede ser '6'");
+                        return false;
+                    }
+                }
+
+                //Si 'Tipo de operación' es '0200' o '0201' o '0202' o '0203' '0204' o '0205' '0206' o '0207' '0208' o '0401', y el valor del Tag UBL es diferente al listado y guion '-'
+                //***Ya se valida que sea un tipo de documento valido lineas mas arriba***
+
+                //Si 'Tipo de operación' es '0112 Venta Interna - Sustenta Gastos Deducibles Persona Natural', el valor del Tag UBL es diferente de '1' y '6'
+                if (_cpe.codigoTipoOperacion == "0112" && _cpe.adquirente.tipoDocumentoIdentificacion != "6" && _cpe.adquirente.tipoDocumentoIdentificacion != "1")
+                {
+                    _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '1' o '6' cuando codigoTipoOperacion = '0112'");
+                    return false;
+                }
+
+                //Si 'Tipo de operación' es '2106 Venta nacional a turistas - Tax Free', el valor del Tag UBL es diferente de '7', 'B' y 'G'.
+                if (_cpe.codigoTipoOperacion == "2106" && _cpe.adquirente.tipoDocumentoIdentificacion != "7" && _cpe.adquirente.tipoDocumentoIdentificacion != "B" && _cpe.adquirente.tipoDocumentoIdentificacion != "G")
+                {
+                    _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '7','B' o 'G' cuando codigoTipoOperacion = '2106'");
+                    return false;
+                }
+
+                //Si no es uno de los cuatro casos anteriores, el valor del Tag UBL es diferente de '6'
+                if (_cpe.adquirente.tipoDocumentoIdentificacion != "6")
+                {
+                    _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '6'");
+                    return false;
+                }
             }
 
             #endregion
@@ -597,31 +660,6 @@ namespace GasperSoft.SUNAT
             {
                 return false;
             }
-
-            #region Obligatorio informar datos del cliente cuando la factura supera los 700 soles
-
-            if (_cpe.serie.StartsWith("F"))
-            {
-                //El codigo 0401 en tipo de operacion deberia poder emitir facturas con sujetos no domiciliado
-                if (!_esExportacion && _cpe.codigoTipoOperacion != "0401" && _cpe.adquirente.tipoDocumentoIdentificacion != "6" && _cpe.adquirente.tipoDocumentoIdentificacion != "1")
-                {
-                    _mensajesError.AddMensaje(CodigoError.V0025, "adquirente.tipoDocumentoIdentificacion");
-                    return false;
-                }
-            }
-            else
-            {
-                if (ConvertirMonedaNacional(_cpe.codMoneda, _cpe.importeTotal, _tipoCambioReferencial) >= _montoMaximoClienteAnonimoBoleta)
-                {
-                    if (_cpe.adquirente.tipoDocumentoIdentificacion == "-" || _cpe.adquirente.numeroDocumentoIdentificacion == "-")
-                    {
-                        _mensajesError.AddMensaje(CodigoError.V0008);
-                        return false;
-                    }
-                }
-            }
-
-            #endregion
 
             #endregion
 
@@ -1541,7 +1579,7 @@ namespace GasperSoft.SUNAT
             }
 
             //Codigo de validacion 3279
-            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _totalAnticiposISC + _sumatoriaOTHCalculado + _sumatoriaIGVCalculado;
+            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _totalAnticiposISC + _sumatoriaOTHCalculado + ((_operacionesGravadasxLinea - _descuentoGlobalAfectaBICalculado) * _tasaIGVOperacionesGravadas / 100);
             decimal _totalAnticiposCalculado = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.importeTotal));
             decimal _totalRedondeo = _cpe.totalRedondeo;
             decimal _importeTotalCalculado = _precioVentaCalculado + _sumatoriaOtrosCargosNoAfectaBICalculado - _totalDescuentosNOAfectaBICalculado - _totalAnticiposCalculado + _totalRedondeo;
@@ -1784,7 +1822,7 @@ namespace GasperSoft.SUNAT
 
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.precioVenta, decimal.Round(_precioVentaCalculado, 2), _toleranciaCalculo))
             {
-                _mensajesError.AddMensaje(CodigoError.V2000, $"precioVenta incorrecto Valor enviado: {_cpe.precioVenta} Valor calculado: {decimal.Round(_precioVentaCalculado, 2)}; Formula: precioVenta = valorVenta + sumatoriaICBPER + sumatoriaISC + (Suma del 'totalISC' de los anticipos) + sumatoriaOTH + sumatoriaIGV");
+                _mensajesError.AddMensaje(CodigoError.V2000, $"precioVenta incorrecto Valor enviado: {_cpe.precioVenta} Valor calculado: {decimal.Round(_precioVentaCalculado, 2)}; Formula: precioVenta = valorVenta + sumatoriaICBPER + sumatoriaISC + (Suma del 'totalISC' de los anticipos) + sumatoriaOTH + ([(Suma del 'valorVenta' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe] * tasaIGV / 100)");
                 return false;
             }
 
