@@ -150,7 +150,7 @@ namespace GasperSoft.SUNAT
                 }
             }
 
-            if (_cpe.detalles?.Count == 0)
+            if ((_cpe.detalles?.Count ?? 0) == 0)
             {
                 _mensajesError.AddMensaje(CodigoError.V0007);
                 return false;
@@ -1891,7 +1891,7 @@ namespace GasperSoft.SUNAT
                 {
                     if (_cpe.informacionPago.formaPago == FormaPagoType.Credito)
                     {
-                        if (_cpe.informacionPago.cuotas?.Count == 0)
+                        if ((_cpe.informacionPago.cuotas?.Count ?? 0) == 0)
                         {
                             _mensajesError.AddMensaje(CodigoError.S3249);
                         }

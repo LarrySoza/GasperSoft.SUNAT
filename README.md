@@ -42,6 +42,7 @@ Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **g
   - [XML GUIA REMISION REMITENTE - Transporte Publico](/Xml/20606433094-09-T001-1.xml) - [C#](/Pruebas/GRERemitente1.cs)
   - [XML GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)](/Xml/20606433094-09-T001-2.xml) - [C#](/Pruebas/GRERemitente2.cs)
   - [XML GUIA REMISION REMITENTE - Transporte Privado (M1 o L)](/Xml/20606433094-09-T001-3.xml) - [C#](/Pruebas/GRERemitente3.cs)
+  - [XML GUIA REMISION REMITENTE - EXPORTACION (PENDIENTE DE VERIFICACION CON SUNAT)](/Xml/20606433094-09-T001-5.xml) - [C#](/Pruebas/GRERemitente5.cs)
   - [XML GUIA REMISION TRANSPORTISTA](/Xml/20606433094-31-V001-1.xml) - [C#](/Pruebas/GRETransportista1.cs)
   - [XML RESUMEN DIARIO DE BOLETAS - INFORMAR](/Xml/20606433094-RC-20241125-1.xml) - [C#](/Pruebas/ResumenDiario1.cs)
   - [XML RESUMEN DIARIO DE BOLETAS - DAR DE BAJA](/Xml/20606433094-RC-20241125-2.xml) - [C#](/Pruebas/ResumenDiario2.cs)

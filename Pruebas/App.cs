@@ -80,9 +80,10 @@ namespace Pruebas
                 ConsoleEx.WriteLine("22: REVERSION (BAJAS DE RETENCIONES)");
                 ConsoleEx.WriteLine("23: GUIA REMITENTE CON INFORMACION ADICIONAL EN 'UBLExtension'", ConsoleColor.Blue);
                 ConsoleEx.WriteLine("24: FACTURA CON INFORMACION ADICIONAL EN 'UBLExtension'", ConsoleColor.Blue);
+                ConsoleEx.WriteLine("25: GUIA REMISION REMITENTE - EXPORTACION (PENDIENTE DE VERIFICACION CON SUNAT)");
 
                 //Pruebas de envio()
-                ConsoleEx.WriteLine("P1: ENVIAR GUIA REMITENTE");
+                ConsoleEx.WriteLine("P1: ENVIAR GUIA REMITENTE",ConsoleColor.Green);
 
                 ConsoleEx.Write("\nX", ConsoleColor.Red);
                 ConsoleEx.WriteLine(": Salir");
@@ -167,6 +168,9 @@ namespace Pruebas
                         break;
                     case "24":
                         EjemploCPE(CPEFactura10.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "25":
+                        EjemploGRE(GRERemitente5.GetDocumento(), _emisor, _certificado, _signature);
                         break;
                     case "P1":
                         EnvioGRE1.Run();

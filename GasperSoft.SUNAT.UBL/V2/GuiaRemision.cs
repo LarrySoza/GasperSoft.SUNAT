@@ -84,11 +84,11 @@ namespace GasperSoft.SUNAT.UBL.V2
 
         private static DocumentReferenceType[] GetDocumentosReferenciaAdicionales(List<DocumentoRelacionadoGREType> documentosReferenciaAdicionales)
         {
-            var _documentReference = new List<DocumentReferenceType>();
+            var _documentsReference = new List<DocumentReferenceType>();
 
             foreach (var item in documentosReferenciaAdicionales)
             {
-                _documentReference.Add(new DocumentReferenceType()
+                var _documentReference = new DocumentReferenceType()
                 {
                     ID = new IDType() { Value = item.numeroDocumento },
 
@@ -104,9 +104,12 @@ namespace GasperSoft.SUNAT.UBL.V2
                     DocumentType = new DocumentTypeType()
                     {
                         Value = GetDocumentType(item.tipoDocumento)
-                    },
+                    }
+                };
 
-                    IssuerParty = new PartyType()
+                if (item.emisor != null)
+                {
+                    _documentReference.IssuerParty = new PartyType()
                     {
                         PartyIdentification = new PartyIdentificationType[]
                         {
@@ -121,11 +124,13 @@ namespace GasperSoft.SUNAT.UBL.V2
                                 }
                             }
                         }
-                    }
-                });
+                    };
+                }
+
+                _documentsReference.Add(_documentReference);
             }
 
-            return _documentReference.ToArray();
+            return _documentsReference.ToArray();
         }
 
         private static DespatchLineType[] GetItems(List<ItemGREType> items)

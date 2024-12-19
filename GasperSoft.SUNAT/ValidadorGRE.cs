@@ -726,10 +726,90 @@ namespace GasperSoft.SUNAT
 
             #endregion
 
+            if (_gre.documentosRelacionados?.Count > 0)
+            {
+                _idRecord = 0;
+                foreach (var item in _gre.documentosRelacionados)
+                {
+                    //Si el 'Código del tipo de documento relacionado' es '01', '03', '04', '09', '12', '48', no existe el Tag UBL o es vacío
+                    if ((new List<string>() { "01", "03", "04", "09", "12", "48" }).Contains(item.tipoDocumento))
+                    {
+                        if (item.emisor == null)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3380, $"gre.documentosRelacionados[{_idRecord}].emisor no puede ser NULL para gre.documentosRelacionados[{_idRecord}].tipoDocumento = '{item.tipoDocumento}'");
+                            return false;
+                        }
+                    }
+
+                    //Si el Tag UBL existe y es diferente de vacío, y el 'Motivo de traslado' es '01', '03' y el 'Código del tipo de documento relacionado' es '01', '03', '12', el valor del Tag UBL es diferente al RUC del remitente
+                    if ((new List<string>() { "01", "03" }).Contains(_gre.datosEnvio.motivoTraslado) && (new List<string> { "01", "03", "12" }).Contains(item.tipoDocumento))
+                    {
+                        if (item.emisor?.tipoDocumentoIdentificacion != _gre.remitente.tipoDocumentoIdentificacion
+                            || item.emisor?.numeroDocumentoIdentificacion != _gre.remitente.numeroDocumentoIdentificacion)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3381, $"gre.documentosRelacionados[{_idRecord}].emisor debe ser el mismo que el remitente");
+                            return false;
+                        }
+                    }
+
+                    //Si el Tag UBL existe y es diferente de vacío y el 'Código del tipo de documento relacionado' es '09', el valor del Tag UBL es diferente al RUC del remitente
+                    if (item.tipoDocumento == "09")
+                    {
+                        if (item.emisor?.tipoDocumentoIdentificacion != _gre.remitente.tipoDocumentoIdentificacion
+                            || item.emisor?.numeroDocumentoIdentificacion != _gre.remitente.numeroDocumentoIdentificacion)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3381, $"gre.documentosRelacionados[{_idRecord}].emisor debe ser el mismo que el remitente");
+                            return false;
+                        }
+                    }
+
+                    //Si el Tag UBL existe y es diferente de vacío, y el 'Motivo de traslado' es '02' y el 'Código del tipo de documento relacionado' es '04', '48' el valor del Tag UBL es diferente al RUC del remitente
+                    if (_gre.datosEnvio.motivoTraslado == "02" && (new List<string> { "04", "48" }).Contains(item.tipoDocumento))
+                    {
+                        if (item.emisor?.tipoDocumentoIdentificacion != _gre.remitente.tipoDocumentoIdentificacion
+                            || item.emisor?.numeroDocumentoIdentificacion != _gre.remitente.numeroDocumentoIdentificacion)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3381, $"gre.documentosRelacionados[{_idRecord}].emisor debe ser el mismo que el remitente");
+                            return false;
+                        }
+                    }
+
+                    //Si el Tag UBL existe y es diferente de vacío, y el 'Motivo de traslado' es '06' y el 'Código del tipo de documento relacionado' es  '01', '03', '12', el valor del Tag UBL es diferente al RUC del destinatario
+                    if (_gre.datosEnvio.motivoTraslado == "06" && (new List<string> { "01", "03", "12" }).Contains(item.tipoDocumento))
+                    {
+                        if (item.emisor?.tipoDocumentoIdentificacion != _gre.destinatario.tipoDocumentoIdentificacion
+                            || item.emisor?.numeroDocumentoIdentificacion != _gre.destinatario.numeroDocumentoIdentificacion)
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3381, $"gre.documentosRelacionados[{_idRecord}].emisor debe ser el mismo que el destinatario");
+                            return false;
+                        }
+                    }
+
+                    //Si el Tag UBL existe y es diferente de vacío, el valor del Tag UBL es diferente de numérico de 11 dígitos
+                    if (item.emisor != null)
+                    {
+                        //Si el 'Código del tipo de documento relacionado' es '01', '03', '04', '09', '12', '48', el atributo del Tag UBL no existe o es diferente a 6 (RUC)
+                        if ((new List<string> { "01", "03", "04", "09", "12", "48" }).Contains(item.tipoDocumento) && item.emisor.tipoDocumentoIdentificacion != "6")
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3382, $"gre.documentosRelacionados[{_idRecord}].emisor.tipoDocumentoIdentificacion = '{item.emisor.tipoDocumentoIdentificacion}'");
+                            return false;
+                        }
+
+                        if (!Validaciones.IsValidRuc(item.emisor.numeroDocumentoIdentificacion))
+                        {
+                            _mensajesError.AddMensaje(CodigoError.S3409, $"gre.documentosRelacionados[{_idRecord}].emisor.numeroDocumentoIdentificacion = '{item.emisor.numeroDocumentoIdentificacion}'");
+                            return false;
+                        }
+                    }
+
+                    _idRecord++;
+                }
+            }
+
             if (_gre.datosEnvio.motivoTraslado == "08" || _gre.datosEnvio.motivoTraslado == "09")
             {
                 //El tipo de operacion es importacion/ exportacion y se requieren documentos relacionados
-                if (_gre.documentosRelacionados?.Count == 0)
+                if ((_gre.documentosRelacionados?.Count ?? 0) == 0)
                 {
                     _mensajesError.AddMensaje(CodigoError.S3440, "documentosRelacionados");
                     return false;

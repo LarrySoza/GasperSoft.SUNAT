@@ -15,7 +15,7 @@ namespace GasperSoft.SUNAT.DTO.GRE
         public InfoPersonaType emisor { get; set; }
 
         /// <summary>
-        /// Tipo de documento 
+        /// Tipo de documento de documento relacionado (Catalogo 61)
         /// </summary>
         public string tipoDocumento { get; set; }
 

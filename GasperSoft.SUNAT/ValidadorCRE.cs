@@ -87,7 +87,7 @@ namespace GasperSoft.SUNAT
                 return false;
             }
 
-            if (_cre.detalles?.Count == 0)
+            if ((_cre.detalles?.Count ?? 0) == 0)
             {
                 _mensajesError.AddMensaje(CodigoError.V0007);
                 return false;

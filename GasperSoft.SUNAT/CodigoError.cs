@@ -2,6 +2,10 @@
 // Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
+using System.Drawing;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
+
 namespace GasperSoft.SUNAT
 {
     /// <summary>
@@ -46,6 +50,10 @@ namespace GasperSoft.SUNAT
         public const string S3355 = "S3355:El Numero de Constancia de Inscripcion Vehicular o Certificado de Habilitacion Vehicular o la TUC (fisica o electronica) no cumple con el formato establecido";
         public const string S3357 = "S3357:Debe consignar informacion del conductor principal";
         public const string S3377 = "S3377:La Partida arancelaria no cumple con el formato establecido";
+        public const string S3380 = "S3380:Debe consignar el RUC del emisor del documento relacionado";
+        public const string S3381 = "S3381:El RUC del emisor del documento relacionado no corresponde";
+        public const string S3382 = "S3382:El Tipo de documento del emisor del documento relacionado debe ser Numero de RUC";
+        public const string S3409 = "S3409:El Numero de RUC no cumple con el formato establecido"; 
         public const string S3414 = "S3414:El Numero de RUC  asociado al punto de partida/llegada debe ser el igual al Numero de RUC del remitente";
         public const string S3426 = "S3426:Si se trata de un bien normalizado por SUNAT, debe indicarse la Partida arancelaria";
         public const string S3430 = "S3430:La Numeracion de la DAM o DS no se encuentra consignado como documento relacionado";

@@ -102,6 +102,8 @@ namespace GasperSoft.SUNAT
 
         /// <summary>
         /// valida si el input tiene el formato de un numero de declaracion de aduana segun SUNAT
+        /// Se usa la siguiente expresion regular "^[0-9]{3}-[0-9]{4}-[0-9]{2}-[0-9]{1,6}$"
+        /// donde: [0-9]{3}: Código de la Aduana, [0-9]{4}: Año, [0-9]{2} Régimen aduanero, [0-9]{1,6} Correlativo
         /// </summary>
         /// <param name="input">Texto a evaluar</param>
         public static bool IsValidNumeroDeclaracionAduana(string input)
