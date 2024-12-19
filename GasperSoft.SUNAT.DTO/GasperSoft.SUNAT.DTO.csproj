@@ -11,7 +11,7 @@
     <Description>Objetos (DTOs), usados por las librerías GasperSoft.SUNAT.UBL.V1.dll y GasperSoft.SUNAT.UBL.V2.dll para la generación de los XML requeridos por SUNAT.</Description>
     <Copyright>Copyright (C) 2023 GasperSoft.</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.11</FileVersion>
+    <FileVersion>1.0.12</FileVersion>
     <Version>$(FileVersion)</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>

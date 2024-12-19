@@ -225,6 +225,8 @@ namespace GasperSoft.SUNAT
 
             if (_cpe.tipoDocumento == "01")
             {
+                bool _validarTipoDocumento = true;
+
                 //Si 'Tipo de operación' es '0200' o '0201' o '0204', y no existe Leyenda con 'Código de leyenda' igual a '2008', el valor del Tag UBL es  '6' 
                 if ((new List<string>() { "0200", "0201", "0203", "0204", "0205", "0206", "0207", "0208" }).Contains(_cpe.codigoTipoOperacion))
                 {
@@ -233,30 +235,62 @@ namespace GasperSoft.SUNAT
                         _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion no puede ser '6'");
                         return false;
                     }
+                    else
+                    {
+                        //Se cumple la condicion entonces ya no hacemos mas validaciones del tipo de documento
+                        _validarTipoDocumento = false;
+                    }
                 }
 
-                //Si 'Tipo de operación' es '0200' o '0201' o '0202' o '0203' '0204' o '0205' '0206' o '0207' '0208' o '0401', y el valor del Tag UBL es diferente al listado y guion '-'
-                //***Ya se valida que sea un tipo de documento valido lineas mas arriba***
-
-                //Si 'Tipo de operación' es '0112 Venta Interna - Sustenta Gastos Deducibles Persona Natural', el valor del Tag UBL es diferente de '1' y '6'
-                if (_cpe.codigoTipoOperacion == "0112" && _cpe.adquirente.tipoDocumentoIdentificacion != "6" && _cpe.adquirente.tipoDocumentoIdentificacion != "1")
+                if (_validarTipoDocumento)
                 {
-                    _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '1' o '6' cuando codigoTipoOperacion = '0112'");
-                    return false;
+                    //Si 'Tipo de operación' es '0200' o '0201' o '0202' o '0203' '0204' o '0205' '0206' o '0207' '0208' o '0401', y el valor del Tag UBL es diferente al listado y guion '-'
+                    if ((new List<string>() { "0200", "0201", "0202", "0203", "0204", "0205", "0206", "0207", "0208", "0401" }).Contains(_cpe.codigoTipoOperacion))
+                    {
+                        //Previamente ya se valido que _cpe.adquirente.tipoDocumentoIdentificacion sea valido (Que este en el Catalogo nro. '06' o sea guion '-')
+                        //entonces ya na no hacemos mas validaciones del tipo de documento
+                        _validarTipoDocumento = false;
+                    }
                 }
 
-                //Si 'Tipo de operación' es '2106 Venta nacional a turistas - Tax Free', el valor del Tag UBL es diferente de '7', 'B' y 'G'.
-                if (_cpe.codigoTipoOperacion == "2106" && _cpe.adquirente.tipoDocumentoIdentificacion != "7" && _cpe.adquirente.tipoDocumentoIdentificacion != "B" && _cpe.adquirente.tipoDocumentoIdentificacion != "G")
+                if (_validarTipoDocumento)
                 {
-                    _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '7','B' o 'G' cuando codigoTipoOperacion = '2106'");
-                    return false;
+                    //Si 'Tipo de operación' es '0112 Venta Interna - Sustenta Gastos Deducibles Persona Natural', el valor del Tag UBL es diferente de '1' y '6'
+                    if (_cpe.codigoTipoOperacion == "0112" && _cpe.adquirente.tipoDocumentoIdentificacion != "6" && _cpe.adquirente.tipoDocumentoIdentificacion != "1")
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '1' o '6' cuando codigoTipoOperacion = '0112'");
+                        return false;
+                    }
+                    else
+                    {
+                        //Se cumple la condicion entonces ya no hacemos mas validaciones del tipo de documento
+                        _validarTipoDocumento = false;
+                    }
                 }
 
-                //Si no es uno de los cuatro casos anteriores, el valor del Tag UBL es diferente de '6'
-                if (_cpe.adquirente.tipoDocumentoIdentificacion != "6")
+                if (_validarTipoDocumento)
                 {
-                    _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '6'");
-                    return false;
+                    //Si 'Tipo de operación' es '2106 Venta nacional a turistas - Tax Free', el valor del Tag UBL es diferente de '7', 'B' y 'G'.
+                    if (_cpe.codigoTipoOperacion == "2106" && _cpe.adquirente.tipoDocumentoIdentificacion != "7" && _cpe.adquirente.tipoDocumentoIdentificacion != "B" && _cpe.adquirente.tipoDocumentoIdentificacion != "G")
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '7','B' o 'G' cuando codigoTipoOperacion = '2106'");
+                        return false;
+                    }
+                    else
+                    {
+                        //Se cumple la condicion entonces ya no hacemos mas validaciones del tipo de documento
+                        _validarTipoDocumento = false;
+                    }
+                }
+
+                if (_validarTipoDocumento)
+                {
+                    //Si no es uno de los cuatro casos anteriores, el valor del Tag UBL es diferente de '6'
+                    if (_cpe.adquirente.tipoDocumentoIdentificacion != "6")
+                    {
+                        _mensajesError.AddMensaje(CodigoError.S2800, "adquirente.tipoDocumentoIdentificacion debe ser '6'");
+                        return false;
+                    }
                 }
             }
 
