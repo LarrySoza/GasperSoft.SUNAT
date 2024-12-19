@@ -354,6 +354,36 @@ namespace GasperSoft.SUNAT
 
             #endregion
 
+            #region Informacion Adicional
+
+            if (_cre.informacionAdicional?.Count > 0)
+            {
+                var _informacionAdicional = new Dictionary<string, string>();
+
+                _idRecord = 0;
+                foreach (var item in _cre.informacionAdicional)
+                {
+                    if (!Validaciones.IsValidCodigoInformacionAdicional(item.codigo))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0025, $"informacionAdicional[{_idRecord}].codigo = '{item.codigo}'");
+                        continue;
+                    }
+
+                    if (_informacionAdicional.ContainsKey(item.codigo))
+                    {
+                        _mensajesError.AddMensaje(CodigoError.V0041, $"informacionAdicional[{_idRecord}].codigo = '{item.codigo}'");
+                    }
+                    else
+                    {
+                        _informacionAdicional.Add(item.codigo, item.valor);
+                    }
+
+                    _idRecord++;
+                }
+            }
+
+            #endregion
+
             //Si no existen mensajes de Error entonces la validacion esta OK
             return !(_mensajesError.Count > 0);
         }

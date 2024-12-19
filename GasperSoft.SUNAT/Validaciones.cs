@@ -423,6 +423,17 @@ namespace GasperSoft.SUNAT
         }
 
         /// <summary>
+        /// Valida si el input tiene tenga un formato alfanumerico de 2 a 30 caracteres
+        /// </summary>
+        /// <param name="input">La cadena a evaluar</param>
+        public static bool IsValidCodigoInformacionAdicional(string input)
+        {
+            var regex = new Regex(@"^[0-9a-zA-Z]{2,30}$");
+
+            return regex.IsMatch(input ?? "");
+        }
+
+        /// <summary>
         /// Un delegado que devuelve sin un determinado valor se encuentra en un determinado catálogo de SUNAT (Anexo 8)
         /// </summary>
         /// <param name="catalogo">El codigo del catalogo</param>

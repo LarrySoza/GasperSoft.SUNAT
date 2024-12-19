@@ -259,10 +259,10 @@ namespace GasperSoft.SUNAT.UBL.V2
 
                         PaymentMeansID = new PaymentMeansIDType[]
                         {
-                                        new PaymentMeansIDType()
-                                        {
-                                            Value = _id
-                                        }
+                            new PaymentMeansIDType()
+                            {
+                                Value = _id
+                            }
                         },
 
                         Amount = new AmountType2()

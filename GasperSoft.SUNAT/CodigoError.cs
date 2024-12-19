@@ -115,6 +115,7 @@ namespace GasperSoft.SUNAT
         public const string V0022 = "V0022:El valor de la propiedad debe ser cero, para notas de crédito motivo 13 (Ajustes – montos y/o fechas de pago)";
         public const string V0023 = "V0023:El valor de la propiedad 'tasaIsc' no es válido, si el ítem no está afecto al ISC asigne 0 a la propiedad 'montoIsc'";
         public const string V0024 = "V0024:El valor de la propiedad 'codSistemaCalculoIsc' no es válido, si el ítem no está afecto al ISC asigne 0 a la propiedad 'montoIsc'";
+        public const string V0025 = "V0025:El valor de la propiedad debe ser un valor alfanumérico de 2 a 30 caracteres, y no empiezan ni terminan con espacios en blanco";
         public const string V0026 = "V0026:Existe al menos un ítem con 'codAfectacionIgv'= 40 y la propiedad 'codigoTipoOperacion' no es de exportación";
         public const string V0027 = "V0027:Solo se permiten los valores: '01', '03', '07' y '08' para la propiedad 'tipoDocumento'";
         public const string V0028 = "V0028:El valor no existe el catálogo N° 02";
@@ -130,6 +131,7 @@ namespace GasperSoft.SUNAT
         public const string V0038 = "V0038:El codigo de moneda de ser PEN";
         public const string V0039 = "V0039:El valor no existe el catálogo N° 23 o la tasa no corresponde al código de régimen de retención ingresado";
         public const string V0040 = "V0040:El valor no existe el catálogo N° 25";
+        public const string V0041 = "V0041:Código de información adicional repetido";
 
         //Mensajes genericos para validar una propiedad
         public const string V0101 = "V0101:El valor de la propiedad deber ser NULL";
