@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Indicadores de la Guia Transportista
+    /// </summary>
     public class IndicadoresGRETransportistaType
     {
         /// <summary>

@@ -8,6 +8,9 @@ using System.Xml.Serialization;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Datos de envio de la guia de remision electronica
+    /// </summary>
     public class DatosEnvioGREType
     {
         /// <summary>

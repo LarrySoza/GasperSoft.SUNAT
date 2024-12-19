@@ -6,10 +6,15 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.DTO.CPE
 {
+    /// <summary>
+    /// Información de pago
+    /// </summary>
     public class InformacionPagoType
     {
+        /// <summary>
+        /// Forma de pago
+        /// </summary>
         public FormaPagoType formaPago { get; set; }
-
 
         /// <summary>
         /// Solo cuando formaPago="Credito"

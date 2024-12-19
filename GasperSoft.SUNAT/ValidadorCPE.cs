@@ -10,6 +10,9 @@ using static GasperSoft.SUNAT.Validaciones;
 
 namespace GasperSoft.SUNAT
 {
+    /// <summary>
+    /// Validador de Facturas, Boletas Notas de credito/debito
+    /// </summary>
     public class ValidadorCPE
     {
         private decimal _montoMaximoClienteAnonimoBoleta = 700;
@@ -43,15 +46,18 @@ namespace GasperSoft.SUNAT
         }
 
         /// <summary>
-        /// Inicia una nueva instancia de la clave ValidadorCPE
+        /// Inicia una nueva instancia de la clase ValidadorCPE
         /// </summary>
-        /// <param name="cpe">El Cpe a Validar</param>
+        /// <param name="cpe">El CPE a Validar</param>
         public ValidadorCPE(CPEType cpe)
         {
             _cpe = cpe;
             _mensajesError = new List<Error>();
         }
 
+        /// <summary>
+        /// Tipo de cambio referencial para las facturas en dolares
+        /// </summary>
         public decimal TipoCambioReferencial
         {
             set
@@ -64,6 +70,9 @@ namespace GasperSoft.SUNAT
             }
         }
 
+        /// <summary>
+        /// Un valor entre 0.20 y 1 que indica la tolerancia de los calculos
+        /// </summary>
         public decimal ToleranciaCalculo
         {
             get
@@ -86,6 +95,9 @@ namespace GasperSoft.SUNAT
             }
         }
 
+        /// <summary>
+        /// Errores de validacion del CPE
+        /// </summary>
         public List<Error> Errors
         {
             get
@@ -99,6 +111,10 @@ namespace GasperSoft.SUNAT
         /// </summary>
         public event ValidarCatalogoSunat OnValidarCatalogoSunat;
 
+        /// <summary>
+        /// Valida el CPE
+        /// </summary>
+        /// <returns>Valor booleano que indica si el CPE es valido</returns>
         public bool Validar()
         {
             _mensajesError.Clear();

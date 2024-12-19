@@ -6,6 +6,9 @@ using System;
 
 namespace GasperSoft.SUNAT.DTO.CPE
 {
+    /// <summary>
+    /// Motivo de la Nota Credito/Debito
+    /// </summary>
     public class MotivoNotaType
     {
         /// <summary>

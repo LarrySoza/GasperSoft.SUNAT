@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Indicadores de la Guia Remitente
+    /// </summary>
     public class IndicadoresGRERemitenteType
     {
         /// <summary>

@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.CPE
 {
+    /// <summary>
+    /// Descuento o cargo aplicado al comprobante
+    /// </summary>
     public class DescuentoCargoType
     {
         /// <summary>

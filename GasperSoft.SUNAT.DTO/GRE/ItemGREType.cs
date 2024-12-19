@@ -4,6 +4,9 @@
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Item de la Guia de Remisión Electrónica
+    /// </summary>
     public class ItemGREType
     {
         /// <summary>
@@ -74,14 +77,19 @@ namespace GasperSoft.SUNAT.DTO.GRE
 
         #region Campos Adiconales(no existen referencias, pero se usan al momento de mandar la lista de detalles(List<ItemCPEType>) al pdf)
 
+        /// <remarks/>
         public string adicional1 { get; set; }
 
+        /// <remarks/>
         public string adicional2 { get; set; }
 
+        /// <remarks/>
         public string adicional3 { get; set; }
 
+        /// <remarks/>
         public string adicional4 { get; set; }
 
+        /// <remarks/>
         public string adicional5 { get; set; }
 
         #endregion

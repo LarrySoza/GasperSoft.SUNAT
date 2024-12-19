@@ -14,12 +14,12 @@ namespace GasperSoft.SUNAT
         /// <summary>
         /// Código del error
         /// </summary>
-        public string codigo { get; set; }
+        public string codigo { get; private set; }
 
         /// <summary>
         /// Detalle del error
         /// </summary>
-        public string detalle { get; set; }
+        public string detalle { get; private set; }
 
         /// <summary>
         /// requerido para la serializacion de respuestas en las API
@@ -33,7 +33,7 @@ namespace GasperSoft.SUNAT
         /// Los mensajes comienzan con la Letra V(Validacion) o S(SUNAT),
         /// </summary>
         /// <param name="mensaje">el mensaje a procesar</param>
-        public Error(string mensaje)
+        internal Error(string mensaje)
         {
             int _index = mensaje.IndexOf(":");
 
@@ -49,11 +49,11 @@ namespace GasperSoft.SUNAT
             }
         }
 
-        public Error(string mensaje, string observacion) : this(mensaje)
+        internal Error(string mensaje, string observacion) : this(mensaje)
         {
             detalle = $"{detalle} - Obs: {observacion}";
         }
 
-        public Error(Exception ex) : this(ex.MessageExt()) { }
+        internal Error(Exception ex) : this(ex.MessageExt()) { }
     }
 }

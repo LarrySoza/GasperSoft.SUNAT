@@ -9,6 +9,9 @@ using System.Text;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Autorización especial
+    /// </summary>
     public class AutorizacionEspecialType
     {
         /// <summary>

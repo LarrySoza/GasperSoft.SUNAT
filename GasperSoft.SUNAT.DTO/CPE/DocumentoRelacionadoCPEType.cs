@@ -15,7 +15,7 @@ namespace GasperSoft.SUNAT.DTO.CPE
         public string tipoDocumento { get; set; }
 
         /// <summary>
-        /// Si es guía (an..30 <Serie>-<Número>)
+        /// Si es guía (an..30 [Serie]-[Número])
         /// </summary>
         public string numeroDocumento { get; set; }
     }

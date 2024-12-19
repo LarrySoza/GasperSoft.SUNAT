@@ -6,6 +6,9 @@ using System;
 
 namespace GasperSoft.SUNAT.DTO
 {
+    /// <summary>
+    /// Tipo de cambio
+    /// </summary>
     public class TipoCambioType
     {
         /// <summary>

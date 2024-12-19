@@ -10,18 +10,28 @@ using static GasperSoft.SUNAT.Validaciones;
 
 namespace GasperSoft.SUNAT
 {
+    /// <summary>
+    /// Validador de Comprobante de Retención Electrónica
+    /// </summary>
     public class ValidadorCRE
     {
         private readonly CREType _cre;
         private readonly List<Error> _mensajesError;
         private decimal _toleranciaCalculo = 0.2m;
 
+        /// <summary>
+        /// Inicia una nueva instancia de la clase ValidadorCRE
+        /// </summary>
+        /// <param name="cre">El CRE a Validar</param>
         public ValidadorCRE(CREType cre)
         {
             _cre = cre;
             _mensajesError = new List<Error>();
         }
 
+        /// <summary>
+        /// Un valor entre 0.20 y 1 que indica la tolerancia de los calculos
+        /// </summary>
         public decimal ToleranciaCalculo
         {
             get
@@ -44,6 +54,9 @@ namespace GasperSoft.SUNAT
             }
         }
 
+        /// <summary>
+        /// Errores de validacion del CRE
+        /// </summary>
         public List<Error> Errors
         {
             get
@@ -57,6 +70,10 @@ namespace GasperSoft.SUNAT
         /// </summary>
         public event ValidarTasaRetencion OnValidarTasaRetencion;
 
+        /// <summary>
+        /// Valida el CRE
+        /// </summary>
+        /// <returns>Valor booleano que indica si el CRE es valido</returns>
         public bool Validar()
         {
             _mensajesError.Clear();

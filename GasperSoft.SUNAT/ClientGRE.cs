@@ -15,13 +15,13 @@ namespace GasperSoft.SUNAT
     /// </summary>
     public class ClientGRE
     {
-        private string _baseUrlServicio;
-        private string _baseUrlToken;
-        private string _ruc;
-        private string _usuarioSol;
-        private string _claveSol;
-        private string _clientID;
-        private string _clientSecret;
+        private readonly string _baseUrlServicio;
+        private readonly string _baseUrlToken;
+        private readonly string _ruc;
+        private readonly string _usuarioSol;
+        private readonly string _claveSol;
+        private readonly string _clientID;
+        private readonly string _clientSecret;
         private string _ticketSunat;
         private string _token;
         private byte[] _bytesCdr;
@@ -89,6 +89,16 @@ namespace GasperSoft.SUNAT
 
         #endregion
 
+        /// <summary>
+        /// Clase para el Envió de guías de remisión a SUNAT
+        /// </summary>
+        /// <param name="baseUrlServicio">Url base para el envio de guias</param>
+        /// <param name="baseUrlToken">Url base para generar el token</param>
+        /// <param name="ruc">Ruc</param>
+        /// <param name="usuarioSol">Usuario Sol</param>
+        /// <param name="claveSol">Clave Sol</param>
+        /// <param name="clientID">Client ID creado desde el portal de SUNAT</param>
+        /// <param name="clientSecret">Client Secret creado desde el portal de SUNAT</param>
         public ClientGRE(string baseUrlServicio,
                               string baseUrlToken,
                               string ruc,

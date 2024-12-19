@@ -10,17 +10,27 @@ using static GasperSoft.SUNAT.Validaciones;
 
 namespace GasperSoft.SUNAT
 {
+    /// <summary>
+    /// Validador de Guia de Remisión Electrónica
+    /// </summary>
     public class ValidadorGRE
     {
         private readonly GREType _gre;
         private readonly List<Error> _mensajesError;
 
+        /// <summary>
+        /// Inicia una nueva instancia de la clase ValidadorCPE
+        /// </summary>
+        /// <param name="gre">La GRE a Validar</param>
         public ValidadorGRE(GREType gre)
         {
             _gre = gre;
             _mensajesError = new List<Error>();
         }
 
+        /// <summary>
+        /// Errores de validacion de la GRE
+        /// </summary>
         public List<Error> Errors
         {
             get
@@ -34,6 +44,10 @@ namespace GasperSoft.SUNAT
         /// </summary>
         public event ValidarCatalogoSunat OnValidarCatalogoSunat;
 
+        /// <summary>
+        /// Valida la GRE
+        /// </summary>
+        /// <returns>Valor booleano que indica si la GRE es valida</returns>
         public bool Validar()
         {
             if (OnValidarCatalogoSunat == null)

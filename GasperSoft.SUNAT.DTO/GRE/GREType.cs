@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Esta clase contiene todos los datos necesarios para armar una Guia Remision Remitente/Transportista
+    /// </summary>
     public class GREType
     {
         /// <summary>

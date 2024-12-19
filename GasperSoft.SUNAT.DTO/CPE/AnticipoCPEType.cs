@@ -6,6 +6,9 @@ using System;
 
 namespace GasperSoft.SUNAT.DTO.CPE
 {
+    /// <summary>
+    /// Informacion de anticipo
+    /// </summary>
     public class AnticipoCPEType
     {
         /// <summary>
@@ -40,7 +43,7 @@ namespace GasperSoft.SUNAT.DTO.CPE
 
         /// <summary>
         /// Importe total del anticipo = valorVenta + montoIGV
-        /// </ summary >
+        /// </summary>
         public decimal importeTotal { get; set; }
 
         /// <summary>

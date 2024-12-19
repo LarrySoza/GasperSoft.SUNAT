@@ -6,10 +6,24 @@ using System.Collections.Generic;
 
 namespace GasperSoft.SUNAT.DTO.GRE
 {
+    /// <summary>
+    /// Información del transportista
+    /// </summary>
     public class InfoTransportistaType
     {
+        /// <summary>
+        /// Ruc del transportista
+        /// </summary>
         public string ruc { get; set; }
+
+        /// <summary>
+        /// Razon social del transportista
+        /// </summary>
         public string razonSocial { get; set; }
+
+        /// <summary>
+        /// Registro MTC
+        /// </summary>
         public string registroMTC { get; set; }
 
         /// <summary>

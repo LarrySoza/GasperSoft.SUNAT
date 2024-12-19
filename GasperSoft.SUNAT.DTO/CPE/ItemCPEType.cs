@@ -185,14 +185,19 @@ namespace GasperSoft.SUNAT.DTO.CPE
 
         #region Campos Adiconales(No se mandan a SUNAT se usan para mandar informacion adicional en el pdf)
 
+        /// <remarks/>
         public string adicional1 { get; set; }
 
+        /// <remarks/>
         public string adicional2 { get; set; }
 
+        /// <remarks/>
         public string adicional3 { get; set; }
 
+        /// <remarks/>
         public string adicional4 { get; set; }
 
+        /// <remarks/>
         public string adicional5 { get; set; }
 
         #endregion

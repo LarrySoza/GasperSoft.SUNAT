@@ -6,6 +6,9 @@ using System;
 
 namespace GasperSoft.SUNAT.DTO.CPE
 {
+    /// <summary>
+    /// Información de hospedaje
+    /// </summary>
     public class HospedajeType
     {
         /// <summary>
