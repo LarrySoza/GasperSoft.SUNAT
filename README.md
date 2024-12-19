@@ -38,6 +38,7 @@ Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **g
   - [XML FACTURA CON ANTICIPOS - MONTO TOTAL EN CERO](/Xml/20606433094-01-F001-7.xml) - [C#](/Pruebas/CPEFactura7.cs)
   - [XML FACTURA CON RETENCION](/Xml/20606433094-01-F001-8.xml) - [C#](/Pruebas/CPEFactura8.cs)
   - [XML FACTURA CON PERCEPCION](/Xml/20606433094-01-F001-9.xml) - [C#](/Pruebas/CPEFactura9.cs)
+  - [XML FACTURA AL CONTADO PAGO CON DEPOSITO EN CUENTA (MEDIO DE PAGO CATALOGO N° 59)](/Xml/20606433094-01-F001-11.xml) - [C#](/Pruebas/CPEFactura11.cs)
   - [XML NOTA CREDITO MOTIVO 13](/Xml/20606433094-07-F001-1.xml) - [C#](/Pruebas/CPENotaCredito1.cs)
   - [XML GUIA REMISION REMITENTE - Transporte Publico](/Xml/20606433094-09-T001-1.xml) - [C#](/Pruebas/GRERemitente1.cs)
   - [XML GUIA REMISION REMITENTE - Transporte Privado (Vehiculo y Conductor)](/Xml/20606433094-09-T001-2.xml) - [C#](/Pruebas/GRERemitente2.cs)
