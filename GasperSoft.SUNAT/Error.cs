@@ -14,12 +14,12 @@ namespace GasperSoft.SUNAT
         /// <summary>
         /// Código del error
         /// </summary>
-        public string codigo { get; private set; }
+        public string codigo { get; set; }
 
         /// <summary>
         /// Detalle del error
         /// </summary>
-        public string detalle { get; private set; }
+        public string detalle { get; set; }
 
         /// <summary>
         /// requerido para la serializacion de respuestas en las API

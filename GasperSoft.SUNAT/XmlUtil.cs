@@ -19,9 +19,9 @@ using System.Xml.Serialization;
 namespace GasperSoft.SUNAT
 {
     /// <summary>
-    /// Metodos para Generar,Firmar y Comprimir el XML
+    /// Contiene metodos para Generar,Firmar y Comprimir el XML
     /// </summary>
-    public class XmlUtil
+    public static class XmlUtil
     {
         /// <summary>
         /// Encoding predeterminado por SUNAT("ISO-8859-1")
