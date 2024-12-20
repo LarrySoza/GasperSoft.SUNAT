@@ -9,12 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
+
+#if NET40
+using Ionic.Zip;
+#endif
 
 namespace GasperSoft.SUNAT
 {
@@ -143,7 +148,11 @@ namespace GasperSoft.SUNAT
 
             if (certificado == null) throw new ArgumentNullException(nameof(certificado));
 
+#if NET462_OR_GREATER || NET6_0_OR_GREATER
             var _rsaKey = certificado.GetRSAPrivateKey() ?? throw new ArgumentException("Error al leer la clave privada del certificado", nameof(certificado));
+#else
+            var _rsaKey = (RSA)certificado.PrivateKey;
+#endif
 
             //Si no se manda el encoding intentamos leer el que se especifica en la primera linea del XML
             //ejemplo: <?xml version="1.0" encoding="iso-8859-1"?> deberia devolver el encoding iso-8859-1
@@ -249,6 +258,8 @@ namespace GasperSoft.SUNAT
             }
         }
 
+#if NET452_OR_GREATER || NET6_0_OR_GREATER
+
         /// <summary>
         /// Comprimir una cadena XML y devuelve la cadena de bytes del zip
         /// </summary>
@@ -260,6 +271,8 @@ namespace GasperSoft.SUNAT
             if (encoding == null) encoding = SunatEncoding;
 
             var _dataBytes = encoding.GetBytes(xml);
+
+            
 
             using (var memDestino = new MemoryStream())
             {
@@ -276,5 +289,35 @@ namespace GasperSoft.SUNAT
                 return memDestino.ToArray();
             }
         }
+#endif
+
+#if NET40
+
+        /// <summary>
+        /// Comprimir una cadena XML y devuelve la cadena de bytes del zip
+        /// </summary>
+        /// <param name="xml">cadena XML</param>
+        /// <param name="nombreArchivo">nombre del archivo incluyendo la extrension Ejemplo: 20606433094-01-T001-1.xml</param>
+        /// <param name="encoding">Encoding a usar para la codificación del XML</param>
+        public static byte[] Comprimir2(string xml, string nombreArchivo, Encoding encoding = null)
+        {
+            if (encoding == null) encoding = SunatEncoding;
+
+            var _dataBytes = encoding.GetBytes(xml);
+
+            using (var memDestino = new MemoryStream())
+            {
+                using (ZipFile zip = new ZipFile())
+                {
+                    zip.AddEntry(nombreArchivo, _dataBytes);
+
+                    zip.Save(memDestino);
+                }
+
+                return memDestino.ToArray();
+            }
+        }
+#endif
+
     }
 }

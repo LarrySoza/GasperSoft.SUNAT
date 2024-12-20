@@ -42,8 +42,7 @@ namespace Pruebas
             var _emisor = GetEmisior;
 
             //Leer el certificado(Estoy usando uno generado de manera gratuita en https://llama.pe/certificado-digital-de-prueba-sunat)
-            var _bytesCertificado = File.ReadAllBytes("20606433094.pfx");
-            var _certificado = new X509Certificate2(_bytesCertificado, "1234567890", X509KeyStorageFlags.MachineKeySet);
+            var _certificado = X509CertificateLoader.LoadPkcs12FromFile("20606433094.pfx", "1234567890");
 
             //El valor de esta variable se refleja en el tag <cac:Signature><cbc:ID> en el XML
             var _signature = "signatureMIEMPRESA";

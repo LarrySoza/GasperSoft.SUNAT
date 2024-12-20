@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net452;net462;net472;net481;netstandard2.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net35;net40;net452;net462;net472;net481;netstandard2.0;net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
     <Title>GasperSoft.SUNAT.UBL</Title>
     <RepositoryUrl>https://github.com/LarrySoza/GasperSoft.SUNAT</RepositoryUrl>
     <PackageTags>XML SUNAT V2</PackageTags>
@@ -11,11 +11,13 @@
     <Description>Librería para generar el XML de Factura, Boleta, Nota de crédito/débito, Guías Remitente/Transportista, Retencion, Resumen diario y Comunicaciones de baja con la estructura UBL requerida por SUNAT.</Description>
     <Copyright>Copyright (C) 2024 GasperSoft.</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.3</FileVersion>
+    <FileVersion>1.0.4</FileVersion>
     <Version>$(FileVersion)</Version>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\keygaspersoft.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

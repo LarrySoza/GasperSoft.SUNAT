@@ -2,6 +2,8 @@
 // Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
+#if NET462_OR_GREATER || NET6_0_OR_GREATER
+
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
@@ -373,3 +375,5 @@ namespace GasperSoft.SUNAT
         }
     }
 }
+
+#endif
