@@ -237,7 +237,16 @@ namespace GasperSoft.SUNAT
             //nodoExtension.AppendChild(signedXml.GetXml());
             _extensionContent.AppendChild(signedXml.GetXml());
 
-            return _xmlDoc.OuterXml;
+            //Solucionar problema de XML Adulterado
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = XmlWriter.Create(stream, GetXmlWriterSettings(encoding)))
+                {
+                    _xmlDoc.WriteTo(writer);
+                }
+
+                return encoding.GetString(stream.ToArray());
+            }
         }
 
         /// <summary>
