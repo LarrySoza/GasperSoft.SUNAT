@@ -20,10 +20,10 @@ Librerías .NET que permite generar los XML de la **Facturación Electrónica** 
 Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **gracias a [UblXsdToCS]( https://github.com/LarrySoza/UblXsdToCS)**, estas clases contienen la estructura completa del estándar UBL/SUNAT, entonces implementar cualquier atributo adicional requerido parte de SUNAT es relativamente sencillo. Sin embargo dado la gran cantidad de propiedades que existen en el estándar UBL, en este proyecto se emplean objetos intermedios más sencillos que cumplen con todos los requerimientos de SUNAT, estas clases están definidas en **GasperSoft.SUNAT.DTO.dll** (CPEType, CREType, GREType, ResumenDiarioV2Type, ComunicacionBajaType), posteriormente después de asignar las propiedades correspondientes son convertidos usando la librería **GasperSoft.SUNAT.UBL.dll** a clases generadas desde los XSD (InvoiceType, DespatchAdviceType, SummaryDocumentsType, VoidedDocumentsType, RetentionType), finalmente son serializados a XML y firmado utilizando métodos definidos en **GasperSoft.SUNAT.dll**.
 
 >[!NOTE] 
->Si bien es cierto la librería es compatible para net35, net40, net452, net462, net472, net481, netstandard2.0, net6.0, net7.0, net8.0 y net9.0, los métodos de envió a SUNAT no serán implementados para net35, net40 ni net452.
+>Estas librería son compatible para net35, net40, net452, net462, net472, net481, netstandard2.0, net6.0, net7.0, net8.0 y net9.0, los métodos de envió a SUNAT no serán implementados para net35, net40 ni net452. La generación del zip en net35 y net40 es mediante la librería **DotNetZip** la cual contiene una vulnerabilidad relacionada con la descompresión no hay nada de qué preocuparse porque aún no implemento la lectura del CDR
 
 # Como se usa
-- En el proyecto pruebas encontrara ejemplos de código de como generar y firmar los XML, se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [LLAMA.PE](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
+- En el proyecto **Pruebas** encontrara ejemplos de código de como generar y firmar los XML, se usa certificado digital de prueba generado de manera gratuita en [LLAMA.PE](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:
 
   - [XML BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-03-B001-1.xml) - [Pagina 60 Manual SUNAT](/ManualesSunat/BoletaDeVentaElectronica2.1.pdf) - [C#](/Pruebas/CPEBoleta1.cs)
   - [XML BOLETA CON ICBPER - COBRANDO BOLSA](/Xml/20606433094-03-B001-2.xml) - [C#](/Pruebas/CPEBoleta2.cs)
@@ -76,6 +76,18 @@ Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **g
 >Actualmente existe una Clase para el envió de Guías Electrónicas usando **GasperSoft.SUNAT.dll** [ClientGRE.cs](/GasperSoft.SUNAT/ClientGRE.cs). Un ejemplo de uso en [EnvioGRE1.cs](/Pruebas/EnvioGRE1.cs)
 
 
-## Asesoría y Soporte ##
+# Asesoría y Soporte
 
-Siéntase cómodo de escribir a [it@gaspersoft.com](mailto:it@gaspersoft.com) para cualquier característica requerida o bugs.
+Si consideras que hay algún error en la validación o generación de un XML y no puede solucionarlo usando las fuentes, puedes serializar a JSON el objeto intermedio "CPEType", "CREType", "GREType", "ResumenDiarioV2Type" o "ComunicacionBajaType" y informarlo a **it@gaspersoft.com** detallando el problema.
+
+El siguiente código genera un archivo "CPE.json" que ayudaría a replicar el XML que estas generando.
+```C#
+var _cpe = new CPEType();
+//Codigo para asignar las propiedades
+
+var _json = System.Text.Json.JsonSerializer.Serialize(_cpe);
+File.WriteAllText("CPE.json", _json);
+```
+
+>[!NOTE] 
+>Recomiendo hacer un Fork del proyecto e intentar darle solución por tus propios medios si dominas algo de C# es muy sencillo.
