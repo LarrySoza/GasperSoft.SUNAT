@@ -15,7 +15,7 @@ namespace GasperSoft.SUNAT
         internal static bool IsNullOrWhiteSpace(string value)
         {
 #if NET35 || NET40
-            return Validaciones.IsNullOrWhiteSpace(value) || value.Trim().Length > 0;
+            return string.IsNullOrEmpty(value) || value.Trim().Length == 0;
 #else
             return string.IsNullOrWhiteSpace(value);    
 #endif

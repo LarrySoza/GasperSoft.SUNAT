@@ -2,7 +2,12 @@
 // Copyright (C) 2024 GasperSoft.
 // Contacto: it@gaspersoft.com
 
+#if NET462_OR_GREATER || NET6_0_OR_GREATER
+
 using GasperSoft.SUNAT;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 
 namespace Pruebas
@@ -141,7 +146,7 @@ namespace Pruebas
             ConsoleEx.ReadKey();
         }
 
-        private static string? Enviar(byte[] archivo, string nombreArchivo)
+        private static string Enviar(byte[] archivo, string nombreArchivo)
         {
             var _clientGRE = new ClientGRE(_baseUrlServicio, _baseUrlToken, _ruc, _usuarioSol, _claveSol, _clientID, _clientSecret);
 
@@ -181,7 +186,7 @@ namespace Pruebas
             }
         }
 
-        private static byte[]? ObtenerEstado(string ticket)
+        private static byte[] ObtenerEstado(string ticket)
         {
             var _clientGRE = new ClientGRE(_baseUrlServicio, _baseUrlToken, _ruc, _usuarioSol, _claveSol, _clientID, _clientSecret);
 
@@ -229,3 +234,5 @@ namespace Pruebas
         }
     }
 }
+
+#endif

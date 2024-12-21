@@ -10,8 +10,9 @@ using GasperSoft.SUNAT.DTO.GRE;
 using GasperSoft.SUNAT.DTO.Resumen;
 using GasperSoft.SUNAT.UBL.V1;
 using GasperSoft.SUNAT.UBL.V2;
-using System.Drawing;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Pruebas
@@ -29,7 +30,7 @@ namespace Pruebas
             provincia = "LIMA",
             distrito = "PUENTE PIEDRA"
         };
-        
+
         static void Main(string[] args)
         {
             //Si no existe el Directorio Storage lo creamos
@@ -42,7 +43,13 @@ namespace Pruebas
             var _emisor = GetEmisior;
 
             //Leer el certificado(Estoy usando uno generado de manera gratuita en https://llama.pe/certificado-digital-de-prueba-sunat)
+#if NET9_0
             var _certificado = X509CertificateLoader.LoadPkcs12FromFile("20606433094.pfx", "1234567890");
+#else
+            var _bytesCertificado = File.ReadAllBytes("20606433094.pfx");
+            var _certificado = new X509Certificate2(_bytesCertificado, "1234567890", X509KeyStorageFlags.MachineKeySet);
+#endif
+
 
             //El valor de esta variable se refleja en el tag <cac:Signature><cbc:ID> en el XML
             var _signature = "signatureMIEMPRESA";
@@ -82,8 +89,10 @@ namespace Pruebas
                 ConsoleEx.WriteLine("25: GUIA REMISION REMITENTE - EXPORTACION (PENDIENTE DE VERIFICACION CON SUNAT)");
                 ConsoleEx.WriteLine("26: FACTURA AL CONTADO PAGO CON DEPOSITO EN CUENTA (MEDIO DE PAGO CATALOGO N° 59)");
 
+#if NET462_OR_GREATER || NET6_0_OR_GREATER
                 //Pruebas de envio()
                 ConsoleEx.WriteLine("P1: ENVIAR GUIA REMITENTE",ConsoleColor.Green);
+#endif
 
                 ConsoleEx.Write("\nX", ConsoleColor.Red);
                 ConsoleEx.WriteLine(": Salir");
@@ -175,9 +184,14 @@ namespace Pruebas
                     case "26":
                         EjemploCPE(CPEFactura11.GetDocumento(), _emisor, _certificado, _signature);
                         break;
+
+#if NET462_OR_GREATER || NET6_0_OR_GREATER
+
                     case "P1":
                         EnvioGRE1.Run();
                         break;
+#endif
+
                     case "X":
                         salir = true;
                         break;

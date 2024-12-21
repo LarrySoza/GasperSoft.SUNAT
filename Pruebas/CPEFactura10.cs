@@ -4,6 +4,7 @@
 
 using GasperSoft.SUNAT.DTO;
 using GasperSoft.SUNAT.DTO.CPE;
+using System.Collections.Generic;
 
 namespace Pruebas
 {

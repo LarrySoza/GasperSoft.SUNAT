@@ -4,6 +4,8 @@
 
 using GasperSoft.SUNAT.DTO;
 using GasperSoft.SUNAT.DTO.GRE;
+using System;
+using System.Collections.Generic;
 
 namespace Pruebas
 {

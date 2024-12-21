@@ -266,7 +266,7 @@ namespace GasperSoft.SUNAT
         /// <param name="xml">cadena XML</param>
         /// <param name="nombreArchivo">nombre del archivo incluyendo la extrension Ejemplo: 20606433094-01-T001-1.xml</param>
         /// <param name="encoding">Encoding a usar para la codificación del XML</param>
-        public static byte[] Comprimir2(string xml, string nombreArchivo, Encoding encoding = null)
+        public static byte[] Comprimir(string xml, string nombreArchivo, Encoding encoding = null)
         {
             if (encoding == null) encoding = SunatEncoding;
 

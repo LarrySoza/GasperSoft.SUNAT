@@ -3,10 +3,6 @@
 // Contacto: it@gaspersoft.com
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pruebas
 {
@@ -69,7 +65,7 @@ namespace Pruebas
         /// <summary>
         /// Hace lo mismo que Console.ReadLine, solo para tener todo en una sola clase
         /// </summary>
-        public static string? ReadLine()
+        public static string ReadLine()
         {
             return Console.ReadLine();
         }

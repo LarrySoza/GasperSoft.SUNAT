@@ -3,6 +3,8 @@
 // Contacto: it@gaspersoft.com
 
 using GasperSoft.SUNAT.DTO.Resumen;
+using System;
+using System.Collections.Generic;
 
 namespace Pruebas
 {
