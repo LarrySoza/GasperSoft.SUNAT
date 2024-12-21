@@ -142,7 +142,7 @@ namespace GasperSoft.SUNAT
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(_cpe.horaEmision))
+            if (!Validaciones.IsNullOrWhiteSpace(_cpe.horaEmision))
             {
                 if (!Validaciones.IsValidTimeSunat(_cpe.horaEmision))
                 {
@@ -274,7 +274,7 @@ namespace GasperSoft.SUNAT
 
             #region Validacion de Propiedades del comprobante
 
-            if (string.IsNullOrEmpty(_cpe.codigoEstablecimiento))
+            if (Validaciones.IsNullOrWhiteSpace(_cpe.codigoEstablecimiento))
             {
                 _mensajesError.AddMensaje(CodigoError.S3030, "codigoEstablecimiento");
                 return false;
@@ -282,7 +282,7 @@ namespace GasperSoft.SUNAT
 
             if (_cpe.tipoDocumento == "01" || _cpe.tipoDocumento == "03")
             {
-                if (string.IsNullOrEmpty(_cpe.codigoTipoOperacion))
+                if (Validaciones.IsNullOrWhiteSpace(_cpe.codigoTipoOperacion))
                 {
                     _mensajesError.AddMensaje(CodigoError.S3205, "codigoTipoOperacion");
                     return false;
@@ -346,7 +346,7 @@ namespace GasperSoft.SUNAT
                 }
             }
 
-            if (!string.IsNullOrEmpty(_cpe.ordenCompra))
+            if (!Validaciones.IsNullOrWhiteSpace(_cpe.ordenCompra))
             {
                 if (!Validaciones.IsValidOrdenCompra(_cpe.ordenCompra))
                 {
@@ -644,7 +644,7 @@ namespace GasperSoft.SUNAT
 
             if (_cpe.detraccion != null)
             {
-                if (string.IsNullOrEmpty(_cpe.detraccion.numeroCuentaBancoNacion))
+                if (Validaciones.IsNullOrWhiteSpace(_cpe.detraccion.numeroCuentaBancoNacion))
                 {
                     _mensajesError.AddMensaje(CodigoError.S3034, "detraccion.numeroCuentaBancoNacion");
                 }
@@ -871,7 +871,7 @@ namespace GasperSoft.SUNAT
                     _detalleGratuito = true;
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.codigoProducto))
+                if (!Validaciones.IsNullOrWhiteSpace(item.codigoProducto))
                 {
                     if (!Validaciones.IsValidCodigoProducto(item.codigoProducto))
                     {
@@ -879,9 +879,9 @@ namespace GasperSoft.SUNAT
                     }
                 }
 
-                if (!string.IsNullOrEmpty(item.codigoProductoGS1))
+                if (!Validaciones.IsNullOrWhiteSpace(item.codigoProductoGS1))
                 {
-                    if (!string.IsNullOrWhiteSpace(item.tipoCodigoProductoGS1))
+                    if (!Validaciones.IsNullOrWhiteSpace(item.tipoCodigoProductoGS1))
                     {
                         if (!(new List<string> { "GTIN-8", "GTIN-12", "GTIN-13", "GTIN-14" }).Contains(item.tipoCodigoProductoGS1))
                         {
@@ -901,7 +901,7 @@ namespace GasperSoft.SUNAT
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.codigoProductoSunat))
+                if (!Validaciones.IsNullOrWhiteSpace(item.codigoProductoSunat))
                 {
                     //Validar que codigoProductoSunat se encuentre en el catálogo N° 25
                     if (!OnValidarCatalogoSunat("25", item.codigoProductoSunat))

@@ -109,13 +109,13 @@ namespace GasperSoft.SUNAT
                               string clientID,
                               string clientSecret)
         {
-            if (string.IsNullOrEmpty(baseUrlServicio)) throw new ArgumentNullException(nameof(baseUrlServicio));
-            if (string.IsNullOrEmpty(baseUrlToken)) throw new ArgumentNullException(nameof(baseUrlToken));
-            if (string.IsNullOrEmpty(ruc)) throw new ArgumentNullException(nameof(ruc));
-            if (string.IsNullOrEmpty(usuarioSol)) throw new ArgumentNullException(nameof(usuarioSol));
-            if (string.IsNullOrEmpty(claveSol)) throw new ArgumentNullException(nameof(claveSol));
-            if (string.IsNullOrEmpty(clientID)) throw new ArgumentNullException(nameof(clientID));
-            if (string.IsNullOrEmpty(clientSecret)) throw new ArgumentNullException(nameof(clientSecret));
+            if (Validaciones.IsNullOrWhiteSpace(baseUrlServicio)) throw new ArgumentNullException(nameof(baseUrlServicio));
+            if (Validaciones.IsNullOrWhiteSpace(baseUrlToken)) throw new ArgumentNullException(nameof(baseUrlToken));
+            if (Validaciones.IsNullOrWhiteSpace(ruc)) throw new ArgumentNullException(nameof(ruc));
+            if (Validaciones.IsNullOrWhiteSpace(usuarioSol)) throw new ArgumentNullException(nameof(usuarioSol));
+            if (Validaciones.IsNullOrWhiteSpace(claveSol)) throw new ArgumentNullException(nameof(claveSol));
+            if (Validaciones.IsNullOrWhiteSpace(clientID)) throw new ArgumentNullException(nameof(clientID));
+            if (Validaciones.IsNullOrWhiteSpace(clientSecret)) throw new ArgumentNullException(nameof(clientSecret));
 
             _baseUrlServicio = baseUrlServicio;
             _baseUrlToken = baseUrlToken;
@@ -241,7 +241,7 @@ namespace GasperSoft.SUNAT
 
         private bool ToKenVencido()
         {
-            if (string.IsNullOrEmpty(_token)) return true;
+            if (Validaciones.IsNullOrWhiteSpace(_token)) return true;
 
             try
             {

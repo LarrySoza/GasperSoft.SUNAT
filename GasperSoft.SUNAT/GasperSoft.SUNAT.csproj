@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net452;net462;net472;net481;netstandard2.0;net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net35;net40;net452;net462;net472;net481;netstandard2.0;net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
     <Title>GasperSoft.SUNAT.DTO</Title>
     <RepositoryUrl>https://github.com/LarrySoza/GasperSoft.SUNAT</RepositoryUrl>
     <PackageTags>GASPERSOFT SUNAT DTO</PackageTags>
@@ -11,7 +11,7 @@
     <Description>Métodos utilizados para convertir los Objetos (DTOs) de GasperSoft.SUNAT.DTO(CPETye, CREType, GREType)  a XML</Description>
     <Copyright>Copyright (C) 2024 GasperSoft.</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <FileVersion>1.0.7</FileVersion>
+    <FileVersion>1.0.8</FileVersion>
     <Version>$(FileVersion)</Version>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -30,6 +30,11 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net35'">
+    <Reference Include="System.Security" />
+    <PackageReference Include="DotNetZip" Version="1.12.0" />
+  </ItemGroup>
+  
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <Reference Include="System.Security" />
     <PackageReference Include="DotNetZip" Version="1.16.0" />

@@ -2,7 +2,7 @@
 [![NuGet Version](https://img.shields.io/nuget/v/GasperSoft.SUNAT)](https://www.nuget.org/packages/GasperSoft.SUNAT)
 [![GitHub License](https://img.shields.io/github/license/LarrySoza/GasperSoft.SUNAT)](/LICENSE.txt)
 
-Librerías .NET que permite generar los XML de la **Facturación Electrónica** en Perú, estas mismas librerías son las que uso en mi plataforma de producción que ofrezco a mis clientes, por lo que están en constante actualización.
+Librerías .NET que permite generar los XML de la **Facturación Electrónica** en Perú, estas librerías están actualmente en producción y en constante actualización.
 
 # Características #
 - Generación de XML de los siguientes documentos electrónicos:
@@ -20,8 +20,7 @@ Librerías .NET que permite generar los XML de la **Facturación Electrónica** 
 Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **gracias a [UblXsdToCS]( https://github.com/LarrySoza/UblXsdToCS)**, estas clases contienen la estructura completa del estándar UBL/SUNAT, entonces implementar cualquier atributo adicional requerido parte de SUNAT es relativamente sencillo. Sin embargo dado la gran cantidad de propiedades que existen en el estándar UBL, en este proyecto se emplean objetos intermedios más sencillos que cumplen con todos los requerimientos de SUNAT, estas clases están definidas en **GasperSoft.SUNAT.DTO.dll** (CPEType, CREType, GREType, ResumenDiarioV2Type, ComunicacionBajaType), posteriormente después de asignar las propiedades correspondientes son convertidos usando la librería **GasperSoft.SUNAT.UBL.dll** a clases generadas desde los XSD (InvoiceType, DespatchAdviceType, SummaryDocumentsType, VoidedDocumentsType, RetentionType), finalmente son serializados a XML y firmado utilizando métodos definidos en **GasperSoft.SUNAT.dll**.
 
 >[!NOTE] 
->El Proyecto **GasperSoft.SUNAT** es compatible con net462, net472, net481, netstandard2.0 y net8.0. **GasperSoft.SUNAT.DTO** y **GasperSoft.SUNAT.UBL** lo son con net35, net452, net462, net472, net481, netstandard2.0, net6.0, net7.0 y net8.0.
-**GasperSoft.SUNAT.DTO.dll** y **GasperSoft.SUNAT.UBL.dll** no dependen de **GasperSoft.SUNAT.dll**, sin embargo es esta la librería que permite validar, serializar y firmar los XML, si necesita compatibilidad con net35 o un framework no soportado deberá implementar sus propios métodos.
+>Si bien es cierto la librería es compatible para net35, net40, net452, net462, net472, net481, netstandard2.0, net6.0, net7.0, net8.0 y net9.0, los métodos de envió a SUNAT no serán implementados para net35, net40 ni net452.
 
 # Como se usa
 - En el proyecto pruebas encontrara ejemplos de código de como generar y firmar los XML, se necesita un certificado digital, puede generar uno para pruebas de manera gratuita en [LLAMA.PE](https://llama.pe/certificado-digital-de-prueba-sunat)(sin valor legal), actualmente se tienen los siguientes ejemplos:

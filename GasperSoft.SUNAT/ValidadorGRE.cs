@@ -366,7 +366,7 @@ namespace GasperSoft.SUNAT
                 }
             }
 
-            if (string.IsNullOrEmpty(_gre.datosEnvio.motivoTraslado))
+            if (Validaciones.IsNullOrWhiteSpace(_gre.datosEnvio.motivoTraslado))
             {
                 _mensajesError.AddMensaje(CodigoError.S3404, $"datosEnvio.motivoTraslado = '{_gre.datosEnvio.modalidadTraslado}'");
                 return false;
@@ -377,7 +377,7 @@ namespace GasperSoft.SUNAT
                 return false;
             }
 
-            if (string.IsNullOrEmpty(_gre.datosEnvio.modalidadTraslado))
+            if (Validaciones.IsNullOrWhiteSpace(_gre.datosEnvio.modalidadTraslado))
             {
                 _mensajesError.AddMensaje(CodigoError.S2532, $"datosEnvio.modalidadTraslado = '{_gre.datosEnvio.modalidadTraslado}'");
                 return false;
@@ -491,7 +491,7 @@ namespace GasperSoft.SUNAT
                 }
 
                 //Codigo de establecimiento es obligatorio
-                if (string.IsNullOrEmpty(_gre.datosEnvio.puntoPartida.codigoEstablecimiento))
+                if (Validaciones.IsNullOrWhiteSpace(_gre.datosEnvio.puntoPartida.codigoEstablecimiento))
                 {
                     _mensajesError.AddMensaje(CodigoError.S3365, "datosEnvio.puntoPartida.codigoEstablecimiento");
                 }
@@ -532,7 +532,7 @@ namespace GasperSoft.SUNAT
                     }
 
                     //Codigo de establecimiento es obligatorio
-                    if (string.IsNullOrEmpty(_gre.datosEnvio.puntoLlegada.codigoEstablecimiento))
+                    if (Validaciones.IsNullOrWhiteSpace(_gre.datosEnvio.puntoLlegada.codigoEstablecimiento))
                     {
                         _mensajesError.AddMensaje(CodigoError.S3365, "datosEnvio.puntoLlegada.codigoEstablecimiento");
                     }
@@ -568,7 +568,7 @@ namespace GasperSoft.SUNAT
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(item.numeroTarjeta))
+                            if (!Validaciones.IsNullOrWhiteSpace(item.numeroTarjeta))
                             {
                                 //Si existe el Indicador de registro de vehículos y conductores del transportista es falso no se debe registrar el Tuc
                                 if ((_gre.datosEnvio.indicadoresGRERemitente?.indVehiculoConductoresTransp ?? false) == false)
@@ -623,7 +623,7 @@ namespace GasperSoft.SUNAT
 
                                 foreach (var autorizacion in item.autorizacionesEspeciales)
                                 {
-                                    if (!string.IsNullOrEmpty(autorizacion.codigoEntidadAutorizadora))
+                                    if (!Validaciones.IsNullOrWhiteSpace(autorizacion.codigoEntidadAutorizadora))
                                     {
                                         if (!OnValidarCatalogoSunat("D37", autorizacion.codigoEntidadAutorizadora))
                                         {
@@ -918,7 +918,7 @@ namespace GasperSoft.SUNAT
 
                 if (_debeExistirItemDAMoDS && _mensajesError.Count == 0)
                 {
-                    var _totalItemsConDAMoDS = _gre.detalles?.Select(x => !string.IsNullOrEmpty(x.partidaArancelaria)).Count();
+                    var _totalItemsConDAMoDS = _gre.detalles?.Select(x => !Validaciones.IsNullOrWhiteSpace(x.partidaArancelaria)).Count();
 
                     if ((_totalItemsConDAMoDS ?? 0) == 0)
                     {
@@ -938,7 +938,7 @@ namespace GasperSoft.SUNAT
 
             foreach (var item in _gre.detalles)
             {
-                if (!string.IsNullOrWhiteSpace(item.codigoProducto))
+                if (!Validaciones.IsNullOrWhiteSpace(item.codigoProducto))
                 {
                     if (!Validaciones.IsValidCodigoProducto(item.codigoProducto))
                     {
@@ -946,9 +946,9 @@ namespace GasperSoft.SUNAT
                     }
                 }
 
-                if (!string.IsNullOrEmpty(item.codigoProductoGS1))
+                if (!Validaciones.IsNullOrWhiteSpace(item.codigoProductoGS1))
                 {
-                    if (!string.IsNullOrWhiteSpace(item.tipoCodigoProductoGS1))
+                    if (!Validaciones.IsNullOrWhiteSpace(item.tipoCodigoProductoGS1))
                     {
                         var _tipoCodigoProductoGS1Permitidos = new List<string> { "GTIN-8", "GTIN-12", "GTIN-13", "GTIN-14" };
 
@@ -970,7 +970,7 @@ namespace GasperSoft.SUNAT
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.codigoProductoSunat))
+                if (!Validaciones.IsNullOrWhiteSpace(item.codigoProductoSunat))
                 {
                     //Validar que codigoProductoSunat se encuentre en el catálogo N° 25
                     if (!OnValidarCatalogoSunat("25", item.codigoProductoSunat))
@@ -994,7 +994,7 @@ namespace GasperSoft.SUNAT
                     _mensajesError.AddMensaje(CodigoError.V0005, $"detalle[{_idRecord}].nombre");
                 }
 
-                if (!string.IsNullOrEmpty(item.partidaArancelaria))
+                if (!Validaciones.IsNullOrWhiteSpace(item.partidaArancelaria))
                 {
                     if (!Validaciones.IsValidPartidaArancelaria(item.partidaArancelaria))
                     {
@@ -1014,7 +1014,7 @@ namespace GasperSoft.SUNAT
                     }
                 }
 
-                if (!string.IsNullOrEmpty(item.numeroDeclaracionAduanera))
+                if (!Validaciones.IsNullOrWhiteSpace(item.numeroDeclaracionAduanera))
                 {
                     if (_gre.datosEnvio.motivoTraslado != "08" && _gre.datosEnvio.motivoTraslado != "09")
                     {
@@ -1041,7 +1041,7 @@ namespace GasperSoft.SUNAT
                     }
                 }
 
-                if (!string.IsNullOrEmpty(item.numeroSerieEnDeclaracionAduanera))
+                if (!Validaciones.IsNullOrWhiteSpace(item.numeroSerieEnDeclaracionAduanera))
                 {
                     if (_gre.datosEnvio.motivoTraslado != "08" && _gre.datosEnvio.motivoTraslado != "09")
                     {

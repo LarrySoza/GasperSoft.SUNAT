@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 
-#if NET40
+#if NET35 || NET40
 using Ionic.Zip;
 #endif
 
@@ -144,7 +144,7 @@ namespace GasperSoft.SUNAT
         /// <returns>XML firmado</returns>
         public static string FirmarXml(string xml, X509Certificate2 certificado, out string digestValue, string signature = null, Encoding encoding = null)
         {
-            if (string.IsNullOrEmpty(xml)) throw new ArgumentNullException(nameof(xml));
+            if (Validaciones.IsNullOrWhiteSpace(xml)) throw new ArgumentNullException(nameof(xml));
 
             if (certificado == null) throw new ArgumentNullException(nameof(certificado));
 
@@ -163,7 +163,7 @@ namespace GasperSoft.SUNAT
             }
 
             //Se podria leer el <cac:Signature><cbc:ID> del XML (posiblemente en versiones futuras)
-            if (string.IsNullOrEmpty(signature)) signature = "signatureGASPERSOFT";
+            if (Validaciones.IsNullOrWhiteSpace(signature)) signature = "signatureGASPERSOFT";
 
             var _xmlDoc = new XmlDocument();
             digestValue = string.Empty;
@@ -214,7 +214,7 @@ namespace GasperSoft.SUNAT
             //Colocar la firma en el ultimo ExtensionContent
             XmlNode _extensionContent = _extensionContentNode.Item(_totalExtensionContent - 1);
 
-            if (!string.IsNullOrEmpty(_extensionContent.InnerText)) throw new Exception("No existe un tag '<ext:ExtensionContent/>' vacio en el XML");
+            if (!Validaciones.IsNullOrWhiteSpace(_extensionContent.InnerText)) throw new Exception("No existe un tag '<ext:ExtensionContent/>' vacio en el XML");
 
             // Creamos el objeto SignedXml.
             var signedXml = new SignedXml(_xmlDoc) { SigningKey = _rsaKey };
@@ -258,40 +258,7 @@ namespace GasperSoft.SUNAT
             }
         }
 
-#if NET452_OR_GREATER || NET6_0_OR_GREATER
-
-        /// <summary>
-        /// Comprimir una cadena XML y devuelve la cadena de bytes del zip
-        /// </summary>
-        /// <param name="xml">cadena XML</param>
-        /// <param name="nombreArchivo">nombre del archivo incluyendo la extrension Ejemplo: 20606433094-01-T001-1.xml</param>
-        /// <param name="encoding">Encoding a usar para la codificación del XML</param>
-        public static byte[] Comprimir(string xml, string nombreArchivo, Encoding encoding = null)
-        {
-            if (encoding == null) encoding = SunatEncoding;
-
-            var _dataBytes = encoding.GetBytes(xml);
-
-            
-
-            using (var memDestino = new MemoryStream())
-            {
-                using (var fileZip = new ZipArchive(memDestino, ZipArchiveMode.Create))
-                {
-                    ZipArchiveEntry zipItem = fileZip.CreateEntry(nombreArchivo);
-
-                    using (Stream ZipFile = zipItem.Open())
-                    {
-                        ZipFile.Write(_dataBytes, 0, _dataBytes.Length);
-                    }
-                }
-
-                return memDestino.ToArray();
-            }
-        }
-#endif
-
-#if NET40
+#if NET35 || NET40
 
         /// <summary>
         /// Comprimir una cadena XML y devuelve la cadena de bytes del zip
@@ -312,6 +279,35 @@ namespace GasperSoft.SUNAT
                     zip.AddEntry(nombreArchivo, _dataBytes);
 
                     zip.Save(memDestino);
+                }
+
+                return memDestino.ToArray();
+            }
+        }
+
+#else
+        /// <summary>
+        /// Comprimir una cadena XML y devuelve la cadena de bytes del zip
+        /// </summary>
+        /// <param name="xml">cadena XML</param>
+        /// <param name="nombreArchivo">nombre del archivo incluyendo la extrension Ejemplo: 20606433094-01-T001-1.xml</param>
+        /// <param name="encoding">Encoding a usar para la codificación del XML</param>
+        public static byte[] Comprimir(string xml, string nombreArchivo, Encoding encoding = null)
+        {
+            if (encoding == null) encoding = SunatEncoding;
+
+            var _dataBytes = encoding.GetBytes(xml);
+
+            using (var memDestino = new MemoryStream())
+            {
+                using (var fileZip = new ZipArchive(memDestino, ZipArchiveMode.Create))
+                {
+                    ZipArchiveEntry zipItem = fileZip.CreateEntry(nombreArchivo);
+
+                    using (Stream ZipFile = zipItem.Open())
+                    {
+                        ZipFile.Write(_dataBytes, 0, _dataBytes.Length);
+                    }
                 }
 
                 return memDestino.ToArray();

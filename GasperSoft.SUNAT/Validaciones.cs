@@ -12,6 +12,15 @@ namespace GasperSoft.SUNAT
     /// </summary>
     public class Validaciones
     {
+        internal static bool IsNullOrWhiteSpace(string value)
+        {
+#if NET35 || NET40
+            return Validaciones.IsNullOrWhiteSpace(value) || value.Trim().Length > 0;
+#else
+            return string.IsNullOrWhiteSpace(value);    
+#endif
+        }
+
         internal static bool ValidarToleranciaCalculo(decimal valorEnviado, decimal valorCalculado, decimal toleranciaCalculo)
         {
             if (toleranciaCalculo < 0.20m)
@@ -213,7 +222,7 @@ namespace GasperSoft.SUNAT
         /// <param name="serie">Serie a evaluar</param>
         public static bool IsValidSeries(string tipoDoc, string serie)
         {
-            if (string.IsNullOrEmpty(tipoDoc) || string.IsNullOrEmpty(serie))
+            if (Validaciones.IsNullOrWhiteSpace(tipoDoc) || Validaciones.IsNullOrWhiteSpace(serie))
                 return false;
 
             if (serie.Length != 4) return false;
@@ -239,7 +248,7 @@ namespace GasperSoft.SUNAT
         /// <param name="input">Numero de ruc a evaluar</param>
         public static bool IsValidRuc(string input)
         {
-            if (string.IsNullOrEmpty(input) || !IsInteger(input) || !(input.Length == 11))
+            if (Validaciones.IsNullOrWhiteSpace(input) || !IsInteger(input) || !(input.Length == 11))
             {
                 return false;
             }
@@ -355,8 +364,8 @@ namespace GasperSoft.SUNAT
         /// <returns></returns>
         public static bool IsValidDocumentoIdentidadSunat(string numeroDocumento, string tipoDocumento)
         {
-            if (string.IsNullOrEmpty(tipoDocumento) ||
-                string.IsNullOrEmpty(numeroDocumento))
+            if (Validaciones.IsNullOrWhiteSpace(tipoDocumento) ||
+                Validaciones.IsNullOrWhiteSpace(numeroDocumento))
                 return false;
 
             var regex = new Regex(@"^(?!\s*$)[^\s]{1,15}$");
