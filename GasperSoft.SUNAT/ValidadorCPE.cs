@@ -1545,6 +1545,7 @@ namespace GasperSoft.SUNAT
             decimal _totalDescuentosNOAfectaBICalculado = _descuentosxLineaNOAfectaBI + _descuentosGlobalesNOAfectaBI;
 
             decimal _operacionesGravadasxLinea = _cpe.detalles.Where(x => x.codAfectacionIGV == "10").Sum(x => x.valorVenta);
+            decimal _iscGravadasxLina = _cpe.detalles.Where(x => x.codAfectacionIGV == "10").Sum(x => x.montoISC);
             decimal _descuentoGlobalAfectaBICalculado = decimal.Round(_operacionesGravadasxLinea * _cpe.tasaDescuentoGlobal, 2);
             decimal _totalOperacionesGravadasCalculado = _operacionesGravadasxLinea - _descuentoGlobalAfectaBICalculado - _totalAnticiposGravados;
 
@@ -1597,7 +1598,8 @@ namespace GasperSoft.SUNAT
             }
 
             //Codigo de validacion 3279
-            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _totalAnticiposISC + _sumatoriaOTHCalculado + ((_operacionesGravadasxLinea - _descuentoGlobalAfectaBICalculado) * _tasaIGVOperacionesGravadas / 100);
+            decimal _precioVentaCalculado = _valorVentaCalculado + _sumatoriaICBPERCalculado + _sumatoriaISCCalculado + _totalAnticiposISC + _sumatoriaOTHCalculado + ((_operacionesGravadasxLinea - _descuentoGlobalAfectaBICalculado + _iscGravadasxLina) * _tasaIGVOperacionesGravadas / 100);
+
             decimal _totalAnticiposCalculado = Convert.ToDecimal(_cpe.anticipos?.Sum(x => x.importeTotal));
             decimal _totalRedondeo = _cpe.totalRedondeo;
             decimal _importeTotalCalculado = _precioVentaCalculado + _sumatoriaOtrosCargosNoAfectaBICalculado - _totalDescuentosNOAfectaBICalculado - _totalAnticiposCalculado + _totalRedondeo;
@@ -1840,7 +1842,7 @@ namespace GasperSoft.SUNAT
 
             if (!Validaciones.ValidarToleranciaCalculo(_cpe.precioVenta, decimal.Round(_precioVentaCalculado, 2), _toleranciaCalculo))
             {
-                _mensajesError.AddMensaje(CodigoError.V2000, $"precioVenta incorrecto Valor enviado: {_cpe.precioVenta} Valor calculado: {decimal.Round(_precioVentaCalculado, 2)}; Formula: precioVenta = valorVenta + sumatoriaICBPER + sumatoriaISC + (Suma del 'totalISC' de los anticipos) + sumatoriaOTH + ([(Suma del 'valorVenta' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe] * tasaIGV / 100)");
+                _mensajesError.AddMensaje(CodigoError.V2000, $"precioVenta incorrecto Valor enviado: {_cpe.precioVenta} Valor calculado: {decimal.Round(_precioVentaCalculado, 2)}; Formula: precioVenta = valorVenta + sumatoriaICBPER + sumatoriaISC + (Suma del 'totalISC' de los anticipos) + sumatoriaOTH + ([(Suma del 'valorVenta' de cada detalle que tenga 'codAfectacionIGV' = '10') - descuentoGlobalAfectaBI.importe + (Suma del 'montoISC' de cada detalle que tenga 'codAfectacionIGV' = '10')] * tasaIGV / 100)");
                 return false;
             }
 
