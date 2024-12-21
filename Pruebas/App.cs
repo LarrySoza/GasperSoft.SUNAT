@@ -88,6 +88,7 @@ namespace Pruebas
                 ConsoleEx.WriteLine("24: FACTURA CON INFORMACION ADICIONAL EN 'UBLExtension'", ConsoleColor.Blue);
                 ConsoleEx.WriteLine("25: GUIA REMISION REMITENTE - EXPORTACION (PENDIENTE DE VERIFICACION CON SUNAT)");
                 ConsoleEx.WriteLine("26: FACTURA AL CONTADO PAGO CON DEPOSITO EN CUENTA (MEDIO DE PAGO CATALOGO N° 59)");
+                ConsoleEx.WriteLine("27: BOLETA GRATUITA GRABADA (RETIRO POR ENTREGA A TRABAJADORES)");
 
 #if NET462_OR_GREATER || NET6_0_OR_GREATER
                 //Pruebas de envio()
@@ -183,6 +184,9 @@ namespace Pruebas
                         break;
                     case "26":
                         EjemploCPE(CPEFactura11.GetDocumento(), _emisor, _certificado, _signature);
+                        break;
+                    case "27":
+                        EjemploCPE(CPEBoleta4.GetDocumento(), _emisor, _certificado, _signature);
                         break;
 
 #if NET462_OR_GREATER || NET6_0_OR_GREATER

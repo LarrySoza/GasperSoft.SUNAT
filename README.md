@@ -28,6 +28,7 @@ Utiliza código generado desde los **XSD oficiales** del estándar UBL/SUNAT **g
   - [XML BOLETA DE VENTA GRAVADA CON DOS ÍTEMS Y UNA BONIFICACIÓN](/Xml/20606433094-03-B001-1.xml) - [Pagina 60 Manual SUNAT](/ManualesSunat/BoletaDeVentaElectronica2.1.pdf) - [C#](/Pruebas/CPEBoleta1.cs)
   - [XML BOLETA CON ICBPER - COBRANDO BOLSA](/Xml/20606433094-03-B001-2.xml) - [C#](/Pruebas/CPEBoleta2.cs)
   - [XML BOLETA CON ICBPER - REGALANDO BOLSA](/Xml/20606433094-03-B001-3.xml) - [C#](/Pruebas/CPEBoleta3.cs)
+  - [XML BOLETA GRATUITA GRABADA - RETIRO POR ENTREGA A TRABAJADORES](/Xml/20606433094-03-B001-4.xml) - [C#](/Pruebas/CPEBoleta4.cs)
   - [XML FACTURA CREDITO (CUOTAS)](/Xml/20606433094-01-F001-1.xml) - [C#](/Pruebas/CPEFactura1.cs)
   - [XML FACTURA GRATUITA](/Xml/20606433094-01-F001-2.xml) - [Pagina 98 Manual SUNAT](/ManualesSunat/FacturaElectronica2.1.pdf) - [C#](/Pruebas/CPEFactura2.cs)
   - [XML FACTURA CONTADO CON DETRACCION](/Xml/20606433094-01-F001-3.xml) - [C#](/Pruebas/CPEFactura3.cs)
